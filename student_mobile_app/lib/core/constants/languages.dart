@@ -1,0 +1,56 @@
+class AppLanguages {
+  static const String defaultLanguage = 'English';
+
+  static const List<String> supportedLanguages = [
+    'English',
+    'Assamese',
+    'Bengali',
+    'Bodo',
+    'Dogri',
+    'Gujarati',
+    'Hindi',
+    'Kannada',
+    'Kashmiri',
+    'Konkani',
+    'Maithili',
+    'Malayalam',
+    'Manipuri (Meitei)',
+    'Marathi',
+    'Nepali',
+    'Odia',
+    'Punjabi',
+    'Sanskrit',
+    'Santali',
+    'Sindhi',
+    'Tamil',
+    'Telugu',
+    'Urdu',
+  ];
+
+  // Optional: Native representation of languages for a premium localized UX
+  static const Map<String, String> nativeLanguageNames = {
+    'English': 'English',
+    'Assamese': 'অসমীয়া',
+    'Bengali': 'বাংলা',
+    'Bodo': 'बड़ो',
+    'Dogri': 'डोगरी',
+    'Gujarati': 'ગુજરાતી',
+    'Hindi': 'हिन्दी',
+    'Kannada': 'ಕನ್ನಡ',
+    'Kashmiri': 'कॉशुर',
+    'Konkani': 'कोंकणी',
+    'Maithili': 'मैथिली',
+    'Malayalam': 'മലയാളം',
+    'Manipuri (Meitei)': 'মৈতৈলোন্',
+    'Marathi': 'मराठी',
+    'Nepali': 'नेपाली',
+    'Odia': 'ଓଡ଼ିଆ',
+    'Punjabi': 'ਪੰਜਾਬੀ',
+    'Sanskrit': 'संस्कृतम्',
+    'Santali': 'ᱥᱟᱱᱛᱟᱲᱤ',
+    'Sindhi': 'سنڌي',
+    'Tamil': 'தமிழ்',
+    'Telugu': 'తెలుగు',
+    'Urdu': 'اُردُو',
+  };
+}
