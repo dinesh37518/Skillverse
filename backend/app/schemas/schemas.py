@@ -195,12 +195,28 @@ class UserSignUp(BaseModel):
     password: str
     full_name: str
     role: str = "student"
+    phone_number: Optional[str] = None
+
+class OTPRequest(BaseModel):
+    email: Optional[str] = None
+    phone_number: Optional[str] = None
+    role: Optional[str] = "student"
+
+class OTPVerify(BaseModel):
+    email: Optional[str] = None
+    phone_number: Optional[str] = None
+    otp: str
+    full_name: Optional[str] = "Student User"
+    role: Optional[str] = "student"
+    details: Optional[Dict[str, Any]] = None
 
 class TokenResponse(BaseModel):
     access_token: str
     token_type: str = "bearer"
     refresh_token: str
     role: str
+    user_id: Optional[str] = None
+    full_name: Optional[str] = None
 
 class RefreshTokenRequest(BaseModel):
     refresh_token: str

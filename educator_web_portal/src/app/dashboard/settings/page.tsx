@@ -3,9 +3,10 @@
 import { useState } from 'react';
 import { Settings, Shield, Bell, Eye, Accessibility } from 'lucide-react';
 import { SUPPORTED_LANGUAGES } from '../../../lib/constants';
+import { useLanguage, SupportedLanguage } from '../../../context/LanguageContext';
 
 export default function SettingsPanel() {
-  const [selectedLanguage, setSelectedLanguage] = useState('Hindi');
+  const { language, setLanguage, t } = useLanguage();
   const [emailAlerts, setEmailAlerts] = useState(true);
   const [liveReminders, setLiveReminders] = useState(true);
   const [studentQueries, setStudentQueries] = useState(false);
@@ -14,7 +15,7 @@ export default function SettingsPanel() {
     <div className="space-y-6 max-w-2xl">
       {/* Title */}
       <div>
-        <h2 className="text-3xl font-bold tracking-tight">Account Settings</h2>
+        <h2 className="text-3xl font-bold tracking-tight">{t('settings')}</h2>
         <p className="text-slate-400 mt-1">Manage portal preferences, accessibility levels, and privacy bounds.</p>
       </div>
 
@@ -26,11 +27,11 @@ export default function SettingsPanel() {
             Regional & Localization Settings
           </h3>
           <div>
-            <label className="block text-xs font-semibold text-slate-400 mb-2">Primary Portal Language</label>
+            <label className="block text-xs font-semibold text-slate-400 mb-2">{t('preferred_language')}</label>
             <select
-              value={selectedLanguage}
-              onChange={e => setSelectedLanguage(e.target.value)}
-              className="w-full max-w-sm px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-slate-300 focus:outline-none"
+              value={language}
+              onChange={e => setLanguage(e.target.value as SupportedLanguage)}
+              className="w-full max-w-sm px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-violet-300 font-semibold focus:outline-none focus:ring-2 focus:ring-violet-500"
             >
               {SUPPORTED_LANGUAGES.map(lang => <option key={lang} value={lang}>{lang}</option>)}
             </select>

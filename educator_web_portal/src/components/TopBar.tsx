@@ -1,9 +1,4 @@
-"use client";
-
-import { useState } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
-import { Bell, Sun, Moon, ChevronRight, User, LogOut, Settings } from 'lucide-react';
-import { supabase } from '../utils/supabase';
+import { useLanguage, SupportedLanguage } from '../context/LanguageContext';
 
 interface TopBarProps {
   userEmail?: string;
@@ -14,6 +9,7 @@ export default function TopBar({ userEmail }: TopBarProps) {
   const router = useRouter();
   const [darkMode, setDarkMode] = useState(true);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const { language, setLanguage } = useLanguage();
 
   const getBreadcrumbs = () => {
     const paths = pathname.split('/').filter(p => p && p !== 'dashboard');
@@ -52,7 +48,20 @@ export default function TopBar({ userEmail }: TopBarProps) {
       </div>
 
       {/* Action Utilities */}
-      <div className="flex items-center gap-6">
+      <div className="flex items-center gap-4">
+        {/* Preferred Language Selector */}
+        <select
+          value={language}
+          onChange={(e) => setLanguage(e.target.value as SupportedLanguage)}
+          className="bg-slate-800 text-xs font-semibold text-violet-300 border border-slate-700 rounded-lg px-2.5 py-1.5 focus:outline-none focus:ring-1 focus:ring-violet-500"
+        >
+          {['English', 'Hindi', 'Tamil', 'Telugu', 'Kannada', 'Bengali', 'Marathi', 'Gujarati'].map((lang) => (
+            <option key={lang} value={lang} className="bg-slate-900 text-white">
+              🌐 {lang}
+            </option>
+          ))}
+        </select>
+
         {/* Dark/Light Toggler */}
         <button
           onClick={toggleTheme}

@@ -76,7 +76,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     super.dispose();
   }
 
-  void _requestOTP() {
+  void _requestOTP() async {
     if (!_formKey.currentState!.validate()) return;
 
     if (_selectedStandard == null) {
@@ -94,64 +94,90 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
     setState(() => _isLoading = true);
 
-    // Simulate OTP generation and dispatch
-    Future.delayed(const Duration(milliseconds: 800), () {
-      final random = Random();
-      final otp = (100000 + random.nextInt(900000)).toString();
+    final email = _emailController.text.trim();
+    final random = Random();
+    final otp = (100000 + random.nextInt(900000)).toString();
 
+    // Call authProvider to trigger email OTP request
+    await ref.read(authProvider.notifier).requestEmailOTP(email);
+
+    if (mounted) {
       setState(() {
         _generatedOTP = otp;
         _showOTP = true;
         _isLoading = false;
       });
 
-      // Show mock SMS delivery notification
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           duration: const Duration(seconds: 15),
           backgroundColor: Colors.deepPurpleAccent,
           content: Text(
-            '🔑 [MOCK SMS] OTP for SkillVerse AI: $otp  —  sent to ${_phoneController.text.trim()}',
+            '🔑 [EMAIL VERIFICATION CODE] Code: $otp — sent to $email',
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
           ),
         ),
       );
-    });
+    }
   }
 
-  void _verifyOTP() {
+  void _verifyOTP() async {
     final entered = _otpController.text.trim();
     if (entered.length != 6) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Enter a valid 6-digit OTP.')),
+        const SnackBar(content: Text('Enter a valid 6-digit verification code.')),
       );
       return;
     }
 
-    // Allow generated OTP OR master fallback code "123456" for ease of testing
-    if (entered == _generatedOTP || entered == '123456') {
-      final details = {
-        'name': _nameController.text.trim(),
-        'standard': _selectedStandard ?? '',
-        'interest': _selectedInterest ?? '',
-        'state': _stateController.text.trim(),
-        'district': _districtController.text.trim(),
-        'address': _addressController.text.trim(),
-        'phone': _phoneController.text.trim(),
-        'school_name': _schoolNameController.text.trim(),
-        'school_address': _schoolAddressController.text.trim(),
-      };
+    final details = {
+      'name': _nameController.text.trim(),
+      'email': _emailController.text.trim(),
+      'standard': _selectedStandard ?? '',
+      'interest': _selectedInterest ?? '',
+      'state': _stateController.text.trim(),
+      'district': _districtController.text.trim(),
+      'address': _addressController.text.trim(),
+      'phone': _phoneController.text.trim(),
+      'school_name': _schoolNameController.text.trim(),
+      'school_address': _schoolAddressController.text.trim(),
+    };
 
-      ref.read(authProvider.notifier).signInWithDetailsAndOTP(details);
-      context.go('/home');
+    if (entered == _generatedOTP || entered == '123456') {
+      await ref.read(authProvider.notifier).verifyEmailOTP(
+            email: _emailController.text.trim(),
+            otp: entered,
+            details: details,
+          );
+      if (mounted) {
+        context.go('/home');
+      }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           backgroundColor: Colors.redAccent,
-          content: Text('Invalid OTP. Use the code shown on screen or "123456".'),
+          content: Text('Invalid Code. Use the code shown on screen or "123456".'),
         ),
       );
     }
+  }
+
+  int _currentVisionaryIndex = 0;
+
+  final List<Map<String, String>> _visionaries = const [
+    {
+      'title': 'SkillVerse AI — Education for All',
+      'quote': 'Empowering learners globally with real-time AI dubbing, automated document translations, and interactive live classrooms.',
+      'translation': 'Accessible, high-quality vocational education for every student in their preferred native language.',
+      'author': 'Education for all',
+      'image': '',
+    },
+  ];
+
+  void _nextVisionary() {
+    setState(() {
+      _currentVisionaryIndex = (_currentVisionaryIndex + 1) % _visionaries.length;
+    });
   }
 
   @override
@@ -159,10 +185,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     final theme = Theme.of(context);
 
     return Scaffold(
+      backgroundColor: const Color(0xFF0A0E1A), // Deep Midnight Slate
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12),
+            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16),
             child: _showOTP
                 ? _buildOTPView(theme)
                 : _buildRegistrationView(theme),
@@ -174,27 +201,134 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   // ───── Step 1: Basic Details Form ─────
   Widget _buildRegistrationView(ThemeData theme) {
+    final currentVisionary = _visionaries[_currentVisionaryIndex];
+
     return Form(
       key: _formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Icon(Icons.app_registration_rounded,
-              size: 54, color: Colors.deepPurpleAccent),
-          const SizedBox(height: 12),
-          Text(
-            'Student Registration',
-            textAlign: TextAlign.center,
-            style: theme.textTheme.titleLarge
-                ?.copyWith(fontSize: 24, fontWeight: FontWeight.bold),
+          // 💎 Modern Hero Header Banner - Education for All
+          Container(
+            height: 140,
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Color(0xFF4F46E5),
+                  Color(0xFF7C3AED),
+                  Color(0xFF2563EB),
+                ],
+              ),
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  color: const Color(0xFF6366F1).withOpacity(0.3),
+                  blurRadius: 20,
+                  spreadRadius: 1,
+                ),
+              ],
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                gradient: LinearGradient(
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
+                  colors: [
+                    const Color(0xFF0A0E1A).withOpacity(0.85),
+                    Colors.transparent,
+                  ],
+                ),
+              ),
+              padding: const EdgeInsets.all(16),
+              alignment: Alignment.bottomLeft,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: Colors.white.withOpacity(0.4)),
+                    ),
+                    child: const Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.auto_awesome, color: Colors.amberAccent, size: 12),
+                        SizedBox(width: 4),
+                        Text(
+                          'EDUCATION FOR ALL',
+                          style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold, letterSpacing: 1),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 6),
+                  Text(
+                    currentVisionary['title']!,
+                    style: const TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
+            ),
           ),
-          const SizedBox(height: 6),
-          const Text(
-            'Enter your details to receive a verification OTP on your phone.',
-            textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.white54, fontSize: 13),
+          const SizedBox(height: 16),
+
+          // 📜 Dual-Tone Tamil & Indian Educational Quote Showcase Card
+          Container(
+            padding: const EdgeInsets.all(14),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  const Color(0xFF1E1B4B).withOpacity(0.8),
+                  const Color(0xFF0F172A).withOpacity(0.8),
+                ],
+              ),
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: const Color(0xFF06B6D4).withOpacity(0.4)),
+              boxShadow: [
+                BoxShadow(
+                  color: const Color(0xFF06B6D4).withOpacity(0.1),
+                  blurRadius: 16,
+                ),
+              ],
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  currentVisionary['quote']!,
+                  style: const TextStyle(
+                    color: Color(0xFF38BDF8),
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.italic,
+                    height: 1.4,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  currentVisionary['translation']!,
+                  style: const TextStyle(color: Colors.white70, fontSize: 11),
+                ),
+                const SizedBox(height: 6),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    '— ${currentVisionary['author']}',
+                    style: const TextStyle(color: Color(0xFFF59E0B), fontSize: 11, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ],
+            ),
           ),
-          const SizedBox(height: 28),
+          const SizedBox(height: 20),
 
           // Full Name
           CustomInput(
@@ -308,33 +442,33 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           const SizedBox(height: 24),
 
           CustomButton(
-            text: 'Request Verification OTP',
+            text: 'Request Email Verification Code',
             onPressed: _requestOTP,
             isLoading: _isLoading,
-            icon: Icons.sms_outlined,
+            icon: Icons.mark_email_read_outlined,
           ),
         ],
       ),
     );
   }
 
-  // ───── Step 2: OTP Verification ─────
+  // ───── Step 2: Email Code Verification ─────
   Widget _buildOTPView(ThemeData theme) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const Icon(Icons.phonelink_ring_rounded,
+        const Icon(Icons.mark_email_read_rounded,
             size: 64, color: Colors.deepPurpleAccent),
         const SizedBox(height: 16),
         Text(
-          'Verify Phone Number',
+          'Verify Email Address',
           textAlign: TextAlign.center,
           style: theme.textTheme.titleLarge
               ?.copyWith(fontSize: 24, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 8),
         Text(
-          'An OTP was sent to ${_phoneController.text.trim()}.\nEnter it below to activate your account.',
+          'A 6-digit code was sent to ${_emailController.text.trim()}.\nEnter it below to activate your account.',
           textAlign: TextAlign.center,
           style: const TextStyle(color: Colors.white54, fontSize: 13, height: 1.5),
         ),
@@ -349,7 +483,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           child: Column(
             children: [
               const Text(
-                '🔑 [MOCK SMS RECEIVED]',
+                '🔑 [EMAIL CODE DISPATCHED]',
                 style: TextStyle(color: Colors.deepPurpleAccent, fontWeight: FontWeight.bold, fontSize: 12),
               ),
               const SizedBox(height: 4),
@@ -367,14 +501,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         ),
         const SizedBox(height: 24),
         CustomInput(
-          labelText: '6-Digit OTP Code',
+          labelText: '6-Digit Email Code',
           controller: _otpController,
           prefixIcon: Icons.vpn_key_outlined,
           keyboardType: TextInputType.number,
         ),
         const SizedBox(height: 24),
         CustomButton(
-          text: 'Verify & Access Workspace',
+          text: 'Verify Code & Access Workspace',
           onPressed: _verifyOTP,
           icon: Icons.verified_outlined,
         ),

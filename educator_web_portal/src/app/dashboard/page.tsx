@@ -6,15 +6,17 @@ import {
   Play, CheckCircle2, Clock, Sparkles, TrendingUp, Zap
 } from 'lucide-react';
 import StatCard from '../../components/StatCard';
+import { useLanguage } from '../../context/LanguageContext';
 
 export default function DashboardOverview() {
   const router = useRouter();
+  const { t } = useLanguage();
 
   const metrics = [
-    { title: "Total Courses", value: 8, changeText: "+2 this month", changeType: "positive" as const, icon: BookOpen },
-    { title: "Students Enrolled", value: "1,248", changeText: "+148 this week", changeType: "positive" as const, icon: Users, iconColor: "text-emerald-500" },
-    { title: "Upcoming Live Classes", value: 3, changeText: "Next at 4:00 PM today", changeType: "neutral" as const, icon: Video, iconColor: "text-rose-500" },
-    { title: "Files Uploaded", value: 45, changeText: "82% processing success", changeType: "positive" as const, icon: FileText, iconColor: "text-cyan-500" }
+    { title: t('total_courses'), value: 8, changeText: "+2 this month", changeType: "positive" as const, icon: BookOpen },
+    { title: t('students_enrolled'), value: "1,248", changeText: "+148 this week", changeType: "positive" as const, icon: Users, iconColor: "text-emerald-500" },
+    { title: t('upcoming_live_classes'), value: 3, changeText: "Next at 4:00 PM today", changeType: "neutral" as const, icon: Video, iconColor: "text-rose-500" },
+    { title: t('files_uploaded'), value: 45, changeText: "82% processing success", changeType: "positive" as const, icon: FileText, iconColor: "text-cyan-500" }
   ];
 
   const recentActivities = [
@@ -25,9 +27,9 @@ export default function DashboardOverview() {
   ];
 
   const quickActions = [
-    { label: "Create New Course", desc: "Design and publish vocational learning modules", onClick: () => router.push('/dashboard/courses/create'), gradient: "from-violet-600 to-indigo-600", hoverGradient: "hover:from-violet-500 hover:to-indigo-500", icon: BookOpen },
-    { label: "Schedule Live Class", desc: "Plan realtime interactive sessions with students", onClick: () => router.push('/dashboard/live'), gradient: "from-rose-600 to-fuchsia-600", hoverGradient: "hover:from-rose-500 hover:to-fuchsia-500", icon: Video },
-    { label: "Upload Resource Files", desc: "Add videos, PDFs, and presentations to the library", onClick: () => router.push('/dashboard/upload'), gradient: "from-cyan-600 to-teal-600", hoverGradient: "hover:from-cyan-500 hover:to-teal-500", icon: FileText }
+    { label: t('quick_create'), desc: "Design and publish vocational learning modules", onClick: () => router.push('/dashboard/courses/create'), gradient: "from-violet-600 to-indigo-600", hoverGradient: "hover:from-violet-500 hover:to-indigo-500", icon: BookOpen },
+    { label: t('upcoming_live_classes'), desc: "Plan realtime interactive sessions with students", onClick: () => router.push('/dashboard/live'), gradient: "from-rose-600 to-fuchsia-600", hoverGradient: "hover:from-rose-500 hover:to-fuchsia-500", icon: Video },
+    { label: t('files_uploaded'), desc: "Add videos, PDFs, and presentations to the library", onClick: () => router.push('/dashboard/upload'), gradient: "from-cyan-600 to-teal-600", hoverGradient: "hover:from-cyan-500 hover:to-teal-500", icon: FileText }
   ];
 
   return (
@@ -43,13 +45,13 @@ export default function DashboardOverview() {
           <div>
             <div className="flex items-center gap-2 mb-3">
               <Sparkles className="h-5 w-5 text-violet-400 animate-pulse" />
-              <span className="text-xs font-bold text-violet-400 uppercase tracking-widest">Educator Dashboard</span>
+              <span className="text-xs font-bold text-violet-400 uppercase tracking-widest">{t('educator_dashboard')}</span>
             </div>
             <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-white via-violet-200 to-violet-400 bg-clip-text text-transparent">
-              Welcome to SkillVerse AI
+              {t('welcome_title')}
             </h2>
             <p className="text-slate-400 mt-2 max-w-xl leading-relaxed">
-              Create, manage, and translate vocational courses in real-time. Use the AI suite to generate subtitles, summaries, flashcards, and quizzes instantly.
+              {t('welcome_sub')}
             </p>
             <div className="flex gap-3 mt-5">
               <button
@@ -57,7 +59,7 @@ export default function DashboardOverview() {
                 className="px-5 py-2.5 bg-violet-600 hover:bg-violet-500 rounded-xl text-sm font-semibold text-white transition-all cursor-pointer flex items-center gap-2 shadow-lg shadow-violet-600/20"
               >
                 <Zap className="h-4 w-4" />
-                Quick Create Course
+                {t('quick_create')}
               </button>
               <button
                 onClick={() => router.push('/dashboard/analytics')}

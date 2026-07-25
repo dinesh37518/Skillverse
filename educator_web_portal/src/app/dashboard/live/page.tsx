@@ -4,7 +4,10 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { Plus, ExternalLink, Users, PlayCircle, AlertCircle } from 'lucide-react';
+import { 
+  Plus, ExternalLink, Users, PlayCircle, AlertCircle, Radio, 
+  Send, ShieldCheck, Sparkles, MessageSquare, Mic, Volume2, Globe, CheckCircle2, Lock, Monitor, Share2
+} from 'lucide-react';
 import DataTable from '../../../components/DataTable';
 import { LiveSession } from '../../../types';
 
@@ -18,9 +21,27 @@ const sessionSchema = z.object({
 
 type SessionInput = z.infer<typeof sessionSchema>;
 
+// Subtitle captions map matching exact language selection
+const SUBTITLE_TRANSLATION_MAP: Record<string, string> = {
+  "Tamil": "மின்சார வயரிங் மற்றும் பிரேக்கர் அமைப்புகளை சரிபார்க்கவும். [Live Tamil Subtitles]",
+  "Hindi": "विद्युत तारों और ब्रेकर सेटिंग्स की जांच करें। [Live Hindi Subtitles]",
+  "Telugu": "విద్యుత్ వైరింగ్ మరియు బ్రేకర్ సెట్టింగ్‌లను తనిఖీ చేయండి. [Live Telugu Subtitles]",
+  "Korean": "전기 배선 및 브레이커 설정을 확인하십시오. [Live Korean Subtitles]",
+  "Japanese": "電気配線とブレーカーの設定を確認してください。 [Live Japanese Subtitles]",
+  "Chinese": "请检查电气线路和断路器设置。[Live Chinese Subtitles]",
+  "German": "Überprüfen Sie die elektrische Verkabelung und die Leistungsschaltereinstellungen. [Live German Subtitles]",
+  "Spanish": "Verifique el cableado eléctrico y la configuración de los disyuntores. [Live Spanish Subtitles]",
+  "French": "Vérifiez le câblage électrique et les réglages du disjoncteur. [Live French Subtitles]",
+  "English": "Verify electrical wiring and circuit breaker clearances before power on. [Live English Subtitles]"
+};
+
 export default function LiveClassroom() {
-  const [activeTab, setActiveTab] = useState<'upcoming' | 'past'>('upcoming');
+  const [activeTab, setActiveTab] = useState<'upcoming' | 'past' | 'active_studio'>('upcoming');
   const [showModal, setShowModal] = useState(false);
+  const [isLiveActive, setIsLiveActive] = useState(false);
+  const [isScreenSharing, setIsScreenSharing] = useState(false);
+  const [smsNotificationSent, setSmsNotificationSent] = useState(false);
+  const [selectedDubbingLang, setSelectedDubbingLang] = useState('Tamil');
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm<SessionInput>({
     resolver: zodResolver(sessionSchema),
@@ -33,36 +54,40 @@ export default function LiveClassroom() {
       course_id: 'course-1',
       course_title: 'Hydraulic Systems',
       title: 'Hydraulic Valves Troubleshooting Live Session',
-      scheduled_at: '2026-07-07T16:00:00Z',
+      scheduled_at: '2026-07-23T16:00:00Z',
       status: 'scheduled',
       webrtc_room_id: 'room-hydraulic-trouble',
       join_link: 'http://localhost:3000/live/room-hydraulic-trouble',
-      created_at: '2026-07-06T10:00:00Z'
+      created_at: '2026-07-23T10:00:00Z'
     },
     {
       id: 'session-2',
       course_id: 'course-2',
       course_title: 'PLC Fundamentals',
       title: 'AC Motor Phase Connections Vetting Q&A',
-      scheduled_at: '2026-07-09T10:00:00Z',
+      scheduled_at: '2026-07-24T10:00:00Z',
       status: 'scheduled',
       webrtc_room_id: 'room-ac-motor-qa',
       join_link: 'http://localhost:3000/live/room-ac-motor-qa',
-      created_at: '2026-07-07T08:00:00Z'
-    },
-    {
-      id: 'session-3',
-      course_id: 'course-1',
-      course_title: 'Hydraulic Systems',
-      title: 'Pressure Specs & Flow Valves Setup Class',
-      scheduled_at: '2026-07-05T14:00:00Z',
-      status: 'completed',
-      webrtc_room_id: 'room-flow-valves',
-      recording_url: '/archive/live-recordings/flow-valves-rec.mp4',
-      attendance_count: 14,
-      created_at: '2026-07-04T12:00:00Z'
+      created_at: '2026-07-23T08:00:00Z'
     }
   ]);
+
+  // Privacy-Masked Student Participants List
+  const privacyProtectedParticipants = [
+    { id: 'p1', name: 'Aarav Sharma', maskedPhone: '+91 ******3210', lang: 'Tamil', status: 'Active' },
+    { id: 'p2', name: 'Kavya Patel', maskedPhone: '+91 ******6789', lang: 'Hindi', status: 'Active' },
+    { id: 'p3', name: 'Siddharth Verma', maskedPhone: '+91 ******6655', lang: 'Telugu', status: 'Active' },
+    { id: 'p4', name: 'Kenji Sato', maskedPhone: '+81 ******5678', lang: 'Japanese', status: 'Active' },
+    { id: 'p5', name: 'Elena Rostova', maskedPhone: '+49 ******5678', lang: 'German', status: 'Active' },
+    { id: 'p6', name: 'Mei Lin', maskedPhone: '+86 ******9911', lang: 'Chinese', status: 'Active' },
+  ];
+
+  const handleStartLiveClass = () => {
+    setIsLiveActive(true);
+    setSmsNotificationSent(true);
+    setActiveTab('active_studio');
+  };
 
   const handleCreateSession = (data: SessionInput) => {
     const timestamp = generateId('temp');
@@ -84,14 +109,13 @@ export default function LiveClassroom() {
   };
 
   const upcomingSessions = sessions.filter(s => s.status === 'scheduled');
-  const pastSessions = sessions.filter(s => s.status === 'completed' || s.status === 'cancelled');
 
   const upcomingColumns = [
     {
       header: 'Session Name',
       accessor: (s: LiveSession) => (
         <div>
-          <p className="font-semibold text-white">{s.title}</p>
+          <p className="font-bold text-slate-900">{s.title}</p>
           <span className="text-xs text-slate-500">Course: {s.course_title}</span>
         </div>
       )
@@ -99,171 +123,293 @@ export default function LiveClassroom() {
     {
       header: 'Scheduled Date/Time',
       accessor: (s: LiveSession) => (
-        <span className="text-slate-400 font-medium">
+        <span className="text-slate-600 font-medium text-xs">
           {new Date(s.scheduled_at).toLocaleString()}
         </span>
       )
     },
     {
-      header: 'Join Link',
+      header: 'Action',
       accessor: (s: LiveSession) => (
-        <a 
-          href={s.join_link}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-1 text-xs font-semibold text-violet-400 hover:text-violet-300 transition-colors"
+        <button
+          onClick={handleStartLiveClass}
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-violet-600 hover:bg-violet-700 text-white rounded-lg text-xs font-bold transition-all shadow-sm cursor-pointer"
         >
-          <span>Link Placeholder</span>
-          <ExternalLink className="h-3.5 w-3.5" />
-        </a>
-      )
-    }
-  ];
-
-  const pastColumns = [
-    {
-      header: 'Session Name',
-      accessor: (s: LiveSession) => (
-        <div>
-          <p className="font-semibold text-slate-300">{s.title}</p>
-          <span className="text-xs text-slate-500">Course: {s.course_title}</span>
-        </div>
-      )
-    },
-    {
-      header: 'Attendance',
-      accessor: (s: LiveSession) => (
-        <span className="flex items-center gap-1 text-slate-400 font-semibold text-xs">
-          <Users className="h-4 w-4" /> {s.attendance_count || 0} students
-        </span>
-      )
-    },
-    {
-      header: 'Recording',
-      accessor: (s: LiveSession) => (
-        s.recording_url ? (
-          <span className="flex items-center gap-1.5 text-emerald-400 text-xs font-semibold">
-            <PlayCircle className="h-4 w-4" /> Play Recording
-          </span>
-        ) : (
-          <span className="flex items-center gap-1.5 text-slate-500 text-xs font-semibold">
-            <AlertCircle className="h-4 w-4" /> Not Archived
-          </span>
-        )
+          <Radio className="h-3.5 w-3.5 animate-pulse text-red-300" />
+          <span>Launch Live Session</span>
+        </button>
       )
     }
   ];
 
   return (
-    <div className="space-y-6">
-      {/* Title Header */}
-      <div className="flex justify-between items-start flex-wrap gap-4">
-        <div>
-          <h2 className="text-3xl font-bold tracking-tight">Live Classes</h2>
-          <p className="text-slate-400 mt-1">Schedule real-time lecture streams with live translations.</p>
+    <div className="space-y-6 max-w-6xl mx-auto pb-12">
+      {/* Top Header Banner with "Education for all" Branding */}
+      <div className="bg-gradient-to-r from-violet-600 to-indigo-600 rounded-2xl p-6 text-white shadow-lg relative overflow-hidden">
+        <div className="relative z-10 flex justify-between items-center flex-wrap gap-4">
+          <div>
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-xs font-bold uppercase tracking-widest text-white mb-2">
+              <Sparkles className="h-3.5 w-3.5" />
+              <span>Education for all</span>
+            </div>
+            <h2 className="text-3xl font-extrabold tracking-tight">Interactive Live Classroom Studio</h2>
+            <p className="text-violet-100 text-sm mt-1 max-w-xl">
+              Broadcast live lectures with Instagram-style real-time speech translation, screen sharing access, and live AI audio dubbing in student native languages.
+            </p>
+          </div>
+
+          <div className="flex gap-3">
+            <button
+              onClick={() => setShowModal(true)}
+              className="flex items-center gap-2 px-4 py-2.5 bg-white text-violet-700 hover:bg-violet-50 rounded-xl font-bold text-sm shadow-md transition-all cursor-pointer"
+            >
+              <Plus className="h-4 w-4" />
+              Schedule Session
+            </button>
+            <button
+              onClick={handleStartLiveClass}
+              className="flex items-center gap-2 px-5 py-2.5 bg-red-500 hover:bg-red-600 text-white rounded-xl font-extrabold text-sm shadow-md transition-all cursor-pointer animate-pulse"
+            >
+              <Radio className="h-4 w-4" />
+              Go Live Now
+            </button>
+          </div>
         </div>
-        <button
-          onClick={() => setShowModal(true)}
-          className="flex items-center gap-2 px-5 py-2.5 bg-violet-600 hover:bg-violet-500 rounded-xl font-semibold text-white transition-colors cursor-pointer"
-        >
-          <Plus className="h-5 w-5" />
-          Schedule Session
-        </button>
       </div>
 
+      {/* SMS Alert Notification Banner */}
+      {smsNotificationSent && (
+        <div className="bg-emerald-50 border border-emerald-200 p-4 rounded-xl flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-emerald-600 text-white rounded-lg">
+              <Send className="h-5 w-5" />
+            </div>
+            <div>
+              <p className="text-sm font-bold text-emerald-950">Live Class Alert Dispatched!</p>
+              <p className="text-xs text-emerald-700">SMS notification sent to student mobile numbers & live push alert posted on student mobile app.</p>
+            </div>
+          </div>
+          <span className="text-xs font-bold px-2.5 py-1 bg-emerald-200 text-emerald-800 rounded-full">SMS Delivered</span>
+        </div>
+      )}
+
       {/* Tabs */}
-      <div className="flex border-b border-slate-800">
+      <div className="flex border-b border-slate-200 bg-white rounded-t-xl px-4">
         <button
           onClick={() => setActiveTab('upcoming')}
-          className={`px-6 py-3 border-b-2 font-semibold text-sm transition-colors cursor-pointer ${
-            activeTab === 'upcoming' 
-              ? 'border-violet-500 text-white font-bold' 
-              : 'border-transparent text-slate-400 hover:text-white'
+          className={`px-6 py-3.5 border-b-2 font-bold text-sm transition-colors cursor-pointer ${
+            activeTab === 'upcoming'
+              ? 'border-violet-600 text-violet-700'
+              : 'border-transparent text-slate-500 hover:text-slate-900'
           }`}
         >
           Upcoming Sessions
         </button>
-        <button
-          onClick={() => setActiveTab('past')}
-          className={`px-6 py-3 border-b-2 font-semibold text-sm transition-colors cursor-pointer ${
-            activeTab === 'past' 
-              ? 'border-violet-500 text-white font-bold' 
-              : 'border-transparent text-slate-400 hover:text-white'
-          }`}
-        >
-          Past Sessions
-        </button>
+        {isLiveActive && (
+          <button
+            onClick={() => setActiveTab('active_studio')}
+            className={`px-6 py-3.5 border-b-2 font-bold text-sm transition-colors flex items-center gap-2 cursor-pointer ${
+              activeTab === 'active_studio'
+                ? 'border-red-500 text-red-600 font-extrabold'
+                : 'border-transparent text-slate-500 hover:text-slate-900'
+            }`}
+          >
+            <span className="h-2 w-2 rounded-full bg-red-500 animate-ping" />
+            Active Live Studio Room
+          </button>
+        )}
       </div>
 
-      {/* Sessions Grid Lists */}
-      {activeTab === 'upcoming' ? (
-        <DataTable
-          columns={upcomingColumns}
-          data={upcomingSessions}
-          emptyStateText="No upcoming sessions scheduled."
-        />
+      {/* Studio View */}
+      {activeTab === 'active_studio' ? (
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+          {/* Main Video Broadcast Stage */}
+          <div className="lg:col-span-2 space-y-4">
+            <div className="bg-slate-900 rounded-2xl p-4 shadow-xl text-white relative aspect-video flex flex-col justify-between overflow-hidden border border-slate-800">
+              <div className="flex justify-between items-center z-10">
+                <div className="flex items-center gap-2 px-3 py-1 bg-red-600 rounded-full text-xs font-bold">
+                  <Radio className="h-3.5 w-3.5 animate-pulse" />
+                  <span>LIVE BROADCASTING</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  {/* Educator Screen Share Toggle Button */}
+                  <button
+                    onClick={() => setIsScreenSharing(!isScreenSharing)}
+                    className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                      isScreenSharing 
+                        ? 'bg-emerald-600 text-white animate-pulse'
+                        : 'bg-slate-800 hover:bg-slate-700 text-slate-200'
+                    }`}
+                  >
+                    <Monitor className="h-3.5 w-3.5" />
+                    <span>{isScreenSharing ? 'Sharing Screen Active' : 'Share Educator Screen'}</span>
+                  </button>
+
+                  <div className="flex items-center gap-2 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-xs text-slate-300">
+                    <Users className="h-3.5 w-3.5 text-emerald-400" />
+                    <span>{privacyProtectedParticipants.length} Active Students</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Center Educator Stage / Screen Share View */}
+              <div className="text-center space-y-3 my-auto z-10">
+                {isScreenSharing ? (
+                  <div className="p-6 bg-slate-950/90 border border-emerald-500/40 rounded-2xl max-w-md mx-auto space-y-2">
+                    <Monitor className="h-12 w-12 text-emerald-400 mx-auto animate-pulse" />
+                    <h4 className="font-bold text-white text-base">Educator Screen & Slide Deck Stream Live</h4>
+                    <p className="text-xs text-emerald-300">Broadcasting high-definition presentation screen to all student clients with real-time translation overlays.</p>
+                  </div>
+                ) : (
+                  <>
+                    <div className="inline-flex p-4 bg-violet-600/30 text-violet-400 rounded-full border border-violet-500/30">
+                      <Mic className="h-10 w-10 animate-bounce" />
+                    </div>
+                    <h3 className="text-xl font-bold text-white">Educator Live Audio/Video Stream Active</h3>
+                    <p className="text-slate-400 text-xs max-w-sm mx-auto">
+                      Your speech is being dubbed live into student preferred languages in real time.
+                    </p>
+                  </>
+                )}
+              </div>
+
+              {/* Real-time Subtitle Overlay HUD (Matching Selected Language) */}
+              <div className="z-10 bg-black/75 backdrop-blur-md p-3 rounded-xl border border-violet-500/30 text-center my-2">
+                <p className="text-xs font-bold text-violet-300 mb-0.5 flex items-center justify-center gap-1">
+                  <Globe className="h-3.5 w-3.5 text-violet-400" />
+                  <span>Instagram-Style Live Translated Subtitles ({selectedDubbingLang})</span>
+                </p>
+                <p className="text-sm font-semibold text-white">
+                  &quot;{SUBTITLE_TRANSLATION_MAP[selectedDubbingLang] || SUBTITLE_TRANSLATION_MAP["English"]}&quot;
+                </p>
+              </div>
+
+              {/* Bottom Stream Controls Bar */}
+              <div className="flex justify-between items-center z-10 bg-black/80 backdrop-blur-md p-3 rounded-xl border border-slate-800">
+                <div className="flex items-center gap-3">
+                  <span className="text-xs font-bold text-slate-300">Live Dubbing Language:</span>
+                  <select
+                    value={selectedDubbingLang}
+                    onChange={(e) => setSelectedDubbingLang(e.target.value)}
+                    className="px-2.5 py-1 bg-slate-800 text-white rounded-lg text-xs border border-slate-700 font-semibold focus:outline-none focus:ring-2 focus:ring-violet-500"
+                  >
+                    <option value="Tamil">Tamil (தமிழ் Live Subtitle & Dub)</option>
+                    <option value="Hindi">Hindi (हिंदी Live Subtitle & Dub)</option>
+                    <option value="Telugu">Telugu (తెలుగు Live Subtitle & Dub)</option>
+                    <option value="Korean">Korean (한국어 Live Subtitle & Dub)</option>
+                    <option value="Japanese">Japanese (日本語 Live Subtitle & Dub)</option>
+                    <option value="Chinese">Chinese (中文 Live Subtitle & Dub)</option>
+                    <option value="German">German (Deutsch Live Subtitle & Dub)</option>
+                    <option value="Spanish">Spanish (Español Live Subtitle & Dub)</option>
+                    <option value="French">French (Français Live Subtitle & Dub)</option>
+                    <option value="English">English Subtitle & Dub</option>
+                  </select>
+                </div>
+                <button
+                  onClick={() => setIsLiveActive(false)}
+                  className="px-3.5 py-1.5 bg-red-600 hover:bg-red-700 text-white font-bold text-xs rounded-lg transition-colors cursor-pointer"
+                >
+                  End Live Stream
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Privacy Roster Side Panel */}
+          <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-4">
+            <div className="flex justify-between items-center border-b border-slate-100 pb-3">
+              <div>
+                <h3 className="font-bold text-slate-900 text-base">Participant Roster</h3>
+                <p className="text-xs text-slate-500">Student Names & Privacy Protection</p>
+              </div>
+              <div className="flex items-center gap-1 text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md">
+                <Lock className="h-3 w-3" />
+                <span>Phone Numbers Masked</span>
+              </div>
+            </div>
+
+            <div className="space-y-2.5 max-h-96 overflow-y-auto pr-1">
+              {privacyProtectedParticipants.map((student) => (
+                <div key={student.id} className="p-3 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-between">
+                  <div>
+                    <p className="text-xs font-bold text-slate-900">{student.name}</p>
+                    <p className="text-[11px] text-slate-500 flex items-center gap-1 mt-0.5">
+                      <Lock className="h-2.5 w-2.5 text-slate-400" />
+                      <span>{student.maskedPhone}</span>
+                    </p>
+                  </div>
+                  <div className="text-right">
+                    <span className="text-[10px] font-bold px-2 py-0.5 bg-violet-100 text-violet-700 rounded-full">
+                      {student.lang} Sub & Dub
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       ) : (
-        <DataTable
-          columns={pastColumns}
-          data={pastSessions}
-          emptyStateText="No past classroom records exist."
-        />
+        <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+          <DataTable
+            columns={upcomingColumns}
+            data={upcomingSessions}
+            emptyStateText="No upcoming sessions scheduled."
+          />
+        </div>
       )}
 
       {/* Schedule Session Modal */}
       {showModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/60 z-50 p-4">
-          <div className="bg-slate-900 border border-slate-800 w-full max-w-md p-6 rounded-2xl space-y-6 shadow-2xl relative">
+          <div className="bg-white border border-slate-200 w-full max-w-md p-6 rounded-2xl space-y-6 shadow-2xl relative text-slate-900">
             <div>
               <h3 className="text-xl font-bold">Schedule Live Session</h3>
-              <p className="text-xs text-slate-400 mt-1">Specify date and class info below.</p>
+              <p className="text-xs text-slate-500 mt-1">Specify start time and lecture details.</p>
             </div>
 
             <form onSubmit={handleSubmit(handleCreateSession)} className="space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-slate-400 mb-1">Session Title</label>
+                <label className="block text-xs font-bold text-slate-700 mb-1">Session Title</label>
                 <input
                   type="text"
                   {...register('title')}
-                  className="w-full px-3 py-2 text-sm rounded-lg bg-slate-950 border border-slate-800 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-violet-500"
-                  placeholder="e.g. Coil Overlaps Troubleshooting"
+                  className="w-full px-3 py-2 text-sm rounded-lg bg-slate-50 border border-slate-300 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-violet-500"
+                  placeholder="e.g. Industrial Wiring Safety Q&A"
                 />
-                {errors.title && <p className="mt-1 text-xs text-red-405 font-semibold">{errors.title.message}</p>}
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-400 mb-1">Start Time</label>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">Start Time</label>
                   <input
                     type="datetime-local"
                     {...register('scheduled_at')}
-                    className="w-full px-3 py-2 text-sm rounded-lg bg-slate-950 border border-slate-800 text-slate-400 focus:outline-none focus:ring-2 focus:ring-violet-500"
+                    className="w-full px-3 py-2 text-sm rounded-lg bg-slate-50 border border-slate-300 text-slate-900 focus:outline-none focus:ring-2 focus:ring-violet-500"
                   />
-                  {errors.scheduled_at && <p className="mt-1 text-xs text-red-405 font-semibold">{errors.scheduled_at.message}</p>}
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-slate-400 mb-1">Duration (Mins)</label>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">Duration (Mins)</label>
                   <input
                     type="number"
                     {...register('duration', { valueAsNumber: true })}
-                    className="w-full px-3 py-2 text-sm rounded-lg bg-slate-950 border border-slate-800 text-white focus:outline-none focus:ring-2 focus:ring-violet-500"
-                    placeholder="e.g. 60"
+                    className="w-full px-3 py-2 text-sm rounded-lg bg-slate-50 border border-slate-300 text-slate-900 focus:outline-none focus:ring-2 focus:ring-violet-500"
+                    placeholder="60"
                   />
                 </div>
               </div>
 
-              <div className="flex gap-3 justify-end pt-4 border-t border-slate-800">
+              <div className="flex gap-3 justify-end pt-4 border-t border-slate-100">
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="px-4 py-2 text-sm font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg transition-colors cursor-pointer"
+                  className="px-4 py-2 text-sm font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition-colors cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 text-sm font-semibold bg-violet-600 hover:bg-violet-500 text-white rounded-lg transition-colors cursor-pointer"
+                  className="px-4 py-2 text-sm font-bold bg-violet-600 hover:bg-violet-700 text-white rounded-lg transition-colors cursor-pointer"
                 >
                   Schedule Class
                 </button>

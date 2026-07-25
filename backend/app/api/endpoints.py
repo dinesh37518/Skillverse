@@ -9,7 +9,7 @@ from app.core.security import (
     get_current_user, CurrentUser, require_student, require_educator, require_admin, require_staff
 )
 from app.schemas.schemas import (
-    UserSignUp, UserLogin, TokenResponse, RefreshTokenRequest,
+    UserSignUp, UserLogin, TokenResponse, RefreshTokenRequest, OTPRequest, OTPVerify,
     ProfileRead, ProfileUpdate, LanguagePreferenceRead, LanguagePreferenceUpdate,
     CourseRead, CourseCreate, LessonRead, LessonCreate,
     LiveSessionRead, LiveSessionCreate, ChatSessionRequest, ChatSessionResponse,
@@ -52,6 +52,47 @@ def signup(data: UserSignUp):
 def login(data: UserLogin, db: Session = Depends(get_db)):
     result = auth_service.login(data)
     analytics_service.log_event(db, "login", user_id=None, metadata={"email": data.email})
+    return result
+
+@router.post("/auth/request-email-otp", response_model=Dict[str, Any], tags=["Authentication"])
+def request_email_otp(email: str = Query(...), purpose: str = Query("signup")):
+    return auth_service.request_email_otp(email=email, purpose=purpose)
+
+@router.post("/auth/verify-email-otp-set-password", response_model=Dict[str, Any], tags=["Authentication"])
+def verify_email_otp_and_set_password(email: str = Form(...), otp: str = Form(...), password: str = Form(...), full_name: Optional[str] = Form(None)):
+    return auth_service.verify_email_otp_and_set_password(email=email, otp=otp, password=password, full_name=full_name)
+
+@router.post("/auth/verify-email-otp", response_model=Dict[str, Any], tags=["Authentication"])
+def verify_email_otp(email: str = Form(...), otp: str = Form(...)):
+    return auth_service.verify_email_otp(email=email, otp=otp)
+
+
+@router.post("/auth/change-password", response_model=Dict[str, Any], tags=["Authentication"])
+def change_password_with_email_otp(email: str = Form(...), otp: str = Form(...), new_password: str = Form(...)):
+    return auth_service.change_password_with_email_otp(email=email, otp=otp, new_password=new_password)
+
+@router.post("/admin/educators/add", response_model=Dict[str, Any], tags=["Admin"])
+def admin_register_educator(
+    full_name: str = Form(...),
+    educator_email: str = Form(...),
+    password: str = Form(...),
+    current_user: CurrentUser = Depends(get_current_user)
+):
+    return auth_service.admin_register_educator(
+        admin_email=current_user.email,
+        full_name=full_name,
+        educator_email=educator_email,
+        password=password
+    )
+
+@router.post("/auth/request-otp", response_model=Dict[str, Any], tags=["Authentication"])
+def request_otp(data: OTPRequest):
+    return auth_service.request_otp(data)
+
+@router.post("/auth/verify-otp", response_model=TokenResponse, tags=["Authentication"])
+def verify_otp(data: OTPVerify, db: Session = Depends(get_db)):
+    result = auth_service.verify_otp(data)
+    analytics_service.log_event(db, "mobile_otp_login", user_id=result.get("user_id"), metadata={"phone": data.phone_number})
     return result
 
 @router.post("/auth/refresh", response_model=TokenResponse, tags=["Authentication"])

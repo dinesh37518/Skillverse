@@ -23,6 +23,7 @@ import '../../features/settings/settings_screen.dart';
 import '../../features/mentor/mentor_dashboard_screen.dart';
 import '../../features/video/video_analysis_screen.dart';
 import '../../features/classroom/live_classroom_screen.dart';
+import '../../features/dashboard/fun_session_screen.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
   final authState = ref.watch(authProvider);
@@ -119,6 +120,10 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/video-analysis',
         builder: (context, state) => const VideoAnalysisScreen(),
+      ),
+      GoRoute(
+        path: '/fun-session',
+        builder: (context, state) => const FunSessionScreen(),
       ),
       GoRoute(
         path: '/classroom/:id',

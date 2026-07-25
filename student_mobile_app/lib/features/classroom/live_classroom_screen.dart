@@ -12,7 +12,7 @@ class LiveClassroomScreen extends StatefulWidget {
 class _LiveClassroomScreenState extends State<LiveClassroomScreen> {
   String _selectedLanguage = "Hindi";
   final List<String> _languagesList = [
-    "English", "Hindi", "Tamil", "Telugu", "Marathi", "Bengali", "Kannada"
+    "English", "Hindi", "Tamil", "Telugu", "Korean", "Japanese", "Chinese", "German", "Spanish", "French", "Marathi", "Bengali", "Kannada"
   ];
   
   final List<Map<String, String>> _chatMessages = [
@@ -33,24 +33,135 @@ class _LiveClassroomScreenState extends State<LiveClassroomScreen> {
     _chatController.clear();
   }
 
+  bool _enableSubtitles = true;
+  bool _enableLowDataMode = false;
+  bool _enableAiSummarizer = true;
+  bool _isMicMuted = false;
+  bool _isCameraOff = false;
+  String _videoQuality = "720p HD";
+
+  void _showSettingsDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setDialogState) {
+            return AlertDialog(
+              backgroundColor: const Color(0xFF0F172A),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+              title: const Row(
+                children: [
+                  Icon(Icons.settings_suggest_rounded, color: Color(0xFF6366F1)),
+                  SizedBox(width: 8),
+                  Text('Live Class Settings', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
+                ],
+              ),
+              content: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // Subtitles Toggle
+                    SwitchListTile(
+                      activeColor: const Color(0xFF6366F1),
+                      title: const Text('Live Subtitles', style: TextStyle(color: Colors.white, fontSize: 14)),
+                      subtitle: const Text('Real-time translation HUD', style: TextStyle(color: Colors.white54, fontSize: 11)),
+                      value: _enableSubtitles,
+                      onChanged: (val) {
+                        setDialogState(() => _enableSubtitles = val);
+                        setState(() => _enableSubtitles = val);
+                      },
+                    ),
+                    const Divider(color: Colors.white12),
+
+                    // Low Data Mode Toggle
+                    SwitchListTile(
+                      activeColor: const Color(0xFF06B6D4),
+                      title: const Text('Low Bandwidth Data Saver', style: TextStyle(color: Colors.white, fontSize: 14)),
+                      subtitle: const Text('Optimize audio & media for 2G/3G connections', style: TextStyle(color: Colors.white54, fontSize: 11)),
+                      value: _enableLowDataMode,
+                      onChanged: (val) {
+                        setDialogState(() => _enableLowDataMode = val);
+                        setState(() => _enableLowDataMode = val);
+                      },
+                    ),
+                    const Divider(color: Colors.white12),
+
+                    // AI Summarizer Toggle
+                    SwitchListTile(
+                      activeColor: const Color(0xFFF59E0B),
+                      title: const Text('Auto AI Note Summarizer', style: TextStyle(color: Colors.white, fontSize: 14)),
+                      subtitle: const Text('Compile key points during lecture', style: TextStyle(color: Colors.white54, fontSize: 11)),
+                      value: _enableAiSummarizer,
+                      onChanged: (val) {
+                        setDialogState(() => _enableAiSummarizer = val);
+                        setState(() => _enableAiSummarizer = val);
+                      },
+                    ),
+                    const Divider(color: Colors.white12),
+
+                    // Video Quality Dropdown
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text('Video Stream Quality', style: TextStyle(color: Colors.white, fontSize: 14)),
+                        DropdownButton<String>(
+                          value: _videoQuality,
+                          dropdownColor: const Color(0xFF1E293B),
+                          style: const TextStyle(color: Color(0xFF38BDF8), fontSize: 13, fontWeight: FontWeight.bold),
+                          items: ["Auto HD", "1080p Full HD", "720p HD", "480p SD", "Audio Only"]
+                              .map((q) => DropdownMenuItem(value: q, child: Text(q)))
+                              .toList(),
+                          onChanged: (val) {
+                            if (val != null) {
+                              setDialogState(() => _videoQuality = val);
+                              setState(() => _videoQuality = val);
+                            }
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('Apply Settings', style: TextStyle(color: Color(0xFF6366F1), fontWeight: FontWeight.bold)),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFF0A0E1A),
       appBar: AppBar(
-        title: const Text('Live Multilingual Class'),
-        backgroundColor: Colors.transparent,
+        title: const Text('Live Multilingual Class', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+        backgroundColor: const Color(0xFF0A0E1A),
         elevation: 0,
         actions: [
+          // Settings Modal Button
+          IconButton(
+            icon: const Icon(Icons.settings_outlined, color: Color(0xFF6366F1)),
+            onPressed: _showSettingsDialog,
+            tooltip: 'Live Class Settings',
+          ),
+          const SizedBox(width: 4),
           // Preferred language chooser dropdown
           DropdownButton<String>(
             value: _selectedLanguage,
             dropdownColor: const Color(0xFF1E293B),
             underline: Container(),
-            icon: const Icon(Icons.translate, color: Colors.deepPurpleAccent),
+            icon: const Icon(Icons.translate, color: Color(0xFF38BDF8)),
             items: _languagesList.map((String lang) {
               return DropdownMenuItem<String>(
                 value: lang,
-                child: Text(lang, style: const TextStyle(fontSize: 14)),
+                child: Text(lang, style: const TextStyle(fontSize: 14, color: Colors.white)),
               );
             }).toList(),
             onChanged: (val) {

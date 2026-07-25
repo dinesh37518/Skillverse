@@ -12,9 +12,17 @@ class Settings(BaseSettings):
     # Redis Configuration for realtime channels & cache
     REDIS_URL: str = "redis://localhost:6379/0"
     
-    # AI Groq API Key
-    GROQ_API_KEY: str = "gsk_mock_api_key_placeholder"
+    # AI Engine API Keys
+    GEMINI_API_KEY: str = "your_gemini_api_key_placeholder"
+    GROQ_API_KEY: str = "your_gemini_api_key_placeholder"
     
+    # Real SMS Gateway Configurations (Fast2SMS / Twilio / Supabase)
+    SMS_PROVIDER: str = "auto"
+    FAST2SMS_API_KEY: str = ""
+    TWILIO_ACCOUNT_SID: str = ""
+    TWILIO_AUTH_TOKEN: str = ""
+    TWILIO_PHONE_NUMBER: str = ""
+
     # Supabase authentication details
     SUPABASE_URL: str = "https://mock.supabase.co"
     SUPABASE_JWT_SECRET: str = "super-secret-jwt-token-key-placeholder"

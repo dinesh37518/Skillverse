@@ -38,21 +38,21 @@ export default function Sidebar({ userEmail }: SidebarProps) {
   ];
 
   return (
-    <aside className="w-64 bg-slate-950/80 backdrop-blur-xl border-r border-slate-800/60 text-white flex flex-col h-screen sticky top-0 shrink-0">
+    <aside className="w-64 bg-white border-r border-slate-200 text-slate-900 flex flex-col h-screen sticky top-0 shrink-0 shadow-sm">
       {/* ── Brand Header ── */}
-      <div className="p-6 border-b border-slate-800/60">
+      <div className="p-5 border-b border-slate-100">
         <div className="flex items-center gap-3">
           <div className="relative">
-            <div className="absolute inset-0 bg-violet-600/30 rounded-xl blur-md" />
-            <div className="relative bg-gradient-to-br from-violet-600 to-indigo-600 p-2.5 rounded-xl shadow-lg shadow-violet-600/20">
-              <BookOpen className="h-5 w-5 text-white" />
+            <div className="absolute inset-0 bg-violet-500/20 rounded-xl blur-md" />
+            <div className="relative bg-gradient-to-br from-violet-600 to-indigo-600 p-2.5 rounded-xl shadow-md text-white">
+              <BookOpen className="h-5 w-5" />
             </div>
           </div>
           <div>
-            <h1 className="font-bold text-lg leading-none tracking-tight">SkillVerse AI</h1>
-            <div className="flex items-center gap-1 mt-0.5">
-              <Sparkles className="h-3 w-3 text-violet-400" />
-              <span className="text-[10px] text-violet-400 font-bold uppercase tracking-widest">Educator Portal</span>
+            <h1 className="font-bold text-lg leading-none tracking-tight text-slate-900">SkillVerse AI</h1>
+            <div className="flex items-center gap-1 mt-1">
+              <Sparkles className="h-3 w-3 text-violet-600" />
+              <span className="text-[10px] text-violet-600 font-bold uppercase tracking-widest">Education for all</span>
             </div>
           </div>
         </div>
