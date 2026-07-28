@@ -94,11 +94,11 @@ export default function DashboardOverview() {
   ];
 
   const recentActivities = [
-    { text: "Hosted 1 core course: Satellite Communication", type: "course", time: "Just now" },
-    { text: "Uploaded 8 learning files & Question Banks for Satellite Communication", type: "ai", time: "15 mins ago" },
-    { text: "Published Unit 1-5 Lecture Notes & Part-B Excel Spreadsheets", type: "course", time: "1 hour ago" },
-    { text: "1,250 students actively enrolled in Satellite Communication", type: "enrollment", time: "Today" },
-    { text: "Live streaming session scheduled: Satellite Orbit & Link Budget Lab", type: "live", time: "Upcoming at 4:00 PM" }
+    { text: t('act_hosted_course'), type: "course", time: t('time_just_now') },
+    { text: t('act_uploaded_files'), type: "ai", time: t('time_15_mins_ago') },
+    { text: t('act_published_notes'), type: "course", time: t('time_1_hour_ago') },
+    { text: t('act_students_enrolled'), type: "enrollment", time: t('time_today') },
+    { text: t('act_live_scheduled'), type: "live", time: t('time_upcoming_4pm') }
   ];
 
   const quickActions = [

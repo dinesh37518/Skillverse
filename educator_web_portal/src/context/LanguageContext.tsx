@@ -18,228 +18,92 @@ export const ALL_23_LANGUAGES: SupportedLanguage[] = [
 type TranslationDictionary = Record<string, Partial<Record<SupportedLanguage, string>>>;
 
 const translations: TranslationDictionary = {
-  // Navigation items & core UI keys translated across all 23 scheduled languages
+  // Navigation & Core UI
   Dashboard: {
-    English: "Dashboard", Tamil: "டாஷ்போர்டு", Hindi: "डैशबोर्ड", Telugu: "డాష్‌బోర్డ్",
-    Assamese: "ডেচবৰ্ড", Bengali: "ড্যাশবোর্ড", Bodo: "ड्यासबोर्ड", Dogri: "डैशबोर्ड", Gujarati: "ડેશબોર્ડ",
-    Kannada: "ಡ್ಯಾಶ್‌ಬೋರ್ಡ್", Kashmiri: "ڈیش بورڈ", Konkani: "डॅशबोर्ड", Maithili: "डैशबोर्ड", Malayalam: "ഡാഷ്‌ബോർഡ്",
-    Manipuri: "ꯗꯦꯁꯕꯣꯔꯗ", Marathi: "डॅशबोर्ड", Nepali: "ड्यासबोर्ड", Odia: "ଡ୍ୟାସବୋର୍ଡ", Punjabi: "ਡੈਸ਼ਬੋਰਡ",
-    Sanskrit: "फलकम्", Santali: "ᱰᱮᱥ workspace", Sindhi: "ڊئش بورڊ", Urdu: "ڈیش بورڈ"
+    English: "Dashboard", Assamese: "ডেচবৰ্ড", Bengali: "ড্যাশবোর্ড", Bodo: "ड्यासबोर्ड", Dogri: "डैशबोर्ड", Gujarati: "ડેશબોર્ડ",
+    Hindi: "डैशबोर्ड", Kannada: "ಡ್ಯಾಶ್‌ಬೋರ್ಡ್", Kashmiri: "ڈیش بورڈ", Konkani: "डॅशबोर्ड", Maithili: "डैशबोर्ड", Malayalam: "ഡാഷ്‌ബോർഡ്",
+    Manipuri: "ꯗꯦꯁꯕꯣꯔꯗ", Marathi: "डॅशबोर्ड", Nepali: "ड्यासबोर्ड", Odia: "ଡ୍ୟାସବୋର୍ଡ", Punjabi: "ਡੈਸ਼ਬੋਰਡ", Sanskrit: "फलकम्",
+    Santali: "ᱰᱮᱥ workspace", Sindhi: "ڊئش بورڊ", Tamil: "டாஷ்போர்டு", Telugu: "డాష్‌బోర్డ్", Urdu: "ڈیش بورڈ"
   },
   Courses: {
-    English: "Courses", Tamil: "பாடநெறிகள்", Hindi: "पाठ्यक्रम", Telugu: "కోర్సులు",
-    Assamese: "পাঠ্যক্ৰম", Bengali: "পাঠ্যক্রম", Bodo: "आयदाफोर", Dogri: "कोर्स", Gujarati: "કોર્સિસ",
-    Kannada: "ಕೋರ್ಸ್‌ಗಳು", Kashmiri: "کورس", Konkani: "कोर्स", Maithili: "पाठ्यक्रम", Malayalam: "കോഴ്സുകൾ",
-    Manipuri: "ꯀꯣꯔꯁꯁꯤꯡ", Marathi: "अभ्यासक्रम", Nepali: "पाठ्यक्रमहरू", Odia: "ପାଠ୍ୟକ୍ରମ", Punjabi: "ਕੋਰਸ",
-    Sanskrit: "पाठ्यक्रमः", Santali: "<ctrl42>ᱳᱨᱥ", Sindhi: "ڪورس", Urdu: "کورسز"
+    English: "Courses", Assamese: "পাঠ্যক্ৰম", Bengali: "পাঠ্যক্রম", Bodo: "आयदाफोर", Dogri: "कोर्स", Gujarati: "કોર્સિસ",
+    Hindi: "पाठ्यक्रम", Kannada: "ಕೋರ್ಸ್‌ಗಳು", Kashmiri: "کورس", Konkani: "कोर्स", Maithili: "पाठ्यक्रम", Malayalam: "കോഴ്സുകൾ",
+    Manipuri: "ꯀꯣꯔꯁꯁꯤꯡ", Marathi: "अभ्यासक्रम", Nepali: "पाठ्यक्रमहरू", Odia: "ପାଠ୍ୟକ୍ରମ", Punjabi: "ਕੋਰਸ", Sanskrit: "पाठ्यक्रमः",
+    Santali: "ᱠᱳᱨᱥ", Sindhi: "ڪورس", Tamil: "பாடநெறிகள்", Telugu: "కోర్సులు", Urdu: "کورسز"
   },
   "Content Library": {
-    English: "Content Library", Tamil: "பாடக் களஞ்சியம்", Hindi: "सामग्री पुस्तकालय", Telugu: "కంటెంట్ లైబ్రరీ",
-    Assamese: "সামগ্ৰী পুথিভঁৰাল", Bengali: "কন্টেন্ট লাইব্রেরি", Bodo: "आयदा लायब्रेरी", Dogri: "सामग्री पुस्तकालय", Gujarati: "સાધનો મંડળ",
-    Kannada: "ವಿಷಯ ಗ್ರಂಥಾಲಯ", Kashmiri: "مواد لایبریری", Konkani: "सामग्री लायब्ररी", Maithili: "सामग्री पुस्तकालय", Malayalam: "കണ്ടന്റ് ലൈബ്രറി",
-    Manipuri: "ꯀꯟꯇꯦꯟꯠ ꯂꯥꯏꯕ꯭ꯔꯦꯔꯤ", Marathi: "सामग्री ग्रंथालय", Nepali: "सामग्री पुस्तकालय", Odia: "ବିଷୟବସ୍ତୁ ପାଠାଗାର", Punjabi: "ਸਮੱਗਰੀ ਲਾਇਬ੍ਰੇਰੀ",
-    Sanskrit: "विषयपुस्तकालयः", Santali: "ᱠᱚᱱᱴᱮᱱᱴ", Sindhi: "مواد لائبريري", Urdu: "مواد کی لائبریری"
+    English: "Content Library", Assamese: "সামগ্ৰী পুথিভঁৰাল", Bengali: "কন্টেন্ট লাইব্রেরি", Bodo: "आयदा लायब्रेरी", Dogri: "सामग्री पुस्तकालय", Gujarati: "સાધનો મંડળ",
+    Hindi: "सामग्री पुस्तकालय", Kannada: "ವಿಷಯ ಗ್ರಂಥಾಲಯ", Kashmiri: "مواد لایبریری", Konkani: "सामग्री लायब्ररी", Maithili: "सामग्री पुस्तकालय", Malayalam: "കണ്ടന്റ് ലൈബ്രറി",
+    Manipuri: "ꯀꯟꯇꯦꯟꯠ ꯂꯥꯏꯕ꯭ꯔꯦꯔꯤ", Marathi: "सामग्री ग्रंथालय", Nepali: "सामग्री पुस्तकालय", Odia: "ବିଷୟବସ୍ତୁ ପାଠାଗାର", Punjabi: "ਸਮੱਗਰੀ ਲਾਇਬ੍ਰੇਰੀ", Sanskrit: "विषयपुस्तकालयः",
+    Santali: "ᱠᱚᱱᱴᱮᱱᱴ", Sindhi: "مواد لائبريري", Tamil: "பாடக் களஞ்சியம்", Telugu: "కంటెంట్ లైబ్రరీ", Urdu: "مواد کی لائبریری"
   },
   "Upload Center": {
-    English: "Upload Center", Tamil: "பதிவேற்ற மையம்", Hindi: "अपलोड केंद्र", Telugu: "అప్‌లోడ్ కేంద్రం",
-    Assamese: "আপলোড কেন্দ্ৰ", Bengali: "আপলোড সেন্টার", Bodo: "अपलोड सेंटर", Dogri: "अपलोड केंद्र", Gujarati: "અપલોડ સેન્ટર",
-    Kannada: "ಅಪ್‌ಲೋಡ್ ಕೇಂದ್ರ", Kashmiri: "اپلوڈ سینٹر", Konkani: "अपलोड केंद्र", Maithili: "अपलोड केंद्र", Malayalam: "അപ്‌ലോഡ് സെന്റർ",
-    Manipuri: "ꯑꯞꯂꯣꯗ ꯁꯦꯟꯇꯔ", Marathi: "अपलोड केंद्र", Nepali: "अपलोड केन्द्र", Odia: "ଅପଲୋଡ୍ କେନ୍ଦ୍ର", Punjabi: "ਅੱਪਲੋਡ ਕੇਂਦਰ",
-    Sanskrit: "आरोपणकेन्द्रम्", Santali: "ᱟᱯᱞᱳᱰ ᱥᱮᱱᱴᱚᱨ", Sindhi: "اپلوڊ سينٽر", Urdu: "اپ لوڈ سینٹر"
+    English: "Upload Center", Assamese: "আপলোড কেন্দ্ৰ", Bengali: "আপলোড সেন্টার", Bodo: "अपलोड सेंटर", Dogri: "अपलोड केंद्र", Gujarati: "અપલોડ સેન્ટર",
+    Hindi: "अपलोड केंद्र", Kannada: "ಅಪ್‌ಲೋಡ್ ಕೇಂದ್ರ", Kashmiri: "اپلوڈ سینٹر", Konkani: "अपलोड केंद्र", Maithili: "अपलोड केंद्र", Malayalam: "അപ്‌ലോഡ് സെന്റർ",
+    Manipuri: "ꯑꯞꯂꯣꯗ ꯁꯦꯟꯇꯔ", Marathi: "अपलोड केंद्र", Nepali: "अपलोड केन्द्र", Odia: "ଅପଲୋଡ୍ କେନ୍ଦ୍ର", Punjabi: "ਅੱਪਲੋਡ ਕੇਂਦਰ", Sanskrit: "आरोपणकेन्द्रम्",
+    Santali: "ᱟᱯᱞᱳᱰ ᱥᱮᱱᱴᱚᱨ", Sindhi: "اپلوڊ سينٽر", Tamil: "பதிவேற்ற மையம்", Telugu: "అప్‌లోడ్ కేంద్రం", Urdu: "اپ لوڈ سینٹر"
   },
   "Live Classes": {
-    English: "Live Classes", Tamil: "நேரலை வகுப்புகள்", Hindi: "लाइव कक्षाएं", Telugu: "లైవ్ క్లాసెస్",
-    Assamese: "লাইভ শ্ৰেণী", Bengali: "লাইভ ক্লাস", Bodo: "लाइभ क्लास", Dogri: "लाइव कक्षां", Gujarati: "લાઇવ વર્ગો",
-    Kannada: "ಲೈವ್ ತರಗತಿಗಳು", Kashmiri: "لائیو کلاسز", Konkani: "लाइव्ह क्लासीस", Maithili: "लाइव क्लास", Malayalam: "ലൈവ് ക്ലാസുകൾ",
-    Manipuri: "ꯂꯥꯏ꯭ꯚ ꯀ꯭ꯂꯥꯁ", Marathi: "थेट वर्ग", Nepali: "लाइभ कक्षा", Odia: "ଲାଇଭ୍ କ୍ଲାସ୍", Punjabi: "ਲਾਈਵ ਕਲਾਸਾਂ",
-    Sanskrit: "प्रत्यक्षवर्गः", Santali: "ᱞᱟive ᱠᱞᱟᱥ", Sindhi: "لائيو ڪلاسون", Urdu: "لائیو کلاسز"
+    English: "Live Classes", Assamese: "লাইভ শ্ৰেণী", Bengali: "লাইভ ক্লাস", Bodo: "लाइभ क्लास", Dogri: "लाइव कक्षां", Gujarati: "લાઇવ વર્ગો",
+    Hindi: "लाइव कक्षाएं", Kannada: "ಲೈವ್ ತರಗತಿಗಳು", Kashmiri: "لائیو کلاسز", Konkani: "लाइव्ह क्लासीस", Maithili: "लाइव क्लास", Malayalam: "ലൈവ് ക്ലാസുകൾ",
+    Manipuri: "ꯂꯥꯏ꯭ꯚ ꯀ꯭ꯂꯥꯁ", Marathi: "थेट वर्ग", Nepali: "लाइभ कक्षा", Odia: "ଲାଇଭ୍ କ୍ଲାସ୍", Punjabi: "ਲਾਈਵ ਕਲਾਸਾਂ", Sanskrit: "प्रत्यक्षवर्गः",
+    Santali: "ᱞᱟive ᱠᱞᱟᱥ", Sindhi: "لائيو ڪلاسون", Tamil: "நேரலை வகுப்புகள்", Telugu: "లైవ్ క్లాసెస్", Urdu: "لائیو کلاسز"
   },
   Assignments: {
-    English: "Assignments", Tamil: "பயிற்சிகள்", Hindi: "असाइनमेंट", Telugu: "అసైన్‌మెంట్లు",
-    Assamese: "অ্যাসাইনমেন্ট", Bengali: "অ্যাসাইনমেন্ট", Bodo: "असाइनमेन्ट", Dogri: "असाइनमेंट", Gujarati: "એસાાઇનમેન્ટ્સ",
-    Kannada: "ನಿಯೋಜನೆಗಳು", Kashmiri: "اسائنمنٹ", Konkani: "असायन्मेंट", Maithili: "असाइनमेंट", Malayalam: "അസൈൻമെന്റുകൾ",
-    Manipuri: "ꯑꯦꯁꯥꯏꯟꯃꯦꯟꯠ", Marathi: "स्वाध्याय / असाइनमेंट", Nepali: "असाइनमेन्ट", Odia: "ଅସାଇନମେન્ટ", Punjabi: "ਅਸਾਈਨਮੈਂਟ",
-    Sanskrit: "नियतकार्याणि", Santali: "ᱟᱥᱟᱭᱤᱱᱢᱮᱱᱴ", Sindhi: "اسائنمنٽس", Urdu: "اسائنمنٹس"
+    English: "Assignments", Assamese: "অ্যাসাইনমেন্ট", Bengali: "অ্যাসাইনমেন্ট", Bodo: "असाइनमेन्ट", Dogri: "असाइनमेंट", Gujarati: "એસાાઇનમેન્ટ્સ",
+    Hindi: "असाइनमेंट", Kannada: "ನಿಯೋಜನೆಗಳು", Kashmiri: "اسائنمنٹ", Konkani: "असायन्मेंट", Maithili: "असाइनमेंट", Malayalam: "അസൈൻമെന്റുകൾ",
+    Manipuri: "ꯑꯦꯁꯥꯏꯟꯃꯦꯟꯠ", Marathi: "स्वाध्याय / असाइनमेंट", Nepali: "असाइनमेन्ट", Odia: "ଅସାଇନମେଣ୍ଟ", Punjabi: "ਅਸਾਈਨਮੈਂਟ", Sanskrit: "नियतकार्याणि",
+    Santali: "ᱟᱥᱟᱭᱤᱱᱢᱮᱱᱴ", Sindhi: "اسائنمنٽس", Tamil: "பயிற்சிகள்", Telugu: "అసైన్‌మెంట్లు", Urdu: "اسائنمنٹس"
   },
   Students: {
-    English: "Students", Tamil: "மாணவர்கள்", Hindi: "छात्र", Telugu: "విద్యార్థులు",
-    Assamese: "ছাত্ৰ-ছাত্ৰী", Bengali: "ছাত্রছাত্রী", Bodo: "फरायसाफोर", Dogri: "विद्यार्थी", Gujarati: "વિદ્યાર્થીઓ",
-    Kannada: "ವಿದ್ಯಾರ್ಥಿಗಳು", Kashmiri: "طلباء", Konkani: "विद्यार्थी", Maithili: "विद्यार्थी", Malayalam: "വിദ്യാർത്ഥികൾ",
-    Manipuri: "ꯃꯍꯩꯔꯣꯏꯁꯤꯡ", Marathi: "विद्यार्थी", Nepali: "विद्यार्थीहरू", Odia: "ଛାତ୍ରଛାତ୍ରୀ", Punjabi: "ਵਿਦਿਆਰਥੀ",
-    Sanskrit: "छात्राः", Santali: "ᱪᱮᱛᱮᱫᱤᱭᱟᱹᱠᱚ", Sindhi: "شاگرد", Urdu: "طلباء"
+    English: "Students", Assamese: "ছাত্ৰ-ছাত্ৰী", Bengali: "ছাত্রছাত্রী", Bodo: "फरायसाफोर", Dogri: "विद्यार्थी", Gujarati: "વિદ્યાર્થીઓ",
+    Hindi: "छात्र", Kannada: "ವಿದ್ಯಾರ್ಥಿಗಳು", Kashmiri: "طلباء", Konkani: "विद्यार्थी", Maithili: "विद्यार्थी", Malayalam: "വിദ്യാർത്ഥികൾ",
+    Manipuri: "ꯃꯍꯩꯔꯣꯏꯁꯤꯡ", Marathi: "विद्यार्थी", Nepali: "विद्यार्थीहरू", Odia: "ଛାତ୍ରଛାତ୍ରୀ", Punjabi: "ਵਿਦਿਆਰਥੀ", Sanskrit: "छात्राः",
+    Santali: "ᱪᱮᱛᱮᱫᱤᱭᱟᱹᱠᱚ", Sindhi: "شاگرد", Tamil: "மாணவர்கள்", Telugu: "విద్యార్థులు", Urdu: "طلباء"
   },
   "AI Tools": {
-    English: "AI Tools", Tamil: "AI கருவிகள்", Hindi: "एआई उपकरण", Telugu: "AI టూల్స్",
-    Assamese: "AI সঁজুলি", Bengali: "AI সরঞ্জাম", Bodo: "AI टुलस", Dogri: "AI उपकरण", Gujarati: "AI સાધનો",
-    Kannada: "AI ಉಪಕರಣಗಳು", Kashmiri: "AI ٹولز", Konkani: "AI साधनां", Maithili: "AI उपकरण", Malayalam: "AI ടൂളുകൾ",
-    Manipuri: "AI ꯇꯨꯂꯁꯤꯡ", Marathi: "AI साधने", Nepali: "AI उपकरणहरू", Odia: "AI ଉପକରଣ", Punjabi: "AI ਟੂਲਜ਼",
-    Sanskrit: "कृत्रिमबुद्धि-यन्त्राणि", Santali: "AI ᱴᱩᱞᱥ", Sindhi: "AI ٽولز", Urdu: "اے آئی ٹولز"
+    English: "AI Tools", Assamese: "AI সঁজুলি", Bengali: "AI সরঞ্জাম", Bodo: "AI टुलस", Dogri: "AI उपकरण", Gujarati: "AI સાધનો",
+    Hindi: "एआई उपकरण", Kannada: "AI ಉಪಕರಣಗಳು", Kashmiri: "AI ٹولز", Konkani: "AI साधनां", Maithili: "AI उपकरण", Malayalam: "AI ടൂളുകൾ",
+    Manipuri: "AI ꯇꯨꯂꯁꯤꯡ", Marathi: "AI साधने", Nepali: "AI उपकरणहरू", Odia: "AI ଉପକରଣ", Punjabi: "AI ਟੂਲਜ਼", Sanskrit: "कृत्रिमबुद्धि-यन्त्राणि",
+    Santali: "AI ᱴᱩᱞᱥ", Sindhi: "AI ٽولز", Tamil: "AI கருவிகள்", Telugu: "AI టూల్స్", Urdu: "اے آئی ٹولز"
   },
   Analytics: {
-    English: "Analytics", Tamil: "பகுப்பாய்வு", Hindi: "विश्लेषण", Telugu: "విశ్లేషణ",
-    Assamese: "বিশ্লেষণ", Bengali: "বিশ্লেষণ", Bodo: "बिजिरनाय", Dogri: "विश्लेषण", Gujarati: "વિશ્લેષણ",
-    Kannada: "ವಿಶ್ಲೇಷಣೆ", Kashmiri: "تجزیہ", Konkani: "विश्लेषण", Maithili: "विश्लेषण", Malayalam: "വിശകലനം",
-    Manipuri: "ꯑꯦꯅꯥꯂꯥꯏꯇꯤꯛꯁ", Marathi: "विश्लेषण", Nepali: "विश्लेषण", Odia: "ବିଶ୍ଳେଷଣ", Punjabi: "ਵਿਸ਼ਲੇਸ਼ਣ",
-    Sanskrit: "विश्लेषणम्", Santali: "ᱵᱤᱥᱞᱮᱥᱚᱱ", Sindhi: "تجزيئي", Urdu: "تجزیہ"
+    English: "Analytics", Assamese: "বিশ্লেষণ", Bengali: "বিশ্লেষণ", Bodo: "बिजिरनाय", Dogri: "विश्लेषण", Gujarati: "વિશ્લેષણ",
+    Hindi: "विश्लेषण", Kannada: "ವಿಶ್ಲೇಷಣೆ", Kashmiri: "تجزیہ", Konkani: "विश्लेषण", Maithili: "विश्लेषण", Malayalam: "വിശകലനം",
+    Manipuri: "ꯑꯦꯅꯥꯂꯥꯏꯇꯤꯛꯁ", Marathi: "विश्लेषण", Nepali: "विश्लेषण", Odia: "ବିଶ୍ଳେଷଣ", Punjabi: "ਵਿਸ਼ਲੇਸ਼ਣ", Sanskrit: "विश्लेषणम्",
+    Santali: "ᱵᱤᱥᱞᱮᱥᱚᱱ", Sindhi: "تجزيئي", Tamil: "பகுப்பாய்வு", Telugu: "విశ్లేషణ", Urdu: "تجزیہ"
   },
   Notifications: {
-    English: "Notifications", Tamil: "அறிவிப்புகள்", Hindi: "सूचनाएं", Telugu: "நோட்டிபிகேஷன்లు",
-    Assamese: "বিজ্ঞপ্তি", Bengali: "বিজ্ঞপ্তি", Bodo: "मिथिसारनाय", Dogri: "सूचनां", Gujarati: "સૂચનાઓ",
-    Kannada: "ಅಧಿಸೂಚನೆಗಳು", Kashmiri: "اطلاعات", Konkani: "सूचना", Maithili: "सूचना", Malayalam: "അറിയിപ്പുകൾ",
-    Manipuri: "ꯅꯣꯇꯤꯐꯤꯀꯦꯁꯟ", Marathi: "सूचना", Nepali: "सूचनाहरू", Odia: "ବିଜ୍ଞପ୍ତି", Punjabi: "ਸੂਚਨਾਵਾਂ",
-    Sanskrit: "सूचनाः", Santali: "ᱱᱳᱴᱤᱯᱷᱤᱠᱮᱥᱚᱱ", Sindhi: "اطلاعون", Urdu: "اطلاعات"
+    English: "Notifications", Assamese: "বিজ্ঞপ্তি", Bengali: "বিজ্ঞপ্তি", Bodo: "मिथिसारनाय", Dogri: "सूचनां", Gujarati: "સૂચનાઓ",
+    Hindi: "सूचनाएं", Kannada: "ಅಧಿಸೂಚನೆಗಳು", Kashmiri: "اطلاعات", Konkani: "सूचना", Maithili: "सूचना", Malayalam: "അറിയിപ്പുകൾ",
+    Manipuri: "ꯅꯣꯇꯤꯐꯤꯀꯦꯁꯟ", Marathi: "सूचना", Nepali: "सूचनाहरू", Odia: "ବିଜ୍ଞପ୍ତି", Punjabi: "ਸੂਚਨਾਵਾਂ", Sanskrit: "सूचनाः",
+    Santali: "ᱱᱳᱴᱤᱯᱷᱤᱠᱮᱥᱚᱱ", Sindhi: "اطلاعون", Tamil: "அறிவிப்புகள்", Telugu: "నోటిఫికేషన్లు", Urdu: "اطلاعات"
   },
   Profile: {
-    English: "Profile", Tamil: "சுயவிவரம்", Hindi: "प्रोफ़ाइल", Telugu: "ప్రొఫైల్",
-    Assamese: "প্রফাইল", Bengali: "প্রোফাইল", Bodo: "प्रोफाइल", Dogri: "प्रोफाइल", Gujarati: "પ્રોફાઇલ",
-    Kannada: "ಪ್ರೊಫೈಲ್", Kashmiri: "پروفائل", Konkani: "प्रोफाइल", Maithili: "प्रोफाइल", Malayalam: "പ്രൊഫൈൽ",
-    Manipuri: "ꯄ꯭ꯔꯣꯐꯥꯏꯜ", Marathi: "प्रोफाइल", Nepali: "प्रोफाइल", Odia: "ପ୍ରୋફਾਈଲ୍", Punjabi: "ਪ੍ਰੋਫਾਈਲ",
-    Sanskrit: "परिचयपत्रम्", Santali: "ᱯᱨᱳᱯᱷᱟᱭᱤᱞ", Sindhi: "پروفائل", Urdu: "پروفائل"
+    English: "Profile", Assamese: "প্রফাইল", Bengali: "প্রোফাইল", Bodo: "प्रोफाइल", Dogri: "प्रोफाइल", Gujarati: "પ્રોફાઇલ",
+    Hindi: "प्रोफ़ाइल", Kannada: "ಪ್ರೊಫೈಲ್", Kashmiri: "پروفائل", Konkani: "प्रोफाइल", Maithili: "प्रोफाइल", Malayalam: "പ്രൊഫൈൽ",
+    Manipuri: "ꯄ꯭ꯔꯣꯐꯥꯏꯜ", Marathi: "प्रोफाइल", Nepali: "प्रोफाइल", Odia: "ପ୍ରୋଫାଇଲ୍", Punjabi: "ਪ੍ਰੋਫਾਈਲ", Sanskrit: "परिचयपत्रम्",
+    Santali: "ᱯᱨᱳᱯᱷᱟᱭᱤᱞ", Sindhi: "پروفائل", Tamil: "சுயவிவரம்", Telugu: "ప్రొఫైల్", Urdu: "پروفائل"
   },
   Settings: {
-    English: "Settings", Tamil: "அமைப்புகள்", Hindi: "செட்டிங்ஸ்", Telugu: "సెట్టింగ్‌లు",
-    Assamese: "ছেটিংছ", Bengali: "সেটিংস", Bodo: "सेटिंगस", Dogri: "सैटिंग्स", Gujarati: "સેટિંગ્સ",
-    Kannada: "ಸಂಯೋಜನೆಗಳು", Kashmiri: "سیٹنگس", Konkani: "मांडणी", Maithili: "सेटिंग्स", Malayalam: "ക്രമീകരണങ്ങൾ",
-    Manipuri: "ꯁꯦꯇꯤꯡꯁ", Marathi: "सेटिंग्ज", Nepali: "सेटिङहरू", Odia: "ସେଟିଙ୍ଗ୍ସ", Punjabi: "ਸੈਟਿੰਗਾਂ",
-    Sanskrit: "विन्यासाः", Santali: "ᱥᱮᱴᱤᱝᱥ", Sindhi: "سيٽنگون", Urdu: "سیٹنگز"
+    English: "Settings", Assamese: "ছেটিংছ", Bengali: "সেটিংস", Bodo: "सेटिंगस", Dogri: "सैटिंग्स", Gujarati: "સેટિંગ્સ",
+    Hindi: "सेटिंग्स", Kannada: "ಸಂಯೋಜನೆಗಳು", Kashmiri: "سیٹنگس", Konkani: "मांडणी", Maithili: "सेटिंग्स", Malayalam: "ക്രമീകരണങ്ങൾ",
+    Manipuri: "ꯁꯦꯇꯤꯡꯁ", Marathi: "सेटिंग्ज", Nepali: "सेटिङहरू", Odia: "ସେଟିଙ୍ଗ୍ସ", Punjabi: "ਸੈਟਿੰਗਾਂ", Sanskrit: "विन्यासाः",
+    Santali: "ᱥᱮᱴᱤᱝᱥ", Sindhi: "سيٽنگون", Tamil: "அமைப்புகள்", Telugu: "సెట్టింగ్‌లు", Urdu: "سیٹنگز"
   },
   "Add New Course": {
-    English: "Add New Course", Tamil: "புதிய பாடத்தை சேர்", Hindi: "नया पाठ्यक्रम जोड़ें", Telugu: "కొత్త కోర్సును జోడించండి",
-    Assamese: "নতুন পাঠ্যক্ৰম যোগ কৰক", Bengali: "নতুন কোর্স যোগ করুন", Bodo: "गोदान आयदा सों", Dogri: "नवा कोर्स जोड़ो", Gujarati: "નવો કોર્સ ઉમેરો",
-    Kannada: "ಹೊಸ ಕೋರ್ಸ್ ಸೇರಿಸಿ", Kashmiri: "نواں کورس جوڑیو", Konkani: "नवो कोर्स जोडात", Maithili: "नवीन पाठ्यक्रम जोड़ू", Malayalam: "പുതിയ കോഴ്‌സ് ചേർക്കുക",
-    Manipuri: "ꯑꯅ꧀ꯧꯕ ꯀꯣꯔꯁ ꯍꯥꯞꯆꯤꯅꯕꯥ", Marathi: "नवीन अभ्यासक्रम जोडा", Nepali: "नयाँ पाठ्यक्रम थप्नुहोस्", Odia: "ନୂତନ ପାଠ୍ୟକ୍ରମ ଯୋଡନ୍ତୁ", Punjabi: "ਨਵਾਂ ਕੋਰਸ ਜੋੜੋ",
-    Sanskrit: "नवीनं पाठ्यक्रमं योजयतु", Santali: "ᱱᱟᱶᱟ ᱠᱳᱨᱥ", Sindhi: "نائون ڪورس شامل ڪريو", Urdu: "نیا کورس شامل کریں"
+    English: "Add New Course", Assamese: "নতুন পাঠ্যক্ৰম যোগ কৰক", Bengali: "নতুন কোর্স যোগ করুন", Bodo: "गोदान आयदा सों", Dogri: "नवा कोर्स जोड़ो", Gujarati: "નવો કોર્સ ઉમેરો",
+    Hindi: "नया पाठ्यक्रम जोड़ें", Kannada: "ಹೊಸ ಕೋರ್ಸ್ ಸೇರಿಸಿ", Kashmiri: "نواں کورس جوڑیو", Konkani: "नवो कोर्स जोडात", Maithili: "नवीन पाठ्यक्रम जोड़ू", Malayalam: "പുതിയ കോഴ്‌സ് ചേർക്കുക",
+    Manipuri: "ꯑꯅ꧀ꯧꯕ ꯀꯣꯔꯁ ꯍꯥꯞꯆꯤꯅꯕꯥ", Marathi: "नवीन अभ्यासक्रम जोडा", Nepali: "नयाँ पाठ्यक्रम थप्नुहोस्", Odia: "ନୂତନ ପାଠ୍ୟକ୍ରମ ଯୋଡନ୍ତୁ", Punjabi: "ਨਵਾਂ ਕੋਰਸ ਜੋੜੋ", Sanskrit: "नवीनं पाठ्यक्रमं योजयतु",
+    Santali: "ᱱᱟᱶᱟ ᱠᱳᱨᱥ", Sindhi: "نائون ڪورس شامل ڪريو", Tamil: "புதிய பாடத்தை சேர்", Telugu: "కొత్త కోర్సును జోడించండి", Urdu: "نیا کورس شامل کریں"
   },
 
-  // AI Tools Workspace Headers
-  ai_workspace_title: {
-    English: "AI Multilingual Utilities Workspace (23 Scheduled Languages)",
-    Tamil: "AI பன்மொழி பயன்பாட்டு பணிமேடை (23 மொழிகள்)",
-    Hindi: "एआई बहुभाषी उपयोगिता कार्यस्थान (23 भाषाएं)",
-    Telugu: "AI బహుభాషా యుటిలిటీస్ వర్క్‌స్పేస్ (23 భాషలు)",
-    Dogri: "AI बहुभाषी उपकरण कार्यस्थान (23 भाषां)",
-    Assamese: "AI বহুভাষিক সঁজুলি কৰ্মক্ষেত্ৰ (২৩ ভাষা)",
-    Bengali: "AI বহুভাষিক সরঞ্জাম ওয়ার্কস্পেস (২৩টি ভাষা)",
-    Bodo: "AI बाहुभाषी टूलस वर्कस्पेस (23 राव)",
-    Gujarati: "AI બહુભાષી સાધન કાર્યસ્થળ (23 ભાષાઓ)",
-    Kannada: "AI ಬಹುಭಾಷಾ ಉಪಕರಣಗಳ ವರ್ಕ್‌ಸ್ಪೇಸ್ (23 ಭಾಷೆಗಳು)",
-    Kashmiri: "AI کثیر اللسانی ورک سپیس (23 زبانیں)",
-    Konkani: "AI बहुभाशीय साधन वर्कस्पेस (23 भासो)",
-    Maithili: "AI बहुभाषी कार्यस्थान (23 भाषा)",
-    Malayalam: "AI ബഹുഭാഷാ ടൂളുകൾ വർക്ക്സ്പേസ് (23 ഭാഷകൾ)",
-    Manipuri: "AI ꯃꯜꯇꯤꯂꯤꯉ꯭ꯋꯦꯜ ꯋꯥꯔꯛꯁ꯭ꯄꯦꯁ (23 ꯂꯣꯟ)",
-    Marathi: "AI बहुभाषिक साधन कार्यस्थान (23 भाषा)",
-    Nepali: "AI बहुभाषी कार्यस्थल (२३ भाषाहरू)",
-    Odia: "AI ବହୁଭାଷୀ ଉପକରଣ କାର୍ଯ୍ୟକ୍ଷେତ୍ର (୨୩ ଭାଷା)",
-    Punjabi: "AI ਬਹੁ-ਭਾਸ਼ਾਈ ਟੂਲਜ਼ ਵਰਕਸਪੇਸ (23 ਭਾਸ਼ਾਵਾਂ)",
-    Sanskrit: "कृत्रिमबुद्धि बहुभाषीय कार्यस्थानम् (२३ भाषाः)",
-    Santali: "AI ᱵᱟᱹᱦᱩᱵᱷᱟᱥᱤ ᱴᱩᱞᱥ (23 ᱯᱟᱹᱨᱥᱤ)",
-    Sindhi: "AI باھوباشي ورڪ اسپيس (23 ٻوليون)",
-    Urdu: "اے آئی کثیر اللسانی ورک سپیس (23 زبانیں)"
-  },
-  ai_workspace_subtitle: {
-    English: "Generate lecture notes, quizzes, flashcards, summaries, WebVTT subtitles, and voiceover scripts grounded in educator-posted materials in pure native scripts of all 23 scheduled Indian languages.",
-    Tamil: "ஆசிரியர் பதிவேற்றிய பாடக் கோப்புகளின் அடிப்படையில் குறிப்புகள், வினாடி வினாக்கள் மற்றும் சுருக்கங்களை 23 அதிகாரப்பூர்வ இந்திய தாய்மொழிகளில் உருவாக்கவும்.",
-    Hindi: "शिक्षक द्वारा पोस्ट की गई सामग्री के आधार पर सभी 23 आधिकारिक भारतीय भाषाओं की मूल लिपियों में अध्ययन नोट्स और प्रश्नोत्तरी तैयार करें।",
-    Telugu: "ఉపాధ్యాయులు పోస్ట్ చేసిన కంటెంట్ ఆధారంగా 23 అధికారిక భారతీయ భాషలలో నోట్స్, క్విజ్‌లను రూపొందించండి.",
-    Dogri: "शिक्षक सामग्री दे आधार पर सारियां 23 सरकारी भारतीय भाषाएं बिच्च अध्ययन नोट्स ते प्रश्नोत्तरी तैयार करो。"
-  },
-  ai_studio_badge: {
-    English: "23 Languages Pure AI Studio",
-    Tamil: "23 மொழிகள் AI ஸ்டுடியோ",
-    Hindi: "23 भाषाएं एआई स्टूडियो",
-    Telugu: "23 భాషలు AI స్టూడియో",
-    Dogri: "23 भाषां AI स्टूडियो",
-    Assamese: "২৩ ভাষা AI ষ্টুডিঅ'",
-    Bengali: "২৩টি ভাষা AI স্টুডিও",
-    Gujarati: "23 ભાષાઓ AI સ્ટુડિયો",
-    Kannada: "23 ಭಾಷೆಗಳು AI ಸ್ಟುಡಿಯೋ",
-    Malayalam: "23 ഭാഷകൾ AI സ്റ്റുഡിയോ",
-    Marathi: "23 भाषा AI स्टुडिओ",
-    Odia: "୨୩ ଭାଷା AI ଷ୍ଟୁଡିଓ",
-    Punjabi: "23 ਭਾਸ਼ਾਵਾਂ AI ਸਟੂਡੀਓ",
-    Urdu: "23 زبانیں اے آئی اسٹوڈیو"
-  },
-  view_content_library: {
-    English: "View Content Library",
-    Tamil: "பாடக் களஞ்சியத்தைக் காண்க",
-    Hindi: "सामग्री पुस्तकालय देखें",
-    Telugu: "కంటెంట్ లైబ్రరీ చూడండి",
-    Dogri: "सामग्री पुस्तकालय देखो"
-  },
-  launch_interactive_studio: {
-    English: "Launch Interactive Studio",
-    Tamil: "ஊடாடும் ஸ்டுடியோவை இயக்கு",
-    Hindi: "इंटरएक्टिव स्टूडियो चलाएं",
-    Telugu: "ఇంటరాక్టివ్ స్టూడియోను ప్రారంభించండి",
-    Dogri: "इंटरएक्टिव स्टूडियो चलाओ"
-  },
-  target_language_label: {
-    Hindi: "पसंदीदा मातृभाषा",
-    Telugu: "ఇష్టపడే మాతృభాష"
-  },
-  attach_course_label: {
-    English: "Attach to Educator Course",
-    Tamil: "ஆசிரியர் பாடத்துடன் இணைக்கவும்",
-    Hindi: "पाठ्यक्रम से जोड़ें",
-    Telugu: "కోర్సును ఎంచుకోండి"
-  },
-  topic_prompt_label: {
-    English: "Source Topic / Question / Transcript (Analyzed against Educator Content)",
-    Tamil: "பாடக் கேள்வி / தலைப்பு (ஆசிரியர் பதிவேற்றிய ஆதாரங்களில் பகுப்பாய்வு செய்யப்படும்)",
-    Hindi: "विषय / प्रश्न / प्रतिलेख (शिक्षक सामग्री पर आधारित)",
-    Telugu: "అంశం / ప్రశ్న (ఉపాధ్యాయ కంటెంట్ నుండి విశ్లేషించబడుతుంది)"
-  },
-  generate_ai_asset_btn: {
-    English: "Analyze Educator Content & Generate AI Answer",
-    Tamil: "ஆசிரியர் உள்ளடக்கத்தை பகுப்பாய்வு செய்து விடைகளை உருவாக்கு",
-    Hindi: "सामग्री का विश्लेषण करें और उत्तर उत्पन्न करें",
-    Telugu: "కంటెంట్‌ను విశ్లేషించి సమాధానం రూపొందించండి"
-  },
-  analyzing_educator_content: {
-    English: "Analyzing Educator Uploaded Content & Translating...",
-    Tamil: "ஆசிரியர் பதிவேற்றிய பாடக் கோப்புகளை AI பகுப்பாய்வு செய்கிறது...",
-    Hindi: "शिक्षक सामग्री का विश्लेषण और अनुवाद किया जा रहा है...",
-    Telugu: "ఉపాధ్యాయ కంటెంట్ విశ్లేషణ మరియు అనువాదం జరుగుతోంది..."
-  },
-  save_to_library_btn: {
-    English: "Attach & Save Asset to Course Repository",
-    Tamil: "பாடக் களஞ்சியத்தில் சேமிக்கவும்",
-    Hindi: "सामग्री पुस्तकालय में सहेजें",
-    Telugu: "కంటెంట్ లైబ్రరీలో సేవ్ చేయండి"
-  },
-  grounded_content_badge: {
-    English: "Grounded in Educator Posted Material",
-    Tamil: "ஆசிரியர் பதிவேற்றிய பாட ஆதாரங்களிலிருந்து பெறப்பட்டது",
-    Hindi: "शिक्षक द्वारा पोस्ट की गई सामग्री पर आधारित",
-    Telugu: "ఉపాధ్యాయులు పోస్ట్ చేసిన కంటెంట్ ఆధారంగా"
-  },
-
-  // Dashboard Overview Translation Keys (23 Languages Supported)
+  // Dashboard Headers & Metrics
   welcome_educator: {
-    English: "Welcome back, Educator!",
-    Assamese: "স্বাগতম, শিক্ষক!",
-    Bengali: "স্বাগতম, শিক্ষক!",
-    Bodo: "सिमबि फोरोंगिरि!",
-    Dogri: "जी आयां गी, शिक्षकजी!",
-    Gujarati: "પાછા સ્વાગત છે, શિક્ષક!",
-    Hindi: "शिक्षक महोदय, आपका स्वागत है!",
-    Kannada: "ಮತ್ತೆ ಸ್ವಾಗತ, ಶಿಕ್ಷಕರೇ!",
-    Kashmiri: "خوش آمدید، استاد جی!",
-    Konkani: "परत येवकार, शिक्षक!",
-    Maithili: "स्वागत अछि, शिक्षक!",
-    Malayalam: "വീണ്ടും സ്വാഗതം, അധ്യാപകാ!",
-    Manipuri: "ꯇꯔꯥꯝꯅ ꯑꯣꯀꯆꯔꯤ ꯑꯣꯖꯥ!",
-    Marathi: "पुन्हा स्वागत आहे, शिक्षक!",
-    Nepali: "पुनः स्वागत छ, शिक्षक!",
-    Odia: "ପୁନର୍ବାର ସ୍ୱାଗତ, ଶିକ୍ଷକ!",
-    Punjabi: "ਜੀ ਆਇਆਂ ਨੂੰ, ਅਧਿਆਪਕ ਜੀ!",
-    Sanskrit: "पुनरागमनम् नमो नमः, गुरवः!",
-    Santali: "ᱥᱟᱹᱜᱩᱱ ᱫᱟᱨᱟᱢ ᱪᱮᱪᱮᱫᱤᱭᱟᱹ!",
-    Sindhi: "ڀلي ڪري آيا، استاد!",
-    Tamil: "மீண்டும் வருக, ஆசிரியரே!",
-    Telugu: "స్వాగతం, ఉపాధ్యాయులారా!",
-    Urdu: "خوش آمدید، استاد محترم!"
+    English: "Welcome back, Educator!", Assamese: "স্বাগতম, শিক্ষক!", Bengali: "স্বাগতম, শিক্ষক!", Bodo: "सिमबि फोरोंगिरि!", Dogri: "जी आयां गी, शिक्षकजी!", Gujarati: "પાછા સ્વાગત છે, શિક્ષક!",
+    Hindi: "शिक्षक महोदय, आपका स्वागत है!", Kannada: "ಮತ್ತೆ ಸ್ವಾಗತ, ಶಿಕ್ಷಕರೇ!", Kashmiri: "خوش آمدید، استاد جی!", Konkani: "परत येवकार, शिक्षक!", Maithili: "स्वागत अछि, शिक्षक!", Malayalam: "വീണ്ടും സ്വാഗതം, അധ്യാപകാ!",
+    Manipuri: "ꯇꯔꯥꯝꯅ ꯑꯣꯀꯆꯔꯤ ꯑꯣꯖꯥ!", Marathi: "पुन्हा स्वागत आहे, शिक्षक!", Nepali: "पुनः स्वागत छ, शिक्षक!", Odia: "ପୁନର୍ବାର ସ୍ୱାଗତ, ଶିକ୍ଷକ!", Punjabi: "ਜੀ ਆਇਆਂ ਨੂੰ, ਅਧਿਆਪਕ ਜੀ!", Sanskrit: "पुनरागमनम् नमो नमः, गुरवः!",
+    Santali: "ᱥᱟᱹᱜᱩᱱ ᱫᱟᱨᱟᱢ ᱪᱮᱪᱮᱫᱤᱭᱟᱹ!", Sindhi: "ڀلي ڪري آيا، استاد!", Tamil: "மீண்டும் வருக, ஆசிரியரே!", Telugu: "స్వాగతం, ఉపాధ్యాయులారా!", Urdu: "خوش آمدید، استاد محترم!"
   },
   welcome_subtitle: {
     English: "Manage your courses, uploaded materials, and live interactive classes for your students in real-time.",
@@ -270,166 +134,412 @@ const translations: TranslationDictionary = {
     English: "Total Courses", Assamese: "মুঠ পাঠ্যক্ৰম", Bengali: "মোট কোর্স", Bodo: "गासै आयदा", Dogri: "कुल कोर्स", Gujarati: "કુલ કોર્સ", Hindi: "कुल पाठ्यक्रम", Kannada: "ಒಟ್ಟು ಕೋರ್ಸ್‌ಗಳು", Kashmiri: "کل کورس", Konkani: "कुल कोर्स", Maithili: "कुल पाठ्यक्रम", Malayalam: "ആകെ കോഴ്‌സുകൾ", Manipuri: "ꯑꯄꯨꯅꯕ ꯀꯣꯔꯁ", Marathi: "एकूण अभ्यासक्रम", Nepali: "कुल पाठ्यक्रम", Odia: "ମୋଟ ପାଠ୍ୟକ୍ରମ", Punjabi: "ਕੁੱਲ ਕੋਰਸ", Sanskrit: "सम्पूर्णपाठ्यक्रमाः", Santali: "ᱡᱚᱛᱚ ᱠᱳᱨᱥ", Sindhi: "ڪل ڪورس", Tamil: "மொத்த பாடநெறிகள்", Telugu: "మొత్తం కోర్సులు", Urdu: "کل کورسز"
   },
   active_course_hosted: {
-    English: "1 active course hosted", Assamese: "১ টা সক্ৰিয় পাঠ্যক্ৰম সম্প্ৰচাৰিত", Bengali: "১টি সক্রিয় কোর্স হোস্ট করা হয়েছে", Dogri: "1 सक्रिय कोर्स होस्ट कीता गेया", Hindi: "1 सक्रिय पाठ्यक्रम होस्ट किया गया", Tamil: "1 நேரலை பாடம் வழங்கப்படுகிறது", Telugu: "1 సక్రియ కోర్సు హోస్ట్ చేయబడింది"
+    English: "1 active course hosted", Assamese: "১ টা সক্ৰিয় পাঠ্যক্ৰম সম্প্ৰচাৰিত", Bengali: "১টি সক্রিয় কোর্স হোস্ট করা হয়েছে", Bodo: "1 सोलिफायनाय आयदा", Dogri: "1 सक्रिय कोर्स होस्ट कीता गेया", Gujarati: "1 સક્રિય કોર્સ હોસ્ટ થયેલ", Hindi: "1 सक्रिय पाठ्यक्रम होस्ट किया गया", Kannada: "1 ಸಕ್ರಿಯ ಕೋರ್ಸ್ ಹೋಸ್ಟ್ ಮಾಡಲಾಗಿದೆ", Kashmiri: "1 لائیو کورس", Konkani: "1 सक्रिय कोर्स", Maithili: "1 सक्रिय पाठ्यक्रम होस्ट कएल गेल", Malayalam: "1 സജീവ കോഴ്സ് നടത്തുന്നു", Manipuri: "1 ꯑꯦꯛꯇꯤꯚ ꯀꯣꯔꯁ", Marathi: "1 सक्रिय अभ्यासक्रम होस्ट केला", Nepali: "१ सक्रिय पाठ्यक्रम संचालित", Odia: "୧ ସକ୍ରିୟ ପାଠ୍ୟକ୍ରମ ସଞ୍ଚାଳିତ", Punjabi: "1 ਸਰਗਰਮ ਕੋਰਸ ਹੋਸਟ ਕੀਤਾ", Sanskrit: "1 सक्रिय पाठ्यक्रमः", Santali: "1 ᱪᱟᱹᱞᱩ ᱠᱳᱨᱥ", Sindhi: "1 فيال ڪورس", Tamil: "1 நேரலை பாடம் வழங்கப்படுகிறது", Telugu: "1 సక్రియ కోర్సు హోస్ట్ చేయబడింది", Urdu: "1 فعال کورس موجود"
   },
   students_enrolled: {
-    English: "Students Enrolled", Assamese: "নামভৰ্তি কৰা ছাত্ৰ-ছাত্ৰী", Bengali: "নিবন্ধিত শিক্ষার্থী", Bodo: "फरायसाफोर", Dogri: "नामांकित छात्र", Gujarati: "નોંધાયેલ વિદ્યાર્થીઓ", Hindi: "नामांकित छात्र", Kannada: "ನೊಂದಾಯಿತ ವಿದ್ಯಾರ್ಥಿಗಳು", Malayalam: "എൻറോൾ ചെയ്ത വിദ്യാർത്ഥികൾ", Marathi: "नोंदणीकृत विद्यार्थी", Punjabi: "ਦਾਖਲ ਹੋਏ ਵਿਦਿਆਰਥੀ", Tamil: "சேர்ந்த மாணவர்கள்", Telugu: "నమోదైన విద్యార్థులు", Urdu: "درج شدہ طلباء"
+    English: "Students Enrolled", Assamese: "নামভৰ্তি কৰা ছাত্ৰ-ছাত্ৰী", Bengali: "নিবন্ধিত শিক্ষার্থী", Bodo: "फरायसाफोर", Dogri: "नामांकित छात्र", Gujarati: "નોંધાયેલ વિદ્યાર્થીઓ", Hindi: "नामांकित छात्र", Kannada: "ನೊಂದಾಯಿತ ವಿದ್ಯಾರ್ಥಿಗಳು", Kashmiri: "درج شدہ طلباء", Konkani: "विद्यार्थी", Maithili: "नामांकित विद्यार्थी", Malayalam: "എൻറോൾ ചെയ്ത വിദ്യാർത്ഥികൾ", Manipuri: "ꯃꯍꯩꯔꯣꯏꯁꯤꯡ", Marathi: "नोंदणीकृत विद्यार्थी", Nepali: "भर्ना भएका विद्यार्थीहरू", Odia: "ଛାତ୍ରଛାତ୍ରୀ", Punjabi: "ਦਾਖਲ ਹੋਏ ਵਿਦਿਆਰਥੀ", Sanskrit: "पञ्जीकृताः छात्राः", Santali: "ᱪᱮᱛᱮᱫᱤᱭᱟᱹ", Sindhi: "شاگرد", Tamil: "சேர்ந்த மாணவர்கள்", Telugu: "నమోదైన విద్యార్థులు", Urdu: "درج شدہ طلباء"
   },
   total_enrollments: {
-    English: "Total enrollments across courses", Assamese: "সকলো পাঠ্যক্ৰমত মুঠ নামভৰ্তি", Bengali: "সমস্ত কোর্সে মোট এনরোলমেন্ট", Dogri: "सारें कोर्सें बिच्च कुल नामांकन", Hindi: "सभी पाठ्यक्रमों में कुल नामांकन", Tamil: "அனைத்து பாடங்களிலும் மொத்த சேர்க்கை", Telugu: "అన్ని కోర్సులలో మొత్తం ఎన్‌రోల్‌మెంట్‌లు"
+    English: "Total enrollments across courses", Assamese: "সকলো পাঠ্যক্ৰমত মুঠ নামভৰ্তি", Bengali: "সমস্ত কোর্সে মোট এনরোলমেন্ট", Bodo: "गासै फरायसा", Dogri: "सारें कोर्सें बिच्च कुल नामांकन", Gujarati: "તમામ કોર્સમાં કુલ નોંધણી", Hindi: "सभी पाठ्यक्रमों में कुल नामांकन", Kannada: "ಎಲ್ಲಾ ಕೋರ್ಸ್‌ಗಳಲ್ಲಿ ಒಟ್ಟು ಸೇರ್ಪಡೆ", Kashmiri: "ساری کورسن منز داخلا", Konkani: "सगळ्या कोर्सानी कुल नाव नोंदणी", Maithili: "सभ पाठ्यक्रम मे कुल नामांकन", Malayalam: "എല്ലാ കോഴ്‌സുകളിലുമായി ആകെ എൻറോൾമെന്റുകൾ", Manipuri: "ꯄꯨꯝꯅꯃꯛꯇ ꯑꯄꯨꯅꯕ", Marathi: "सर्व अभ्यासक्रमांमध्ये एकूण नोंदणी", Nepali: "सबै पाठ्यक्रममा कुल भर्ना", Odia: "ସମସ୍ତ ପାଠ୍ୟକ୍ରମରେ ମୋଟ ନାମଲେଖା", Punjabi: "ਸਾਰੇ ਕੋਰਸਾਂ ਵਿੱਚ ਕੁੱਲ ਦਾਖਲੇ", Sanskrit: "सर्वपाठ्यक्रमेषु सम्पूर्णाङ्कनम्", Santali: "ᱡᱚᱛᱚ ᱠᱳᱨᱥ ᱨᱮ Enrollment", Sindhi: "مڙني ڪورسزن ۾ داخلائون", Tamil: "அனைத்து பாடங்களிலும் மொத்த சேர்க்கை", Telugu: "అన్ని కోర్సులలో మొత్తం ఎన్‌రోల్‌మెంట్‌లు", Urdu: "تمام کورسز میں کل اندراج"
   },
   upcoming_live_classes: {
-    English: "Upcoming Live Classes", Assamese: "আগন্তুক লাইভ শ্ৰেণী", Bengali: "আগামী লাইভ ক্লাস", Dogri: "आउने वालियां लाइव कक्षां", Gujarati: "આગામી લાઇવ વર્ગો", Hindi: "आगामी लाइव कक्षाएं", Kannada: "ಮುಂಬರುವ ಲೈವ್ ತರಗತಿಗಳು", Malayalam: "വരാനിരിക്കുന്ന ലൈവ് ക്ലാസുകൾ", Marathi: "पुढील थेट वर्ग", Punjabi: "ਆਉਣ ਵਾਲੀਆਂ ਲਾਈਵ ਕਲਾਸਾਂ", Tamil: "வரவிருக்கும் நேரலை வகுப்புகள்", Telugu: "రాబోయే లైవ్ క్లాసెస్", Urdu: "آنے والی لائیو کلاسز"
+    English: "Upcoming Live Classes", Assamese: "আগন্তুক লাইভ শ্ৰেণী", Bengali: "আগামী লাইভ ক্লাস", Bodo: "फैगौ लाइभ क्लास", Dogri: "आउने वालियां लाइव कक्षां", Gujarati: "આગામી લાઇવ વર્ગો", Hindi: "आगामी लाइव कक्षाएं", Kannada: "ಮುಂಬರುವ ಲೈವ್ ತರಗತಿಗಳು", Kashmiri: "یوان والین لائیو کلاسز", Konkani: "येवपी लाइव्ह क्लासीस", Maithili: "आगामी लाइव क्लास", Malayalam: "വരാനിരിക്കുന്ന ലൈവ് ക്ലാസുകൾ", Manipuri: "ꯂꯥꯛꯀꯗꯧꯕ ꯂꯥꯏ꯭ꯚ ꯀ꯭ꯂꯥꯁ", Marathi: "पुढील थेट वर्ग", Nepali: "आगामी लाइभ कक्षाहरू", Odia: "ଆଗାମୀ ଲାଇଭ୍ କ୍ଲାସ୍", Punjabi: "ਆਉਣ ਵਾਲੀਆਂ ਲਾਈਵ ਕਲਾਸਾਂ", Sanskrit: "आगामिनः प्रत्यक्षवर्गाः", Santali: "ᱦᱤᱡᱩᱜ ᱠᱟᱱ ᱞᱟive ᱠᱞᱟᱥ", Sindhi: "اچڻ واريون لائيو ڪلاسون", Tamil: "வரவிருக்கும் நேரலை வகுப்புகள்", Telugu: "రాబోయే లైవ్ క్లాసెస్", Urdu: "آنے والی لائیو کلاسز"
   },
   next_session_scheduled: {
-    English: "Next session scheduled", Assamese: "পৰৱৰ্তী শ্ৰেণী নিৰ্ধাৰিত", Bengali: "পরবর্তী সেশন নির্ধারিত", Dogri: "अगला सत्र निर्धारित", Hindi: "अगला सत्र निर्धारित", Tamil: "அடுத்த வகுப்பு திட்டமிடப்பட்டது", Telugu: "తదుపరి సెషన్ షెడ్యూల్ చేయబడింది"
+    English: "Next session scheduled", Assamese: "পৰৱৰ্তী শ্ৰেণী নিৰ্ধাৰিত", Bengali: "পরবর্তী সেশন নির্ধারিত", Bodo: "उननि क्लास", Dogri: "अगला सत्र निर्धारित", Gujarati: "આગામી સત્ર શિડ્યુલ થયેલ", Hindi: "अगला सत्र निर्धारित", Kannada: "ಮುಂದಿನ ಅಧಿವೇಶನ ನಿಗದಿಪಡಿಸಲಾಗಿದೆ", Kashmiri: "بییہ سیشن وقت", Konkani: "फुडलो भाग थारायला", Maithili: "अगिला सत्र निर्धारित", Malayalam: "അടുത്ത സെഷൻ ഷെഡ്യൂൾ ചെയ്തു", Manipuri: "ꯃꯊꯪꯒꯤ ꯁꯦꯁꯟ", Marathi: "पुढील सत्र नियोजित", Nepali: "अर्को सत्र निर्धारित", Odia: "ପରବର୍ତ୍ତୀ ଅଧିବେଶନ ନିର୍ଦ୍ଧାରିତ", Punjabi: "ਅਗਲਾ ਸੈਸ਼ਨ ਨਿਰਧਾਰਤ", Sanskrit: "अग्रिमः वर्गः निश्चितः", Santali: "ᱤᱱᱟᱹ ᱛᱟᱭᱚᱢ Session", Sindhi: "اگلي نشست مقرر", Tamil: "அடுத்த வகுப்பு திட்டமிடப்பட்டது", Telugu: "తదుపరి సెషన్ షెడ్యూల్ చేయబడింది", Urdu: "اگلا سیشن شیڈول"
   },
   files_uploaded: {
-    English: "Files Uploaded", Assamese: "আপলোড কৰা ফাইলসমূহ", Bengali: "আপলোড করা ফাইল", Dogri: "अपलोड कीते दे फाइल", Gujarati: "અપલોડ કરેલ ફાઈલો", Hindi: "अपलोड की गई फाइलें", Kannada: "ಅಪ್‌ಲೋಡ್ ಮಾಡಿದ ಫೈಲ್‌ಗಳು", Malayalam: "അപ്‌ലോഡ് ചെയ്ത ഫയലുകൾ", Marathi: "अपलोड केलेल्या फायली", Punjabi: "ਅੱਪਲੋਡ ਕੀਤੀਆਂ ਫਾਈਲਾਂ", Tamil: "பதிவேற்றப்பட்ட கோப்புகள்", Telugu: "అప్‌లోడ్ చేసిన ఫైళ్లు", Urdu: "اپ لوڈ کردہ فائلیں"
+    English: "Files Uploaded", Assamese: "আপলোড কৰা ফাইলসমূহ", Bengali: "আপলোড করা ফাইল", Bodo: "अपलोड फाइल्स", Dogri: "अपलोड कीते दे फाइल", Gujarati: "અપલોડ કરેલ ફાઈલો", Hindi: "अपलोड की गई फाइलें", Kannada: "ಅಪ್‌ಲೋಡ್ ಮಾಡಿದ ಫೈಲ್‌ಗಳು", Kashmiri: "اپلوڈ گومت فائل", Konkani: "अपलोड केल्ल्यो फाइली", Maithili: "अपलोड कएल फाइल", Malayalam: "അപ്‌ലോഡ് ചെയ്ത ഫയലുകൾ", Manipuri: "ꯑꯞꯂꯣꗇ ꯇꧧꯈꯤꯕ ꯐꯥꯏꯜ", Marathi: "अपलोड केलेल्या फायली", Nepali: "अपलोड गरिएका फाइलहरू", Odia: "ଅପଲୋଡ୍ ଫାଇଲ୍", Punjabi: "ਅੱਪਲੋਡ ਕੀਤੀਆਂ ਫਾਈਲਾਂ", Sanskrit: "आरोपिताः सञ्चिकाः", Santali: "ᱟᱯᱞᱳᱰ ᱟᱠᱟᱱ File", Sindhi: "اپلوڊ ٿيل فائليون", Tamil: "பதிவேற்றப்பட்ட கோப்புகள்", Telugu: "అప్‌లోడ్ చేసిన ఫైళ్లు", Urdu: "اپ لوڈ کردہ فائلیں"
   },
   across_all_course_modules: {
-    English: "Across all course modules", Assamese: "সকলো পাঠ্যক্ৰম মডিউলজুৰি", Bengali: "সমস্ত কোর্স মডিউলে", Dogri: "सारें कोर्स मॉड्यूलें बिच्च", Hindi: "सभी पाठ्यक्रम मॉड्यूल में", Tamil: "அனைத்து பாடத் தொகுதிகளிலும்", Telugu: "అన్ని కోర్సు మాడ్యూళ్లలో"
+    English: "Across all course modules", Assamese: "সকলো পাঠ্যক্ৰম মডিউলজুৰি", Bengali: "সমস্ত কোর্স মডিউলে", Bodo: "गासै मडिउलफोर", Dogri: "सारें कोर्स मॉड्यूलें बिच्च", Gujarati: "તમામ કોર્સ મોડ્યુલમાં", Hindi: "सभी पाठ्यक्रम मॉड्यूल में", Kannada: "ಎಲ್ಲಾ ಕೋರ್ಸ್ ಮಾಡ್ಯೂಲ್‌ಗಳಲ್ಲಿ", Kashmiri: "ساری موڈیولن منز", Konkani: "सगळ्या कोर्स मॉड्यूल्सानी", Maithili: "सभ पाठ्यक्रम मॉड्यूल मे", Malayalam: "എല്ലാ കോഴ്‌സ് മോഡ്യൂളുകളിലുമായി", Manipuri: "ꯃꯣꯗ꯭ꯌꯨꯜ ꯄꯨꯝꯅꯃꯛꯇ", Marathi: "सर्व अभ्यासक्रम मॉड्यूलमध्ये", Nepali: "सबै पाठ्यक्रम मोड्युलमा", Odia: "ସମସ୍ତ ପାଠ୍ୟକ୍ରମ ମଡ୍ୟୁଲରେ", Punjabi: "ਸਾਰੇ ਕੋਰਸ ਮੋਡਿਊਲਾਂ ਵਿੱਚ", Sanskrit: "सर्वपाठ्यक्रमघटकेषु", Santali: "ᱡᱚᱛᱚ Module ᱨᱮ", Sindhi: "مڙني ڪورس ماڊيولن ۾", Tamil: "அனைத்து பாடத் தொகுதிகளிலும்", Telugu: "అన్ని కోర్సు మాడ్యూళ్లలో", Urdu: "تمام کورس ماڈیولز میں"
   },
   quick_actions: {
-    English: "Quick Actions", Assamese: "দ্ৰুত কাৰ্য্যসমূহ", Bengali: "দ্রুত পদক্ষেপ", Dogri: "त्वरित कार्रवाई", Gujarati: "ઝડપી ક્રિયાઓ", Hindi: "त्वरित कार्य", Kannada: "ತ್ವರಿತ ಕ್ರಿಯೆಗಳು", Malayalam: "ദ്രുത നടപടികൾ", Marathi: "जलद कृती", Punjabi: "ਤੇਜ਼ ਕਾਰਵਾਈਆਂ", Tamil: "விரைவு செயல்பாடுகள்", Telugu: "త్వరిత చర్యలు", Urdu: "فوری اقدامات"
+    English: "Quick Actions", Assamese: "দ্ৰুত কাৰ্য্যসমূহ", Bengali: "দ্রুত পদক্ষেপ", Bodo: "गोख्रों हाबा", Dogri: "त्वरित कार्रवाई", Gujarati: "ઝડપી ક્રિયાઓ", Hindi: "त्वरित कार्य", Kannada: "ತ್ವರಿತ ಕ್ರಿಯೆಗಳು", Kashmiri: "جلدی کام", Konkani: "रोखडी कृती", Maithili: "त्वरित कार्य", Malayalam: "ദ്രുത നടപടികൾ", Manipuri: "ꯌꯥꯡꯅ ꯇꯧꯕ", Marathi: "जलद कृती", Nepali: "द्रुत कार्यहरू", Odia: "ତୁରନ୍ତ କାର୍ଯ୍ୟ", Punjabi: "ਤੇਜ਼ ਕਾਰਵਾਈਆਂ", Sanskrit: "शीघ्रकार्याणि", Santali: "ᱩᱥᱟᱹᱨᱟ action", Sindhi: "فوري ڪارروايون", Tamil: "விரைவு செயல்பாடுகள்", Telugu: "త్వరిత చర్యలు", Urdu: "فوری اقدامات"
   },
   fast_shortcuts: {
-    English: "Fast Shortcuts", Assamese: "দ্ৰুত শৰ্টকাট", Bengali: "দ্রুত শর্টকাট", Dogri: "तेज शॉर्टकट", Hindi: "फास्ट शॉर्टकट", Tamil: "வேகமான குறுக்குவழிகள்", Telugu: "ఫాస్ట్ షార్ట్‌కట్‌లు"
+    English: "Fast Shortcuts", Assamese: "দ্ৰুত শৰ্টকাট", Bengali: "দ্রুত শর্টকাট", Bodo: "शर्टकाट", Dogri: "तेज शॉर्टकट", Gujarati: "ઝડપી શોર્ટકટ", Hindi: "फास्ट शॉर्टकट", Kannada: "ವೇಗದ ಶಾರ್ಟ್‌ಕಟ್‌ಗಳು", Kashmiri: "شارٹ کٹ", Konkani: "शॉर्टकट", Maithili: "फास्ट शॉर्टकट", Malayalam: "വേഗത്തിലുള്ള ഷോർട്ട്കട്ടുകൾ", Manipuri: "ꯁꯣꯔ꯭ꯠꯀꯠ", Marathi: "जलद शॉर्टकट", Nepali: "छिटो सर्टकट", Odia: "ଦ୍ରୁତ ସର୍ଟକଟ୍", Punjabi: "ਤੇਜ਼ ਸ਼ਾਰਟਕੱਟ", Sanskrit: "लघुमार्गाः", Santali: "Shortcut", Sindhi: "شارت ڪٽس", Tamil: "வேகமான குறுக்குவழிகள்", Telugu: "ఫాస్ట్ షార్ట్‌కట్‌లు", Urdu: "فوری شارٹ کٹس"
   },
   recent_activity_feed: {
-    English: "Recent Activity Feed", Assamese: "সাম্প্রতিক কার্যকলাপ ফিড", Bengali: "সাম্প্রতিক ক্রিয়াকলাপের ফিড", Dogri: "हालिया गतिविधि फ़ीड", Gujarati: "તાજેતરની પ્રવૃત્તિ ફીડ", Hindi: "हालिया गतिविधि फ़ीड", Kannada: "ಇತ್ತೀಚಿನ ಚಟುವಟಿಕೆ ಫೀಡ್", Malayalam: "സമീപകാല പ്രവർത്തന ഫീഡ്", Marathi: "नुकतीच झालेली कृती", Punjabi: "ਤਾਜ਼ਾ ਗਤੀਵਿਧੀ ਫੀਡ", Tamil: "சமீபத்திய செயல்பாடுகள்", Telugu: "ఇటీవలి కార్యాచరణ ఫీడ్", Urdu: "حالیہ سرگرمی فیڈ"
+    English: "Recent Activity Feed", Assamese: "সাম্প্রতিক কার্যকলাপ ফিড", Bengali: "সাম্প্রতিক ক্রিয়াকলাপের ফিড", Bodo: "दाबायदि हाबा", Dogri: "हालिया गतिविधि फ़ीड", Gujarati: "તાજેતરની પ્રવૃત્તિ ફીડ", Hindi: "हालिया गतिविधि फ़ीड", Kannada: "ಇತ್ತೀಚಿನ ಚಟುವಟಿಕೆ ಫೀಡ್", Kashmiri: "حالیہ سرگرمی", Konkani: "हालींची कृती", Maithili: "हालिया गतिविधि फ़ीड", Malayalam: "സമീപകാല പ്രവർത്തന ഫീഡ്", Manipuri: "ꯍꯧꯖꯤꯛꯀꯤ ꯊꯕꯛ-ꯊৌꯔꯝ", Marathi: "नुकतीच झालेली कृती", Nepali: "हालैको गतिविधि", Odia: "ସାମ୍ପ୍ରତିକ କାର୍ଯ୍ୟକଳାପ", Punjabi: "ਤਾਜ਼ਾ ਗਤੀਵਿਧੀ ਫੀਡ", Sanskrit: "हालिया कार्यसूचिका", Santali: "ᱱᱟᱶᱟ Activity", Sindhi: "تازيون سرگرميون", Tamil: "சமீபத்திய செயல்பாடுகள்", Telugu: "ఇటీవలి కార్యాచరణ ఫీడ్", Urdu: "حالیہ سرگرمی فیڈ"
   },
   live_audit_log: {
-    English: "Live Audit Log", Assamese: "লাইভ অডিট লগ", Bengali: "লাইভ অডিট লগ", Dogri: "लाइव ऑडिट लॉग", Hindi: "लाइव ऑडिट लॉग", Tamil: "நேரலை தணிக்கை नोंदवैकள்", Telugu: "లైవ్ ఆడిట్ లాగ్"
+    English: "Live Audit Log", Assamese: "লাইভ অডিট লগ", Bengali: "লাইভ অডিট লগ", Bodo: "लाइभ अडिट", Dogri: "लाइव ऑडिट लॉग", Gujarati: "લાઇવ ઓડિટ લોગ", Hindi: "लाइव ऑडिट लॉग", Kannada: "ಲೈವ್ ಆಡಿಟ್ ಲಾಗ್", Kashmiri: "لائیو لاگ", Konkani: "लाइव्ह ऑडिट", Maithili: "लाइव ऑडिट लॉग", Malayalam: "ലൈവ് ഓഡിറ്റ് ലോഗ്", Manipuri: "ꯂꯥꯏ꯭ꯚ ꯑꯣꯗꯤꯠ", Marathi: "थेट ऑडिट नोंद", Nepali: "लाइभ अडिट लग", Odia: "ଲାଇଭ୍ ଅଡିଟ୍ ଲଗ୍", Punjabi: "ਲਾਈਵ ਆਡਿਟ ਲੌਗ", Sanskrit: "प्रत्यक्षशोधनलेखः", Santali: "Live Audit Log", Sindhi: "لائيو آڊٽ لاڳ", Tamil: "நேரலை தணிக்கை பதிவேடு", Telugu: "లైవ్ ఆడిట్ లాగ్", Urdu: "لائیو آڈٹ لاگ"
   },
   quick_create_course: {
-    English: "Quick Create Course", Assamese: "দ্ৰুত পাঠ্যক্ৰম সৃষ্টি কৰক", Bengali: "দ্রুত কোর্স তৈরি করুন", Dogri: "नवा कोर्स जल्दी बनाओ", Hindi: "त्वरित पाठ्यक्रम बनाएं", Tamil: "விரைவாக பாடம் உருவாக்கு", Telugu: "కోర్సును త్వరగా సృష్టించండి"
+    English: "Quick Create Course", Assamese: "দ্ৰুত পাঠ্যক্ৰম সৃষ্টি কৰক", Bengali: "দ্রুত কোর্স তৈরি করুন", Bodo: "गोदान आयदा बनाइ", Dogri: "नवा कोर्स जल्दी बनाओ", Gujarati: "ઝડપી કોર્સ બનાવો", Hindi: "त्वरित पाठ्यक्रम बनाएं", Kannada: "ತ್ವರಿತ ಕೋರ್ಸ್ ರಚಿಸಿ", Kashmiri: "نواں کورس جوڑیو", Konkani: "नवो कोर्स रोखडो रचात", Maithili: "नवीन पाठ्यक्रम बनाबी", Malayalam: "ദ്രുത കോഴ്‌സ് ഉണ്ടാക്കുക", Manipuri: "ꯌꯥꯡꯅ ꯀꯣꯔꯁ ꯁꯦꯝꯕ", Marathi: "त्वरित अभ्यासक्रम तयार करा", Nepali: "द्रुत पाठ्यक्रम सिर्जना गर्नुहोस्", Odia: "ତୁରନ୍ତ ପାଠ୍ୟକ୍ରମ ତିଆରି କରନ୍ତୁ", Punjabi: "ਤੇਜ਼ੀ ਨਾਲ ਕੋਰਸ ਬਣਾਓ", Sanskrit: "शीघ्रं पाठ्यक्रमं रचयतु", Santali: "ᱩᱥᱟᱹᱨᱟ Course ᱵᱮᱱᱟᱣ", Sindhi: "تيزي سان ڪورس ٺاهيو", Tamil: "விரைவாக பாடம் உருவாக்கு", Telugu: "కోర్సును త్వరగా సృష్టించండి", Urdu: "فوری کورس بنائیں"
   },
   quick_create_course_desc: {
-    English: "Design and publish vocational learning modules (unlimited)", Assamese: "বৃত্তিমূলক শিকন মডিউল ডিজাইন আৰু প্ৰকাশ কৰক", Bengali: "ভোকেশনাল লার্নিং মডিউল তৈরি করুন", Dogri: "व्यावसायिक शिक्षण मॉड्यूल तैयार करो", Hindi: "व्यावसायिक शिक्षण मॉड्यूल डिज़ाइन करें", Tamil: "தொழிற்கல்வி பாடங்களை வடிவமைக்கவும்", Telugu: "వృత్తి విద్యా మాడ్యూళ్లను రూపొందించండి"
+    English: "Design and publish vocational learning modules (unlimited)", Assamese: "বৃত্তিমূলক শিকন মডিউল ডিজাইন আৰু প্ৰকাশ কৰক", Bengali: "ভোকেশনাল লার্নিং মডিউল তৈরি করুন", Bodo: "सोलिफिनाय मडिउल", Dogri: "व्यावसायिक शिक्षण मॉड्यूल तैयार करो", Gujarati: "વ્યાવસાયિક લર્નિંગ મોડ્યુલ બનાવો", Hindi: "व्यावसायिक शिक्षण मॉड्यूल डिज़ाइन करें", Kannada: "ವೃತ್ತಿಪರ ಕಲಿಕಾ ಮಾಡ್ಯೂಲ್‌ಗಳನ್ನು ವಿನ್ಯಾಸಗೊಳಿಸಿ", Kashmiri: "ماڈیول بناویو", Konkani: "व्यावसायिक शिकपाचे मॉड्युल्स डिझाइन करात", Maithili: "व्यावसायिक शिक्षण मॉड्यूल डिज़ाइन करू", Malayalam: "തൊഴിലധിഷ്ഠിത ലേണിംഗ് മോഡ്യൂളുകൾ രൂപകൽപ്പന ചെയ്യുക", Manipuri: "ꯃꯣꯗ꯭ꯌꯨꯜ ꯁꯦꯝꯕ", Marathi: "व्यावसायिक शिक्षण मॉड्यूल डिझाइन करा", Nepali: "व्यावसायिक सिकाइ मोड्युल डिजाइन गर्नुहोस्", Odia: "ବୃତ୍ତିଗତ ଶିକ୍ଷଣ ମଡ୍ୟୁଲ୍ ଡିଜାଇନ୍ କରନ୍ତୁ", Punjabi: "ਕਿੱਤਾਮੁਖੀ ਸਿੱਖਣ ਵਾਲੇ ਮੋਡਿਊਲ ਡਿਜ਼ਾਈਨ ਕਰੋ", Sanskrit: "व्यावसायिकशिक्षणघटकान् रचयतु", Santali: "Module Design ᱢᱮ", Sindhi: "پيشي ورانہ ماڊيولز جوڙيو", Tamil: "தொழிற்கல்வி பாடங்களை வடிவமைக்கவும்", Telugu: "వృత్తి విద్యా మాడ్యూళ్లను రూపొందించండి", Urdu: "پیشہ ورانہ تعلیمی ماڈیولز ڈیزائن کریں"
   },
   upcoming_live_classes_desc: {
-    English: "Plan realtime interactive sessions with students", Assamese: "ছাত্ৰ-ছাত্ৰীসকলৰ সৈতে লাইভ কাৰ্যসূচী প্ৰস্তুত কৰক", Bengali: "শিক্ষার্থীদের সাথে রিয়েলটাইম লাইভ সিডিউল করুন", Dogri: "छात्रें कन्नै लाइव सत्र योजना बनाओ", Hindi: "छात्रों के साथ रियल-टाइम लाइव सत्रों की योजना बनाएं", Tamil: "மாணவர்களுடன் நேரலை வகுப்புகளை திட்டமிடுங்கள்", Telugu: "విద్యార్థులతో లైవ్ సెషన్‌లను ప్లాన్ చేయండి"
+    English: "Plan realtime interactive sessions with students", Assamese: "ছাত্ৰ-ছাত্ৰীসকলৰ সৈতে লাইভ কাৰ্যসূচী প্ৰস্তুত কৰক", Bengali: "শিক্ষার্থীদের সাথে রিয়েলটাইম লাইভ সিডিউল করুন", Bodo: "फरायसाफोरजों लाइभ हाबा", Dogri: "छात्रें कन्नै लाइव सत्र योजना बनाओ", Gujarati: "વિદ્યાર્થીઓ સાથે લાઇવ સત્ર યોજના બનાવો", Hindi: "छात्रों के साथ रियल-टाइम लाइव सत्रों की योजना बनाएं", Kannada: "ವಿದ್ಯಾರ್ಥಿಗಳೊಂದಿಗೆ ಲೈವ್ ಸೆಷನ್‌ಗಳನ್ನು ಯೋಜಿಸಿ", Kashmiri: "لائیو سیشن", Konkani: "विद्यार्थ्या वांगडा लाइव्ह सत्रांची येवजण करात", Maithili: "विद्यार्थी के साथ लाइव सत्रक योजना बनाबू", Malayalam: "വിദ്യാർത്ഥികളുമായി തത്സമയ ലൈവ് സെഷനുകൾ ആസൂത്രണം ചെയ്യുക", Manipuri: "ꯃꯍꩩꯔꯣꯏꯁꯤꯡꯒ ꯂꯥꯏ꯭ꯚ", Marathi: "विद्यार्थ्यांसह थेट सत्रांचे नियोजन करा", Nepali: "विद्यार्थीहरूसँग वास्तविक समयको लाइभ सत्र योजना बनाउनुहोस्", Odia: "ଛାତ୍ରଛାତ୍ରୀଙ୍କ ସହ ଲାଇଭ୍ ସେସନ୍ ଯୋଜନା କରନ୍ତୁ", Punjabi: "ਵਿਦਿਆਰਥੀਆਂ ਨਾਲ ਰੀਅਲ-ਟਾਈਮ ਲਾਈਵ ਸੈਸ਼ਨਾਂ ਦੀ ਯੋਜਨਾ ਬਣਾਓ", Sanskrit: "छात्रैः सह प्रत्यक्षवर्गस्य योजनां करोतु", Santali: "Live Class ᱵᱮᱱᱟᱣ ᱢᱮ", Sindhi: "شاگردن سان لائيو سسيشن يوجنا جوڙيو", Tamil: "மாணவர்களுடன் நேரலை வகுப்புகளை திட்டமிடுங்கள்", Telugu: "విద్యార్థులతో లైవ్ సెషన్‌లను ప్లాన్ చేయండి", Urdu: "طلباء کے ساتھ لائیو سیشنز کی منصوبہ بندی کریں"
   },
   files_upload_center: {
-    English: "Files Upload Center", Assamese: "ফাইল আপলোড কেন্দ্ৰ", Bengali: "ফাইল আপলোড সেন্টার", Dogri: "फाइल अपलोड केंद्र", Hindi: "फ़ाइल अपलोड केंद्र", Tamil: "கோப்புகள் பதிவேற்ற மையம்", Telugu: "ఫైళ్ల అప్‌లోడ్ కేంద్రం"
+    English: "Files Upload Center", Assamese: "ফাইল আপলোড কেন্দ্ৰ", Bengali: "ফাইল আপলোড সেন্টার", Bodo: "फाइल अपलोड सेंटर", Dogri: "फाइल अपलोड केंद्र", Gujarati: "ફાઇલ અપલોડ સેન્ટર", Hindi: "फ़ाइल अपलोड केंद्र", Kannada: "ಫೈಲ್‌ಗಳ ಅಪ್‌ಲೋಡ್ ಕೇಂದ್ರ", Kashmiri: "فائل اپلوڈ سینٹر", Konkani: "फाइली अपलोड केंद्र", Maithili: "फाइल अपलोड केंद्र", Malayalam: "ഫയലുകൾ അപ്‌ലോഡ് കേന്ദ്രം", Manipuri: "ꯐꯥꯏꯜ ꯑꯞꯂꯣꯗ ꯁꯦꯟꯇꯔ", Marathi: "फायली अपलोड केंद्र", Nepali: "फाइल अपलोड केन्द्र", Odia: "ଫାଇଲ୍ ଅପଲୋଡ୍ କେନ୍ଦ୍ର", Punjabi: "ਫਾਈਲ ਅੱਪਲੋਡ ਕੇਂਦਰ", Sanskrit: "सञ्चिकारोपणकेन्द्रम्", Santali: "File Upload Center", Sindhi: "فائل اپلوڊ سينٽر", Tamil: "கோப்புகள் பதிவேற்ற மையம்", Telugu: "ఫైళ్ల అప్‌లోడ్ కేంద్రం", Urdu: "فائل اپ لوڈ سینٹر"
   },
   files_upload_center_desc: {
-    English: "Add videos, PDFs, and presentations to your library", Assamese: "ভিডিঅ', পিডিএফ আৰু উপস্থাপন যোগ কৰক", Bengali: "ভিডিও, পিডিএফ এবং প্রেজেন্টেশন যোগ করুন", Dogri: "वीडियो, पीडीएफ ते प्रेजेंटेशन जोड़ो", Hindi: "लाइब्रेरी में वीडियो, पीडीएफ और प्रस्तुतियाँ जोड़ें", Tamil: "வீடியோக்கள், PDFகள் மற்றும் விளக்கக்காட்சிகளைச் சேர்க்கவும்", Telugu: "వీడియోలు, PDFలు మరియు ప్రెజెంటేషన్‌లను జోడించండి"
+    English: "Add videos, PDFs, and presentations to your library", Assamese: "ভিডিঅ', পিডিএফ আৰু উপস্থাপন যোগ কৰক", Bengali: "ভিডিও, পিডিএফ এবং প্রেজেন্টেশন যোগ করুন", Bodo: "भिडियो पीडीएफ सों", Dogri: "वीडियो, पीडीएफ ते प्रेजेंटेशन जोड़ो", Gujarati: "વિડિઓ, પીડીએફ અને પ્રેઝન્ટેશન ઉમેરો", Hindi: "लाइब्रेरी में वीडियो, पीडीएफ और प्रस्तुतियाँ जोड़ें", Kannada: "ವೀಡಿಯೊಗಳು, PDFಗಳು এবং ಪ್ರಸ್ತುತಿಗಳನ್ನು ಸೇರಿಸಿ", Kashmiri: "ویڈیو تہ پی ڈی ایف", Konkani: "व्हिडिओ, पीडीएफ आनी सादरीकरणां जोडात", Maithili: "वीडियो, पीडीएफ आ प्रस्तुति जोड़ू", Malayalam: "വീഡിയോകൾ, PDF-കൾ, പ്രസന്റേഷനുകൾ എന്നിവ ചേർക്കുക", Manipuri: "ꯚꯤꯗꯤꯑꯣ, PDF ꯍꯥꞧᱪꯤꯅꯕ", Marathi: "व्हिडिओ, पीडीएफ आणि सादरीकरणे जोडा", Nepali: "भिडियो, पीडीएफ र प्रस्तुतिका सामग्रीहरू थप्नुहोस्", Odia: "ଭିଡିଓ, PDF ଏବଂ ପ୍ରେଜେଣ୍ଟେସନ୍ ଯୋଡନ୍ତୁ", Punjabi: "ਵੀਡੀਓ, ਪੀਡੀਐਫ ਅਤੇ ਪ੍ਰਸਤੁਤੀਆਂ ਸ਼ਾਮਲ ਕਰੋ", Sanskrit: "दृश्यश्रव्यचित्रलेखान् संकलयतु", Santali: "Video, PDF Upload ᱢᱮ", Sindhi: "ويڊيو، پي ڊي ايف شامل ڪريو", Tamil: "வீடியோக்கள், PDFகள் மற்றும் விளக்கக்காட்சிகளைச் சேர்க்கவும்", Telugu: "వీడియోలు, PDFలు మరియు ప్రెజెంటేషన్‌లను జోడించండి", Urdu: "ویڈیوز، پی ڈی ایف اور پریزنٹیشنز شامل کریں"
   },
   view_analytics: {
-    English: "View Analytics", Assamese: "বিশ্লেষণ চাওক", Bengali: "এনালাইটিক্স দেখুন", Dogri: "विश्लेषण देखो", Hindi: "विश्लेषण देखें", Tamil: "பகுப்பாய்வைக் காண்க", Telugu: "విశ్లేషణను చూడండి"
+    English: "View Analytics", Assamese: "বিশ্লেষণ চাওক", Bengali: "এনালাইটিক্স দেখুন", Bodo: "बिजिरनाय नाय", Dogri: "विश्लेषण देखो", Gujarati: "વિશ્લેષણ જુઓ", Hindi: "विश्लेषण देखें", Kannada: "ವಿಶ್ಲೇಷಣೆ ವೀಕ್ಷಿಸಿ", Kashmiri: "تجزیہ وچھیو", Konkani: "विश्लेषण पळयात", Maithili: "विश्लेषण देखू", Malayalam: "വിശകലനം കാണുക", Manipuri: "ꯑꯦꯅꥥꯂꯥꯏꯇꯤꯛꯁ ꯌꯦꯡꯕ", Marathi: "विश्लेषण पहा", Nepali: "विश्लेषण हेर्नुहोस्", Odia: "ବିଶ୍ଳେଷଣ ଦେଖନ୍ତୁ", Punjabi: "ਵਿਸ਼ਲੇਸ਼ਣ ਵੇਖੋ", Sanskrit: "विश्लेषणं पश्यतु", Santali: "Analytics ᱧᱮᱞ ᱢᱮ", Sindhi: "تجزيئي ڏسو", Tamil: "பகுப்பாய்வைக் காண்க", Telugu: "విశ్లేషణను చూడండి", Urdu: "تجزیہ دیکھیں"
   },
 
-  // Tool Titles & Descriptions
+  // Recent Activity Feed Dynamic Items
+  act_hosted_course: {
+    English: "Hosted 1 core course: Satellite Communication", Assamese: "১ টা মূল পাঠ্যক্ৰম সম্প্ৰচাৰিত: চেটেলাইট কমিউনিকেচন", Bengali: "১টি মূল কোর্স হোস্ট করা হয়েছে: স্যাটেলাইট কমিউনিকেশন", Bodo: "1 गाहाय आयदा सोलिबाय: स्याटेलाइट कम्युनिकेसन", Dogri: "1 मुख्य कोर्स होस्ट कीता: सैटेलाइट कम्युनिकेशन्", Gujarati: "1 મુખ્ય કોર્સ હોસ્ટ કરાયો: સેટેલાઇટ કોમ્યુનિકેશન", Hindi: "1 मुख्य पाठ्यक्रम होस्ट किया गया: सैटेलाइट कम्युनिकेशन", Kannada: "1 ಪ್ರಮುಖ ಕೋರ್ಸ್ ಹೋಸ್ಟ್ ಮಾಡಲಾಗಿದೆ: ಸ್ಯಾಟಲೈಟ್ ಕಮ್ಯುನಿಕೇಶನ್", Kashmiri: "1 اصلی کورس: سیٹلائٹ کمیونیکیشن", Konkani: "1 मूळ कोर्स होस्ट केला: सॅटेलाइट कम्युनिकेशन", Maithili: "1 मुख्य पाठ्यक्रम होस्ट कएल गेल: सैटेलाइट कम्युनिशन", Malayalam: "1 പ്രധാന കോഴ്‌സ് നടത്തി: സാറ്റലൈറ്റ് കമ്മ്യൂണിക്കേഷൻ", Manipuri: "1 ꯀꯣꯔꯁ: ꯁꯦꯇꯦꯂꯥꯏꯠ ꯀꯝꯌꯨꯅꯤꯀꯦꯁꯟ", Marathi: "1 मुख्य अभ्यासक्रम होस्ट केला: सॅटेलाइट कम्युनिकेशन", Nepali: "१ मुख्य पाठ्यक्रम सञ्चालित: स्याटेलाइट कम्युनिकेसन", Odia: "୧ ମୁଖ୍ୟ ପାଠ୍ୟକ୍ରମ ସଞ୍ଚାଳିତ: ସାଟେଲାଇଟ୍ କମ୍ୟୁନିକେସନ୍", Punjabi: "1 ਮੁੱਖ ਕੋਰਸ ਹੋਸਟ ਕੀਤਾ: ਸੈਟੇਲਾਈਟ ਕਮਿਊਨੀਕੇਸ਼ਨ", Sanskrit: "1 मुख्यपाठ्यक्रमः: उपग्रहसञ्चारः", Santali: "1 Course Hosted: Satellite Communication", Sindhi: "1 اهم ڪورس: سيٽلائيٽ ڪميونيڪيشن", Tamil: "1 நேரலை பாடம் வழங்கப்படுகிறது: சாட்டிலைட் கம்யூனிகேஷன்", Telugu: "1 సక్రియ కోర్సు హోస్ట్ చేయబడింది: శాటిలైట్ కమ్యూనికేషన్", Urdu: "1 اہم کورس: سیٹلائٹ کمیونیکیشن"
+  },
+  act_uploaded_files: {
+    English: "Uploaded 8 learning files & Question Banks for Satellite Communication", Assamese: "৮ টা অধ্যয়ন নথি আৰু প্ৰশ্ন বেংক আপলোড কৰা হৈছে", Bengali: "৮টি শেখার ফাইল এবং প্রশ্ন ব্যাংক আপলোড করা হয়েছে", Bodo: "8 फाइल्स अपलोड खालामबाय", Dogri: "8 फाइल ते प्रश्न बैंक अपलोड कीते गे", Gujarati: "8 ફાઇલો અને પ્રશ્ન બેંક અપલોડ કરી", Hindi: "8 अध्ययन फाइलें और प्रश्न बैंक अपलोड किए गए", Kannada: "8 ಅಧ್ಯಯನ ಫೈಲ್‌ಗಳು ಮತ್ತು ಪ್ರಶ್ನೆ ಬ್ಯಾಂಕ್‌ಗಳನ್ನು ಅಪ್‌ಲೋಡ್ ಮಾಡಲಾಗಿದೆ", Kashmiri: "8 فائل اپلوڈ", Konkani: "8 फायली आनी प्रस्न बँक अपलोड केली", Maithili: "8 अध्ययन फाइल आ प्रश्न बैंक अपलोड कएल गेल", Malayalam: "8 പഠന ഫയലുകളും ചോദ്യ ബാങ്കുകളും അപ്‌ലോഡ് ചെയ്തു", Manipuri: "8 ꯐꯥꯏꯜ ꯑꯃꯁꯨꯡ ꯀ꯭ꯋꯦꯁ꯭ꯆꯟ ꯕꯦꯡꯛ", Marathi: "8 अभ्यास फायली व प्रश्नपेढी अपलोड केली", Nepali: "८ अध्ययन फाइलहरू र प्रश्न बैंक अपलोड गरियो", Odia: "୮ଟି ପାଠ୍ୟ ଫାଇଲ୍ ଏବଂ ପ୍ରଶ୍ନ ବ୍ୟାଙ୍କ ଅପଲୋଡ୍ ହୋଇଛି", Punjabi: "8 ਅਧਿਐਨ ਫਾਈਲਾਂ ਅਤੇ ਪ੍ਰਸ਼ਨ ਬੈਂਕ ਅੱਪਲੋਡ ਕੀਤੇ ਗਏ", Sanskrit: "8 शिक्षणसञ्चिकाः प्रश्नकोशश्च आरोपिताः", Santali: "8 File upload ᱮᱱᱟ", Sindhi: "8 فائليون ۽ سوالن جي بئنڪ اپلوڊ ٿي", Tamil: "8 பாடக் கோப்புகள் மற்றும் வினா வங்கிகள் பதிவேற்றப்பட்டன", Telugu: "8 స్టడీ ఫైళ్లు మరియు ప్రశ్న బ్యాంక్‌లు అప్‌లోడ్ చేయబడ్డాయి", Urdu: "8 تعلیمی فائلیں اور سوالیہ بنک اپ لوڈ کیے گئے"
+  },
+  act_published_notes: {
+    English: "Published Unit 1-5 Lecture Notes & Part-B Excel Spreadsheets", Assamese: "ইউনিট ১-৫ ৰ বক্তৃতা নোট আৰু স্প্ৰেডশ্বীট প্ৰকাশ কৰা হৈছে", Bengali: "ইউনিট ১-৫ লেকচার নোটস এবং এক্সেল প্রকাশ করা হয়েছে", Bodo: "युनिट 1-5 नोट्स", Dogri: "यूनिट 1-5 लेक्चर नोट्स प्रकाशित कीते गे", Gujarati: "યુનિટ 1-5 લેક્ચર નોટ્સ પ્રકાશીત કરાઈ", Hindi: "इकाई 1-5 व्याख्यान नोट्स एवं एक्सेल शीट प्रकाशित की गईं", Kannada: "ಯೂನಿಟ್ 1-5 ಉಪನ್ಯಾಸ ಟಿಪ್ಪಣಿಗಳನ್ನು ಪ್ರಕಟಿಸಲಾಗಿದೆ", Kashmiri: "نوٹس شائع", Konkani: "युनिट 1-5 व्याख्यान टीपां प्रसिद्ध केलीं", Maithili: "इकाई 1-5 व्याख्यान नोट्स प्रकाशित कएल गेल", Malayalam: "യൂണിറ്റ് 1-5 ലെക്ചർ നോട്ടുകൾ പ്രസിദ്ധീകരിച്ചു", Manipuri: "ꯌꯨꯅꯤꯠ 1-5 ꯅꯣꯠꯁ", Marathi: "युनिट 1-5 व्याख्यान टिपा प्रकाशित केल्या", Nepali: "इकाई १-५ व्याख्यान नोटहरू प्रकाशित गरियो", Odia: "ୟୁନିଟ୍ ୧-୫ ଅଧ୍ୟାୟ ନୋଟ୍ସ ପ୍ରକାଶିତ ହୋଇଛି", Punjabi: "ਯੂਨਿਟ 1-5 ਲੈਕਚਰ ਨੋਟਸ ਪ੍ਰਕਾਸ਼ਿਤ ਕੀਤੇ ਗਏ", Sanskrit: "इकाई 1-5 पाठ्यटिप्पण्यः प्रकाशिताः", Santali: "Unit 1-5 Notes publish ᱮᱱᱟ", Sindhi: "يونٽ 1-5 نوٽس شائع ٿيا", Tamil: "அலகு 1-5 விரிவுரை குறிப்புகள் வெளியிடப்பட்டன", Telugu: "యూనిట్ 1-5 లెక్చర్ నోట్స్ ప్రచురించబడ్డాయి", Urdu: "یونٹ 1-5 لیکچر نوٹس شائع کیے گئے"
+  },
+  act_students_enrolled: {
+    English: "1,250 students actively enrolled in Satellite Communication", Assamese: "১,২৫০ গৰাকী শিক্ষাৰ্থী সক্ৰিয়ভাৱে নামভৰ্তি কৰিছে", Bengali: "১,২৫০ জন শিক্ষার্থী সক্রিয়ভাবে যুক্ত", Bodo: "1,250 फरायसाफोर", Dogri: "1,250 छात्र सक्रिय रूपै कन्नै नामांकित न", Gujarati: "1,250 વિદ્યાર્થીઓ સક્રિય રીતે નોંધાયેલા છે", Hindi: "1,250 छात्र सैटेलाइट कम्युनिकेशन में सक्रिय रूप से नामांकित हैं", Kannada: "1,250 ವಿದ್ಯಾರ್ಥಿಗಳು ಸಕ್ರಿಯವಾಗಿ ಸೇರ್ಪಡೆಗೊಂಡಿದ್ದಾರೆ", Kashmiri: "1,250 شاگرد", Konkani: "1,250 विद्यार्थी सक्रियपणान समाविष्ट", Maithili: "1,250 विद्यार्थी सक्रिय रूप सँ नामांकित छथि", Malayalam: "1,250 വിദ്യാർത്ഥികൾ സജീവമായി ചേർന്നു", Manipuri: "1,250 ꯃꯍꯩꯔꯣꯏꯁꯤꯡ", Marathi: "1,250 विद्यार्थी सक्रियपणे सहभागी आहेत", Nepali: "१,२५० विद्यार्थीहरू सक्रिय रूपमा भर्ना भएका छन्", Odia: "୧,୨୫୦ ଛାତ୍ରଛାତ୍ରୀ ସକ୍ରିୟ ଭାବରେ ଯୋଗ ଦେଇଛନ୍ତି", Punjabi: "1,250 ਵਿਦਿਆਰਥੀ ਸਰਗਰਮੀ ਨਾਲ ਦਾਖਲ ਹਨ", Sanskrit: "1,250 छात्राः सक्रियाः सन्ति", Santali: "1,250 ᱪᱮᱛᱮᱫᱤᱭᱟᱹ Enrolled", Sindhi: "1,250 شاگرد فعال آهن", Tamil: "1,250 மாணவர்கள் பாடத்தில் இணைந்துள்ளனர்", Telugu: "1,250 మంది విద్యార్థులు సక్రియంగా నమోదయ్యారు", Urdu: "1,250 طلباء سمیٹ فعال ہیں"
+  },
+  act_live_scheduled: {
+    English: "Live streaming session scheduled: Satellite Orbit & Link Budget Lab", Assamese: "লাইভ শ্ৰেণী নিৰ্ধাৰণ কৰা হৈছে: চেটেলাইট অৰ্বিট লেব", Bengali: "লাইভ স্ট্রিমিং নির্ধারিত: স্যাটেলাইট অরবিট ল্যাব", Bodo: "लाइभ क्लास थि खालामबाय", Dogri: "लाइव सत्र निर्धारित: सैटेलाइट ऑर्बिट लैब", Gujarati: "લાઇવ સ્ટ્રીમિંગ લૅબ શિડ્યુલ થયેલ", Hindi: "लाइव स्ट्रीमिंग सत्र निर्धारित: सैटेलाइट ऑर्बिट एवं लिंक बजट लैब", Kannada: "ಲೈವ್ ಸ್ಟ್ರೀಮಿಂಗ್ ಸೆಷನ್ ನಿಗದಿಪಡಿಸಲಾಗಿದೆ", Kashmiri: "لائیو سیشن", Konkani: "लाइव्ह सत्राची येवजण ठरली", Maithili: "लाइव स्ट्रीमिंग सत्र निर्धारित कएल गेल", Malayalam: "ലൈവ് സ്ട്രീമിംഗ് സെഷൻ ഷെഡ്യൂൾ ചെയ്തു", Manipuri: "ꯂꯥꯏ꯭ꯚ ꯁꯦꯁꯟ", Marathi: "थेट सत्र नियोजित: सॅटेलाइट ऑर्बिट लॅब", Nepali: "लाइभ सत्र निर्धारित: स्याटेलाइट अर्बिट ल्याब", Odia: "ଲାଇଭ୍ ଷ୍ଟ୍ରିମିଂ ସେସନ୍ ସୂଚୀବଦ୍ଧ ହୋଇଛି", Punjabi: "ਲਾਈਵ ਸਟ੍ਰੀਮਿੰਗ ਸੈਸ਼ਨ ਨਿਰਧਾਰਤ ਕੀਤਾ ਗਿਆ", Sanskrit: "प्रत्यक्षसञ्चारवर्गः निश्चितः", Santali: "Live Session Scheduled", Sindhi: "لائيو اسٽريمنگ مقرر ٿي", Tamil: "நேரலை வகுப்பு திட்டமிடப்பட்டது: சாட்டிலைட் ஆர்பிட் லேப்", Telugu: "లైవ్ స్ట్రీమింగ్ సెషన్ షెడ్యూల్ చేయబడింది: శాటిలైట్ ఆర్బిట్ ల్యాబ్", Urdu: "لائیو سٹریمنگ سیشن شیڈول کر دیا گیا"
+  },
+  time_just_now: {
+    English: "Just now", Assamese: "এইমাত্র", Bengali: "এইমাত্র", Bodo: "दासो", Dogri: "हौने", Gujarati: "હમણાં જ", Hindi: "अभी-अभी", Kannada: "ಈಗಷ್ಟೇ", Kashmiri: "وُنیکینس", Konkani: "आत्तांच", Maithili: "एखने", Malayalam: "ഇപ്പോൾ", Manipuri: "ꯍꯧꯖꯤꯛꯃꯛ", Marathi: "आत्ताच", Nepali: "भर्खरै", Odia: "ଏହିମାତ୍ର", Punjabi: "ਹੁਣੇ ਹੀ", Sanskrit: "अधुनावै", Santali: "ᱱᱤᱛ geometric", Sindhi: "هاڻي ئي", Tamil: "இப்பொழுது", Telugu: "ఇప్పుడే", Urdu: "ابھی ابھی"
+  },
+  time_15_mins_ago: {
+    English: "15 mins ago", Assamese: "১৫ মিনিট আগতে", Bengali: "১৫ মিনিট আগে", Bodo: "15 मिनिट सिग्नाव", Dogri: "15 मिनट पैहले", Gujarati: "15 મિનિટ પહેલાં", Hindi: "15 मिनट पहले", Kannada: "15 ನಿಮಿಷಗಳ ಹಿಂದೆ", Kashmiri: "15 منٹ برونٹھ", Konkani: "15 मिनाट आदीं", Maithili: "15 मिनट पहिने", Malayalam: "15 മിനിറ്റ് മുമ്പ്", Manipuri: "15 ꯃꯤꯅꯤꯠ ꯃꯃꯥꯡꯗ", Marathi: "15 मिनिटांपूर्वी", Nepali: "१५ मिनेट पहिले", Odia: "୧୫ ମିନିଟ୍ ପୂର୍ବରୁ", Punjabi: "15 ਮਿੰਟ ਪਹਿਲਾਂ", Sanskrit: "15 निमेषपूर्वम्", Santali: "15 Min ᱞᱟᱦᱟ", Sindhi: "15 منٽ اڳ", Tamil: "15 நிமிடங்களுக்கு முன்", Telugu: "15 నిమిషాల క్రితం", Urdu: "15 منٹ پہلے"
+  },
+  time_1_hour_ago: {
+    English: "1 hour ago", Assamese: "১ ঘণ্টা আগতে", Bengali: "১ ঘণ্টা আগে", Bodo: "1 घन्टा सिग्नाव", Dogri: "1 घंटा पैहले", Gujarati: "1 કલાક પહેલાં", Hindi: "1 घंटा पहले", Kannada: "1 ಗಂಟೆಯ ಹಿಂದೆ", Kashmiri: "1 گھنٹہ برونٹھ", Konkani: "1 वर आदीं", Maithili: "1 घंटा पहिने", Malayalam: "1 മണിക്കൂർ മുമ്പ്", Manipuri: "1 ꯄꯨꯡ ꯃꯃꯥꯡꯗ", Marathi: "1 तासापूर्वी", Nepali: "१ घण्टा पहिले", Odia: "୧ ଘଣ୍ଟା ପୂର୍ବରୁ", Punjabi: "1 ਘੰਟਾ ਪਹਿਲਾਂ", Sanskrit: "1 होरापूर्वम्", Santali: "1 ᱜᱷᱚᱱᱴᱟ ᱞᱟᱦᱟ", Sindhi: "1 ڪلاڪ اڳ", Tamil: "1 மணி நேரத்திற்கு முன்", Telugu: "1 గంట క్రితం", Urdu: "1 گھنٹہ پہلے"
+  },
+  time_today: {
+    English: "Today", Assamese: "আজি", Bengali: "আজ", Bodo: "दिनै", Dogri: "अज्ज", Gujarati: "આજે", Hindi: "आज", Kannada: "ಇಂದು", Kashmiri: "از", Konkani: "आज", Maithili: "आय", Malayalam: "ഇന്ന്", Manipuri: "ꯉꯁꯤ", Marathi: "आज", Nepali: "आज", Odia: "ଆଜି", Punjabi: "ਅੱਜ", Sanskrit: "अद्य", Santali: "ᱛᱮᱦᱮᱧ", Sindhi: "اڄ", Tamil: "இன்று", Telugu: "ఈరోజు", Urdu: "آج"
+  },
+  time_upcoming_4pm: {
+    English: "Upcoming at 4:00 PM", Assamese: "আবেলি ৪:০০ বজাত", Bengali: "বিকাল ৪:০০ টায়", Bodo: "बेलासिनि 4:00 बजियाव", Dogri: "संजै 4:00 बजे", Gujarati: "સાંજે 4:00 વાગ્યે", Hindi: "शाम 4:00 बजे प्रस्तावित", Kannada: "ಸಂಜೆ 4:00 ಕ್ಕೆ", Kashmiri: "شام 4:00 بجے", Konkani: "सांजे 4:00 वरांचेर", Maithili: "सांझ 4:00 बजे", Malayalam: "വൈകുന്നേരം 4:00 ന്", Manipuri: "ꯅꯨꯃꯤꯗꯥꯡꯋꯥꯏ 4:00 PM", Marathi: "संध्याकाळी 4:00 वाजता", Nepali: "साँझ ४:०० बजे", Odia: "ଅପରାହ୍ନ ୪:୦୦ ରେ", Punjabi: "ਸ਼ਾਮ 4:00 ਵਜੇ", Sanskrit: "सायं 4:00 वादने", Santali: "Ayub 4:00 PM", Sindhi: "شام جو 4:00 بجي", Tamil: "மாலை 4:00 மணிக்கு", Telugu: "సాయంత్రం 4:00 గంటలకు", Urdu: "شام 4:00 بجے"
+  },
+
+  // AI Tools Titles & Descriptions
+  ai_workspace_title: {
+    English: "AI Multilingual Utilities Workspace (23 Scheduled Languages)",
+    Assamese: "AI বহুভাষিক সঁজুলি কৰ্মক্ষেত্ৰ (২৩ টা ভাষা)",
+    Bengali: "AI বহুভাষিক সরঞ্জাম ওয়ার্কস্পেস (২৩টি ভাষা)",
+    Bodo: "AI बाहुभाषी टूलस वर्कस्पेस (23 राव)",
+    Dogri: "AI बहुभाषी उपकरण कार्यस्थान (23 भाषां)",
+    Gujarati: "AI બહુભાષી સાધન કાર્યસ્થળ (23 ભાષાઓ)",
+    Hindi: "एआई बहुभाषी उपयोगिता कार्यस्थान (23 भाषाएं)",
+    Kannada: "AI ಬಹುಭಾಷಾ ಉಪಕರಣಗಳ ವರ್ಕ್‌ಸ್ಪೇಸ್ (23 ಭಾಷೆಗಳು)",
+    Kashmiri: "AI کثیر اللسانی ورک سپیس (23 زبانیں)",
+    Konkani: "AI बहुभाशीय साधन वर्कस्पेस (23 भासो)",
+    Maithili: "AI बहुभाषी कार्यस्थान (23 भाषा)",
+    Malayalam: "AI ബഹുഭാഷാ ടൂളുകൾ വർക്ക്സ്പേസ് (23 ഭാഷകൾ)",
+    Manipuri: "AI ꯃꯜꯇꯤꯂꯤꯉ꯭ꯋꯦꯜ ꯋꯥꯔꯛꯁ꯭ꯄꯦꯁ (23 ꯂꯣꯟ)",
+    Marathi: "AI बहुभाषिक साधन कार्यस्थान (23 भाषा)",
+    Nepali: "AI बहुभाषी कार्यस्थल (२३ भाषाहरू)",
+    Odia: "AI ବହୁଭାଷୀ ଉପକରଣ କାର୍ଯ୍ୟକ୍ଷେତ୍ର (୨୩ ଭାଷା)",
+    Punjabi: "AI ਬਹੁ-ਭਾਸ਼ਾਈ ਟੂਲਜ਼ ਵਰਕਸਪੇਸ (23 ਭਾਸ਼ਾਵਾਂ)",
+    Sanskrit: "कृत्रिमबुद्धि बहुभाषीय कार्यस्थानम् (२३ भाषाः)",
+    Santali: "AI ᱵᱟᱹᱦᱩᱵᱷᱟᱥᱤ ᱴᱩᱞᱥ (23 ᱯᱟᱹᱨᱥᱤ)",
+    Sindhi: "AI باھوباشي ورڪ اسپيس (23 ٻوليون)",
+    Tamil: "AI பன்மொழி பயன்பாட்டு பணிமேடை (23 மொழிகள்)",
+    Telugu: "AI బహుభాషా యుటిలిటీస్ వర్క్‌స్పేస్ (23 భాషలు)",
+    Urdu: "اے آئی کثیر اللسانی ورک سپیس (23 زبانیں)"
+  },
+  ai_workspace_subtitle: {
+    English: "Generate lecture notes, quizzes, flashcards, summaries, WebVTT subtitles, and voiceover scripts grounded in educator-posted materials in pure native scripts of all 23 scheduled Indian languages.",
+    Assamese: "শিক্ষকে প'ষ্ট কৰা সামগ্ৰীৰ আধাৰত ২৩ টা ভাৰতীয় ভাষাত অধ্যয়ন নোট, কুইজ আৰু সাৰাংশ প্ৰস্তুত কৰক।",
+    Bengali: "শিক্ষকের আপলোড করা উপাদানের ওপর ভিত্তি করে ২৩টি ভারতীয় ভাষায় নোট, কুইজ এবং সারাংশ তৈরি করুন।",
+    Bodo: "फोरोंगिरिया होनाय बिलाइनि सायाव 23 रावाव नोट्स आरो कुइज सोरजिफाय।",
+    Dogri: "शिक्षक सामग्री दे आधार पर सारियां 23 सरकारी भारतीय भाषाएं बिच्च अध्ययन नोट्स ते प्रश्नोत्तरी तैयार करो।",
+    Gujarati: "શિક્ષક દ્વારા પોસ્ટ કરાયેલ સામગ્રી પર આધારિત તમામ 23 ભાષાઓમાં અભ્યાસ નોંધો અને ક્વિઝ બનાવો.",
+    Hindi: "शिक्षक द्वारा पोस्ट की गई सामग्री के आधार पर सभी 23 आधिकारिक भारतीय भाषाओं की मूल लिपियों में अध्ययन नोट्स और प्रश्नोत्तरी तैयार करें।",
+    Kannada: "ಶಿಕ್ಷಕರು ಅಪ್‌ಲೋಡ್ ಮಾಡಿದ ವಿಷಯಗಳ ಆಧಾರದ ಮೇಲೆ ಎಲ್ಲಾ 23 ಭಾಷೆಗಳಲ್ಲಿ ಸ್ಟಡಿ ನೋಟ್ಸ್ ಮತ್ತು ರಸಪ್ರಶ್ನೆಗಳನ್ನು ತಯಾರಿಸಿ.",
+    Kashmiri: "استاد کی مواد پر مبنی تمام 23 زبانوں میں نوٹس اور کوئز تیار کریں۔",
+    Konkani: "शिक्षकानी दिल्ली सामग्रीचेर आधारित 23 भासांनी अभ्यास टीपा आनी क्विझ तयार करात.",
+    Maithili: "शिक्षक द्वारा पोस्ट कएल सामग्रीक आधार पर सभ 23 भाषा मे अध्ययन नोट्स आ प्रश्नोत्तरी तैयार करू।",
+    Malayalam: "അധ്യാപകർ അപ്‌ലോഡ് ചെയ്ത വിവരങ്ങളെ അടിസ്ഥാനമാക്കി 23 ഭാഷകളിലും നോട്ട്സുകളും ക്വിസുകളും ഉണ്ടാക്കുക.",
+    Manipuri: "ꯑꯣꯖꯥꯅ ꯍꯥꯞꯆꯤꯅꯕ ꯃꯋꯥꯡꯗ ꯌꯨꯝꯐꯝ ꯑꯣꯏꯔꯒ 23 ꯂꯣꯟꯗ ꯅꯣꯠꯁ ꯁꯦꯝꯕꯨ꯫",
+    Marathi: "शिक्षकांनी अपलोड केलेल्या माहितीवर आधारित सर्व 23 भाषांमध्ये अभ्यास नोट्स आणि क्विझ तयार करा.",
+    Nepali: "शिक्षकद्वारा पोस्ट गरिएका सामग्रीको आधारमा सबै २३ भाषामा अध्ययन नोटहरू र प्रश्नोत्तर तयार गर्नुहोस्।",
+    Odia: "ଶିକ୍ଷକଙ୍କ ସାମଗ୍ରୀ ଉପରେ ଆଧାର କରି ସମସ୍ତ ୨୩ଟି ଭାଷାରେ ନୋଟ୍ସ ଏବଂ କୁଇଜ୍ ପ୍ରସ୍ତୁତ କରନ୍ତୁ।",
+    Punjabi: "ਅਧਿਆਪਕ ਦੁਆਰਾ ਪੋਸਟ ਕੀਤੀ ਸਮੱਗਰੀ ਦੇ ਆਧਾਰ 'ਤੇ ਸਾਰੀਆਂ 23 ਭਾਸ਼ਾਵਾਂ ਵਿੱਚ ਨੋਟਸ ਅਤੇ ਕੁਇਜ਼ ਤਿਆਰ ਕਰੋ।",
+    Sanskrit: "शिक्षकैः संस्थापितां सामग्रीम् आधारीकृत्य सर्वासु २३ भाषासु टिप्पण्यः प्रश्नोत्तरीश्च रचयतु।",
+    Santali: "23 ᱯᱟᱹᱨᱥᱤ ᱛᱮ Notes ᱟᱨ Quiz ᱵᱮᱱᱟᱣ ᱢᱮ.",
+    Sindhi: "استاد جي مواد تي ٻڌل 23 ٻولين ۾ نوٽس ۽ ڪوئز ٺاهيو.",
+    Tamil: "ஆசிரியர் பதிவேற்றிய பாடக் கோப்புகளின் அடிப்படையில் குறிப்புகள், வினாடி வினாக்கள் மற்றும் சுருக்கங்களை 23 அதிகாரப்பூர்வ இந்திய தாய்மொழிகளில் உருவாக்கவும்.",
+    Telugu: "ఉపాధ్యాయులు పోస్ట్ చేసిన కంటెంట్ ఆధారంగా 23 అధికారిక భారతీయ భాషలలో నోట్స్, క్విజ్‌లను రూపొందించండి.",
+    Urdu: "استاد کے فراہم کردہ مواد پر مبنی تمام 23 زبانوں میں نوٹس اور کوئز تیار کریں۔"
+  },
   notes_generator_title: {
-    English: "AI Notes Generator",
-    Tamil: "AI பாடக் குறிப்புகள் உருவாக்குபவை",
-    Hindi: "एआई नोट्स जेनरेटर",
-    Telugu: "AI నోట్స్ జెనరేటర్"
+    English: "AI Notes Generator", Assamese: "AI নোট প্রস্তুতকাৰী", Bengali: "AI নোটস জেনারেটর", Bodo: "AI नोट्स सोरजिग्रा", Dogri: "AI नोट्स जेनरेटर", Gujarati: "AI નોટ્સ જેનરેટર",
+    Hindi: "एआई नोट्स जेनरेटर", Kannada: "AI ನೋಟ್ಸ್ ಜೆನೆರೇಟರ್", Kashmiri: "AI نوٹس جینیریٹر", Konkani: "AI टीपां तयार करपी", Maithili: "एआई नोट्स जेनरेटर", Malayalam: "AI നോട്ട്സ് ജനറേറ്റർ",
+    Manipuri: "AI ꯅꯣꯠꯁ ꯁꯦꯝꯕ", Marathi: "AI नोट्स जनरेटर", Nepali: "AI नोटहरू जेनरेटर", Odia: "AI ନୋଟ୍ସ ଜେନେରେଟର", Punjabi: "AI ਨੋਟਸ ਜੇਨਰੇਟਰ", Sanskrit: "AI पाठ्यटिप्पणी-रचयिता",
+    Santali: "AI Notes Generator", Sindhi: "AI نوٽس جينيئيٽر", Tamil: "AI பாடக் குறிப்புகள் உருவாக்குபவை", Telugu: "AI నోట్స్ జెనరేటర్", Urdu: "اے آئی نوٹس جینیریٹر"
   },
   notes_generator_desc: {
     English: "Generate structured study notes directly from educator-uploaded syllabus and lecture transcripts in pure native script.",
-    Tamil: "ஆசிரியர் பதிவேற்றிய பாடத்திட்டம் மற்றும் குறிப்புகளிலிருந்து நேரடி பாடக் குறிப்புகளை உருவாக்குகிறது.",
+    Assamese: "শিক্ষকে আপলোড কৰা পাঠ্যক্ৰমৰ পৰা পোনপটীয়াকৈ গঠনাత్మক অধ্যয়ন নোট প্ৰস্তুত কৰক।",
+    Bengali: "শিক্ষকের আপলোড করা সিলেবাস থেকে সরাসরি সাজানো নোটস তৈরি করুন।",
+    Bodo: "फोरोंगिरिनि होनाय फराय आयदानिफाय नोट्स बनाइ।",
+    Dogri: "शिक्षक दे पाठ्यक्रम ते लेक्चर नोट्स थमां सीधे अध्ययन नोट्स बनाओ।",
+    Gujarati: "શિક્ષકના અપલોડ કરાયેલા સિલેબસમાંથી સીધી રીતે અભ્યાસ નોંધો બનાવો.",
     Hindi: "शिक्षक द्वारा अपलोड किए गए पाठ्यक्रम और नोट्स से सीधे विस्तृत अध्ययन नोट्स बनाएं।",
-    Telugu: "ఉపాధ్యాయులు అప్‌లోడ్ చేసిన సిలబస్ నుండి నేరుగా స్టడీ నోట్స్ రూపొందించండి."
+    Kannada: "ಶಿಕ್ಷಕರು ಅಪ್‌ಲೋಡ್ ಮಾಡಿದ ಪಠ್ಯಕ್ರಮದಿಂದ ನೇರವಾಗಿ ಅಧ್ಯಯನ ಟಿಪ್ಪಣಿಗಳನ್ನು ರಚಿಸಿ.",
+    Kashmiri: "سلیبس منزہ سٹریٹ نوٹس بناویو۔",
+    Konkani: "शिक्षकानी अपलोड केल्ल्या अभ्यासांतल्यान थेट अभ्यासाच्यो टीपां तयार करात.",
+    Maithili: "शिक्षक द्वारा अपलोड कएल पाठ्यक्रम सँ सीधे अध्ययन नोट्स बनाबू।",
+    Malayalam: "അധ്യാപകൻ നൽകിയ പാഠ്യപദ്ധതിയിൽ നിന്ന് നേരിട്ട് സ്റ്റഡി നോട്ടുകൾ ഉണ്ടാക്കുക.",
+    Manipuri: "ꯑꯣꯖꯥꯒꯤ ꯁꯤꯂꯦꯕꯁꯇꯒꯤ ꯅꯣꯠꯁ ꯁꯦꯝꯕꯨ꯫",
+    Marathi: "शिक्षकांनी अपलोड केलेल्या अभ्यासक्रमावरून थेट अभ्यास नोट्स तयार करा.",
+    Nepali: "शिक्षकले अपलोड गरेको पाठ्यक्रमबाट सीधा विस्तृत अध्ययन नोटहरू बनाउनुहोस्।",
+    Odia: "ଶିକ୍ଷକଙ୍କ ପାଠ୍ୟକ୍ରମରୁ ସିଧାସଳଖ ପାଠ୍ୟ ନୋଟ୍ସ ତିଆରି କରନ୍ତୁ।",
+    Punjabi: "ਅਧਿਆਪਕ ਦੁਆਰਾ ਅੱਪਲੋਡ ਕੀਤੇ ਸਿਲੇਬਸ ਤੋਂ ਸਿੱਧੇ ਅਧਿਐਨ ਨੋਟਸ ਬਣਾਓ।",
+    Sanskrit: "शिक्षकपाठ्यक्रमतः साक्षात् पाठ्यटिप्पणीः रचयतु।",
+    Santali: "Syllabus ᱠᱷᱚᱱ Notes ᱵᱮᱱᱟᱣ ᱢᱮ.",
+    Sindhi: "استاد جي سليبس مان سڌو نوٽس ٺاهيو.",
+    Tamil: "ஆசிரியர் பதிவேற்றிய பாடத்திட்டம் மற்றும் குறிப்புகளிலிருந்து நேரடி பாடக் குறிப்புகளை உருவாக்குகிறது.",
+    Telugu: "ఉపాధ్యాయులు అప్‌లోడ్ చేసిన సిలబస్ నుండి నేరుగా స్టడీ నోట్స్ రూపొందించండి.",
+    Urdu: "استاد کے اپ لوڈ کردہ سلیبس سے براہ راست نوٹس تیار کریں۔"
   },
   quiz_generator_title: {
-    English: "AI Quiz Generator",
-    Tamil: "AI வினாடி வினா உருவாக்குபவை",
-    Hindi: "एआई क्विज जेनरेटर",
-    Telugu: "AI క్విజ్ జెనరేటర్"
+    English: "AI Quiz Generator", Assamese: "AI কুইজ প্ৰস্তুতকাৰী", Bengali: "AI কুইজ জেনারেটর", Bodo: "AI कुइज सोरजिग्रा", Dogri: "AI क्विज जेनरेटर", Gujarati: "AI ક્વિઝ જેનરેટર",
+    Hindi: "एआई क्विज जेनरेटर", Kannada: "AI ರಸಪ್ರಶ್ನೆ ಜೆನೆರೇಟರ್", Kashmiri: "AI کوئز جینیریٹر", Konkani: "AI क्विझ करपी", Maithili: "एआई क्विज जेनरेटर", Malayalam: "AI ക്വിസ് ജനറേറ്റർ",
+    Manipuri: "AI ꯀ꯭ꯋꯤꯖ ꯁꯦꯝꯕ", Marathi: "AI क्विझ जनरेटर", Nepali: "AI प्रश्नोत्तरी जेनरेटर", Odia: "AI କୁଇଜ୍ ଜେନେରେଟର", Punjabi: "AI ਕੁਇਜ਼ ਜੇਨਰੇਟਰ", Sanskrit: "AI प्रश्नोत्तरी-रचयिता",
+    Santali: "AI Quiz Generator", Sindhi: "AI ڪوئز جينيئيٽر", Tamil: "AI வினாடி வினா உருவாக்குபவை", Telugu: "AI క్విజ్ జెనరేటర్", Urdu: "اے آئی کوئز جینیریٹر"
   },
   quiz_generator_desc: {
     English: "Create interactive multiple-choice check questions with answer keys from educator exam papers and question banks.",
-    Tamil: "ஆசிரியரின் 2-மதிப்பெண் வினா வங்கி மற்றும் தேர்வு தாள்களிலிருந்து வினாடி வினாக்களை உருவாக்குகிறது.",
+    Assamese: "শিক্ষকৰ পৰীক্ষা কাকত আৰু প্ৰশ্ন বেংকৰ পৰা কুইজ প্ৰশ্ন প্ৰস্তুত কৰক।",
+    Bengali: "শিক্ষকের প্রশ্নপত্র থেকে বহুনির্বাচনী প্রশ্নপত্র ও উত্তরমালা তৈরি করুন।",
+    Bodo: "आनजाद बिलाइनिफाय सोंनाय बनाइ।",
+    Dogri: "शिक्षक दे प्रश्न पत्रें थमां बहुविकल्पीय सवाल ते उत्तर कुंजी बनाओ।",
+    Gujarati: "શિક્ષકના પ્રશ્નપત્રો અને પ્રશ્ન બેંકમાંથી ક્વિઝ બનાવો.",
     Hindi: "शिक्षक के प्रश्न बैंक और परीक्षा पत्रों से बहुविकल्पीय प्रश्न बनाएं।",
-    Telugu: "ఉపాధ్యాయుల ప్రశ్న బ్యాంక్ ఆధారంగా క్విజ్‌లను రూపొందించండి."
+    Kannada: "ಶಿಕ್ಷಕರ ಪ್ರಶ್ನೆ ಪತ್ರಿಕೆಗಳು ಮತ್ತು ಪ್ರಶ್ನೆ ಬ್ಯಾಂಕ್‌ನಿಂದ ರಸಪ್ರಶ್ನೆಗಳನ್ನು ರಚಿಸಿ.",
+    Kashmiri: "امتحان پرچہ منزہ کوئز بناویو۔",
+    Konkani: "शिक्षकांच्या प्रस्नपत्रिकेंतल्यान बहुपर्यायी प्रस्न आनी जाप तयार करात.",
+    Maithili: "शिक्षकक प्रश्न बैंक आ परीक्षा पत्र सँ बहुविकल्पीय प्रश्न बनाबू।",
+    Malayalam: "അധ്യാപകന്റെ ചോദ്യപേപ്പറിൽ നിന്ന് ക്വിസുകളും ഉത്തരങ്ങളും ഉണ്ടാക്കുക.",
+    Manipuri: "ꯑꯣꯖꯥꯒꯤ ꯀ꯭ꯋꯦꯁ꯭ꯆꯟ ꯕꯦꯡꯛꯇꯒꯤ ꯀ꯭ꯋꯤꯖ ꯁꯦꯝꯕꯨ꯫",
+    Marathi: "शिक्षकांच्या प्रश्नपेढीतून बहुपर्यायी प्रश्न व उत्तरसूची तयार करा.",
+    Nepali: "शिक्षकको प्रश्न बैंक र परीक्षा पत्रबाट बहुविकल्पीय प्रश्नहरू बनाउनुहोस्।",
+    Odia: "ଶିକ୍ଷକଙ୍କ ପ୍ରଶ୍ନ ବ୍ୟାଙ୍କରୁ ବହୁବିକଳ୍ପ ପ୍ରଶ୍ନ ତିଆରି କରନ୍ତୁ।",
+    Punjabi: "ਅਧਿਆਪਕ ਦੇ ਪ੍ਰਸ਼ਨ ਬੈਂਕ ਤੋਂ ਬਹੁ-ਚੋਣ ਪ੍ਰਸ਼ਨ ਤਿਆਰ ਕਰੋ।",
+    Sanskrit: "शिक्षकस्य प्रश्नकोशतः बहुविकल्पप्रश्नान् उत्तरकुञ्चिकां च रचयतु।",
+    Santali: "Question Bank ᱠᱷᱚᱱ Quiz ᱵᱮᱱᱟᱣ ᱢᱮ.",
+    Sindhi: "استاد جي سوالن جي بئنڪ مان ڪوئز ٺاهيو.",
+    Tamil: "ஆசிரியரின் 2-மதிப்பெண் வினா வங்கி மற்றும் தேர்வு தாள்களிலிருந்து வினாடி வினாக்களை உருவாக்குகிறது.",
+    Telugu: "ఉపాధ్యాయుల ప్రశ్న బ్యాంక్ ఆధారంగా క్విజ్‌లను రూపొందించండి.",
+    Urdu: "استاد کے سوالیہ بینک سے معروضی سوالات اور جوابات بنائیں।"
   },
   flashcards_compiler_title: {
-    English: "AI Flashcards Compiler",
-    Tamil: "AI நினைவூட்டும் அட்டைகள் தொகுப்பி",
-    Hindi: "एआई फ्लैशकार्ड संकलक",
-    Telugu: "AI ఫ్లాష్‌కార్డ్స్ కம்పైలர்"
+    English: "AI Flashcards Compiler", Assamese: "AI ফ্লেছকাৰ্ড প্ৰস্তুতকাৰী", Bengali: "AI ফ্ল্যাশকার্ডস সংকলক", Bodo: "AI फ्लैशकार्ड सोरजिग्रा", Dogri: "AI फ्लैशकार्ड संकलक", Gujarati: "AI ફ્લેશકાર્ડ સંકલક",
+    Hindi: "एआई फ्लैशकार्ड संकलक", Kannada: "AI ಫ್ಲ್ಯಾಶ್‌ಕಾರ್ಡ್‌ಗಳ ಸಂಕಲನಕಾರ", Kashmiri: "AI فلیش کارڈز", Konkani: "AI फ्लॅशकार्ड्स तयार करपी", Maithili: "एआई फ्लैशकार्ड संकलक", Malayalam: "AI ഫ്ലാഷ് കാർഡുകൾ",
+    Manipuri: "AI ꯐ꯭ꯂꯦꯁꯀꯥꯔ꯭ꯗ ꯁꯦꯝꯕ", Marathi: "AI फ्लॅशकार्ड्स संकलक", Nepali: "AI फ्ल्यासकार्ड सङ्कलक", Odia: "AI ଫ୍ଲାସକାର୍ଡ ସଙ୍କଳକ", Punjabi: "AI ਫਲੈਸ਼ਕਾਰਡ ਸੰਕਲਕ", Sanskrit: "AI द्रुतस्मरणपट्टिका-रचयिता",
+    Santali: "AI Flashcards Compiler", Sindhi: "AI فليش ڪارڊز ٺاهيندڙ", Tamil: "AI நினைவூட்டும் அட்டைகள் தொகுப்பி", Telugu: "AI ఫ్లాష్‌కార్డ్స్ కంపైలర్", Urdu: "اے آئی فلیش کارڈز کمپائلر"
   },
   flashcards_compiler_desc: {
     English: "Compile key definitions, formulas, and 2-mark Q&As into study decks ready for student practice.",
-    Tamil: "முக்கிய வரைவிலக்கணங்கள், சூத்திரங்கள் மற்றும் 2-மதிப்பெண் வினாக்களை நினைவூட்டும் அட்டைகளாக தொகுக்கிறது.",
+    Assamese: "মুখ্য সূত্ৰ, সংজ্ঞাসমূহ ফ্লেছকাৰ্ডত পৰিণত কৰক।",
+    Bengali: "গুরুত্বপূর্ণ সূত্র ও সংজ্ঞাসমূহ রিভিশন কার্ডে সাজান।",
+    Bodo: "गुदि सोदोब आरो सानखान्थि कार्डाव बनाइ।",
+    Dogri: "महत्वपूर्ण परिभाषाएं ते सूत्रें गी अभ्यास कार्डें बिच्च संकलित करो।",
+    Gujarati: "મહત્વપૂર્ણ વ્યાખ્યાઓ અને સૂત્રોને ફ્લેશકાર્ડ્સમાં સંકલિત કરો.",
     Hindi: "महत्वपूर्ण परिभाषाओं और सूत्रों को अध्ययन कार्डों में संकलित करें।",
-    Telugu: "ముఖ్యమైన సూత్రాలు మరియు నిర్వచనాలను స్టడీ కార్డ్‌లుగా మార్చండి."
+    Kannada: "ಪ್ರಮುಖ ವ್ಯಾಖ್ಯಾನಗಳು ಮತ್ತು ಸೂತ್ರಗಳನ್ನು ಅಧ್ಯಯನ ಕಾರ್ಡ್‌ಗಳಾಗಿ ಸಂಕಲಿಸಿ.",
+    Kashmiri: "اہم فارمولہ کارڈن منز بناویو۔",
+    Konkani: "महत्वाच्यो व्याख्या आनी सूत्रां अभ्यासाच्या कार्डांनी तयार करात.",
+    Maithili: "महत्वपूर्ण परिभाषा आ सूत्रकेँ अध्ययन कार्ड मे संकलित करू।",
+    Malayalam: "പ്രധാന നിർവ്വചനങ്ങളും സൂത്രവാക്യങ്ങളും ഫ്ലാഷ് കാർഡുകളാക്കുക.",
+    Manipuri: "ꯃꯔꯨꯑꯣꯏꯕ ꯁꯨꯇ꯭ꯔꯁꯤꯡ ꯀꯥꯔ꯭ꯗ ꯑꯣꯏꯅ ꯁꯦꯝꯕꯨ꯫",
+    Marathi: "महत्त्वाच्या व्याख्या आणि सूत्रे अभ्यासाच्या कार्डांमध्ये संकलित करा.",
+    Nepali: "महत्त्वपूर्ण परिभाषा र सूत्रहरूलाई अभ्यास कार्डहरूमा सङ्कलन गर्नुहोस्।",
+    Odia: "ମୁଖ୍ୟ ସଂଜ୍ଞା ଏବଂ ସୂତ୍ରଗୁଡ଼ିକୁ ଫ୍ଲାସକାର୍ଡରେ ସଜାନ୍ତୁ।",
+    Punjabi: "ਮਹੱਤਵਪੂਰਨ ਪਰਿਭਾਸ਼ਾਵਾਂ ਅਤੇ ਫਾਰਮੂਲਿਆਂ ਨੂੰ ਅਧਿਐਨ ਕਾਰਡਾਂ ਵਿੱਚ ਸ਼ਾਮਲ ਕਰੋ।",
+    Sanskrit: "मुख्यपरिभाषाः सूत्राणि च स्मरणपट्टिकासु संकलयतु।",
+    Santali: "Formulas, Definitions Card ᱨᱮ ᱵᱮᱱᱟᱣ ᱢᱮ.",
+    Sindhi: "بنيادي وصفون ۽ فارمولا ڪارڊن ۾ گڏ ڪريو.",
+    Tamil: "முக்கிய வரைவிலக்கணங்கள், சூத்திரங்கள் மற்றும் 2-மதிப்பெண் வினாக்களை நினைவூட்டும் அட்டைகளாக தொகுக்கிறது.",
+    Telugu: "ముఖ్యమైన సూత్రాలు మరియు నిర్వచనాలను స్టడీ కార్డ్‌లుగా మార్చండి.",
+    Urdu: "اہم تعریفوں اور فارمولوں کو مطالعہ کارڈز میں مرتب کریں۔"
   },
   course_summary_title: {
-    English: "AI Course Summary",
-    Tamil: "AI பாடநெறி சுருக்கம்",
-    Hindi: "एआई पाठ्यक्रम सारांश",
-    Telugu: "AI కోర్సు సారాంశం"
+    English: "AI Course Summary", Assamese: "AI পাঠ্যক্ৰম সাৰাংশ", Bengali: "AI কোর্স সারাংশ", Bodo: "AI आयदा गुसुं", Dogri: "AI कोर्स सारांश", Gujarati: "AI કોર્સ સારાંશ",
+    Hindi: "एआई पाठ्यक्रम सारांश", Kannada: "AI ಕೋರ್ಸ್ ಸಾರಾಂಶ", Kashmiri: "AI کورس خلاصہ", Konkani: "AI कोर्स संक्षेप", Maithili: "एआई पाठ्यक्रम सारांश", Malayalam: "AI കോഴ്‌സ് സംഗ്രഹം",
+    Manipuri: "AI ꯀꯣꯔꯁ ꯁꯝꯂꯞꯅ", Marathi: "AI अभ्यासक्रम सारांश", Nepali: "AI पाठ्यक्रम सारांश", Odia: "AI ପାଠ୍ୟକ୍ରମ ସାରାଂଶ", Punjabi: "AI ਕੋਰਸ ਸਾਰਾਂਸ਼", Sanskrit: "AI पाठ्यक्रमसारसंक्षेपः",
+    Santali: "AI Course Summary", Sindhi: "AI ڪورس خلاصو", Tamil: "AI பாடநெறி சுருக்கம்", Telugu: "AI కోర్సు సారాంశం", Urdu: "اے آئی کورس خلاصہ"
   },
   course_summary_desc: {
     English: "Condense long educator lecture notes, Part-B spreadsheets, or safety videos into concise study bullet points.",
-    Tamil: "ஆசிரியர் பதிவேற்றிய நீண்ட பாட புத்தகங்கள் மற்றும் விரிவுரைகளை சுருக்கமான குறிப்புகளாக மாற்றுகிறது.",
+    Assamese: "দীঘলীয়া পাঠ্যপুথি আৰু বক্তৃতাৰ মুখ্য বিন্দুসমূহ চমু সাৰাংশত ৰূপান্তৰ কৰক।",
+    Bengali: "দীর্ঘ লেকচার নোটস সংক্ষিপ্ত বুলেটে রূপান্তর করুন।",
+    Bodo: "गोबाव नोट्सखौ गुसुं खालाम।",
+    Dogri: "लंबे लेक्चर नोट्स ते सामग्री गी छोटे मुख्य बिंदुओं बिच्च संक्षेप करो।",
+    Gujarati: "લાંબા લેક્ચર નોટ્સને ટૂંકા મુખ્ય મુદ્દાઓમાં સંક્ષિપ્ત કરો.",
     Hindi: "लंबी पाठ्यसामग्री और व्याख्यानों को संक्षिप्त मुख्य बिंदुओं में सारांशित करें।",
-    Telugu: "సుదీర్ఘమైన పాఠ్యాంశాలను సంక్షిప్త పాయింట్లుగా కుదించండి."
+    Kannada: "ದೀರ್ಘ ಉಪನ್ಯಾಸ ಟಿಪ್ಪಣಿಗಳನ್ನು ಸಂಕ್ಷಿಪ್ತ ಮುಖ್ಯ ಅಂಶಗಳಾಗಿ ಕುಗ್ಗಿಸಿ.",
+    Kashmiri: "بڑے نوٹس خلاصہ کرو۔",
+    Konkani: "लांब व्याख्यान टीपां संक्षिप्त मुख्य मुद्द्यांनी सांगात.",
+    Maithili: "लम्बा व्याख्यान नोट्सकेँ संक्षिप्त मुख्य बिन्दु मे सारांशित करू।",
+    Malayalam: "നീളമുള്ള ലെക്ചർ നോട്ടുകൾ ചുരുങ്ങിയ പ്രധാന പോയിന്റുകളാക്കുക.",
+    Manipuri: "ꯁꯥꯡꯕ ꯅꯣꯠꯁꯤꯡ ꯁꯝꯂꯞꯅ ꯁꯦꯝꯕꯨ꯫",
+    Marathi: "लांबच लांब व्याख्यान टिपा संक्षिप्त मुख्य मुद्द्यांमध्ये सारांशित करा.",
+    Nepali: "लामा व्याख्यान नोटहरूलाई छोटा मुख्य बुँदाहरूमा रूपान्तरण गर्नुहोस्।",
+    Odia: "ଦୀର୍ଘ ପାଠ୍ୟ ନୋଟ୍ସକୁ ସଂକ୍ଷିପ୍ତ ବିନ୍ଦୁରେ ରୂପାନ୍ତରିତ କରନ୍ତୁ।",
+    Punjabi: "ਲੰਬੇ ਲੈਕਚਰ ਨੋਟਸ ਨੂੰ ਸੰਖੇਪ ਮੁੱਖ ਬਿੰਦੂਆਂ ਵਿੱਚ ਬਦਲੋ।",
+    Sanskrit: "दीर्घपाठ्यसामग्रीं लघुसुचितबिन्दुभिः संक्षिपतु।",
+    Santali: "Long Notes ᱠᱷᱟᱴᱚ Bullet Points ᱵᱮᱱᱟᱣ ᱢᱮ.",
+    Sindhi: "ڊگھن نوٽس کي مختصر نقطن ۾ خلاصو ڪريو.",
+    Tamil: "ஆசிரியர் பதிவேற்றிய நீண்ட பாட புத்தகங்கள் மற்றும் விரிவுரைகளை சுருக்கமான குறிப்புகளாக மாற்றுகிறது.",
+    Telugu: "సుదీర్ఘమైన పాఠ్యాంశాలను సంక్షిప్త పాయింట్లుగా కుదించండి.",
+    Urdu: "طویل لیکچر نوٹس کو مختصر اہم نکات میں خلاصہ کریں۔"
   },
   translation_engine_title: {
-    English: "AI Multilingual Translation",
-    Tamil: "AI பன்மொழி மொழிபெயர்ப்பு",
-    Hindi: "एआई बहुभाषी अनुवाद",
-    Telugu: "AI బహుభాషా అనువాదం"
+    English: "AI Multilingual Translation", Assamese: "AI বহুভাষিক অনুবাদ", Bengali: "AI বহুভাষিক অনুবাদ", Bodo: "AI बाहुभाषी राव सोलायग्रा", Dogri: "AI बहुभाषी अनुवाद", Gujarati: "AI બહુભાષી અનુવાદ",
+    Hindi: "एआई बहुभाषी अनुवाद", Kannada: "AI ಬಹುಭಾಷಾ ಅನುವಾದ", Kashmiri: "AI ترجمہ", Konkani: "AI बहुभाशीय अणकार", Maithili: "एआई बहुभाषी अनुवाद", Malayalam: "AI ബഹുഭാഷാ തർജ്ജമ",
+    Manipuri: "AI ꯃꯜꯇꯤꯂꯤꯉ꯭ꯋꯦꯜ ꯍꯟꯗꯣꯛꯄ", Marathi: "AI बहुभाषिक भाषांतर", Nepali: "AI बहुभाषी अनुवाद", Odia: "AI ବହୁଭାଷୀ ଅନୁବାଦ", Punjabi: "AI ਬਹੁ-ਭਾਸ਼ਾਈ ਅਨੁਵਾਦ", Sanskrit: "AI बहुभाषीय-अनुवादः",
+    Santali: "AI Multilingual Translation", Sindhi: "AI باھوباشي ترجمو", Tamil: "AI பன்மொழி மொழிபெயர்ப்பு", Telugu: "AI బహుభాషా అనువాదం", Urdu: "اے آئی کثیر اللسانی ترجمہ"
   },
   translation_engine_desc: {
     English: "Translate textbook pages and handouts into any of the 23 official scheduled Indian languages.",
-    Tamil: "பாடநூல் பக்கங்கள் மற்றும் கோப்புகளை 23 அதிகாரப்பூர்வ இந்திய மொழிகளில் மொழிபெயர்க்கிறது.",
+    Assamese: "পাঠ্যপুথিৰ পৃষ্ঠা আৰু নথি ২৩ টা ভাৰতীয় ভাষালৈ অনুবাদ কৰক।",
+    Bengali: "পাঠ্যবইয়ের পাতা ২৩টি সরকারি ভারতীয় ভাষায় অনুবাদ করুন।",
+    Bodo: "बिलाइफोरखौ 23 रावाव सोलाय।",
+    Dogri: "पाठ्यपुस्तक दे पन्ने सारियां 23 भारतीय भाषाएं बिच्च अनुवाद करो।",
+    Gujarati: "પાઠ્યપુસ્તકના પાનાઓનું 23 ભારતીય ભાષાઓમાં અનુવાદ કરો.",
     Hindi: "पाठ्यपुस्तक पृष्ठों का 23 आधिकारिक भारतीय भाषाओं में अनुवाद करें।",
-    Telugu: "పాఠ్యపుస్తకాలను 23 అధికారిక భారతీయ భాషలలోకి అనువదించండి."
+    Kannada: "ಪಠ್ಯಪುಸ್ತಕದ ಪುಟಗಳನ್ನು 23 ಅಧಿಕೃತ ಭಾರತೀಯ ಭಾಷೆಗಳಿಗೆ ಅನುವಾದಿಸಿ.",
+    Kashmiri: "کتابن منزہ 23 زبانن منز ترجمہ کرو۔",
+    Konkani: "पुस्तकाचीं पानां 23 अधिकृत भारतीय भासांनी अणकारात.",
+    Maithili: "पाठ्यपुस्तक पृष्ठक 23 आधिकारिक भारतीय भाषा मे अनुवाद करू।",
+    Malayalam: "പാഠപുസ്തക താളുകൾ 23 ഔദ്യോഗിക ഭാഷകളിലേക്ക് തർജ്ജമ ചെയ്യുക.",
+    Manipuri: "23 ꯂꯣꯟꯗ ꯍꯟꯗꯣꯛꯄꯨ꯫",
+    Marathi: "पाठ्यपुस्तकाची पाने २३ अधिकृत भारतीय भाषांमध्ये भाषांतरित करा.",
+    Nepali: "पाठ्यपुस्तकका पृष्ठहरूलाई २३ आधिकारिक भारतीय भाषाहरूमा अनुवाद गर्नुहोस्।",
+    Odia: "ପାଠ୍ୟପୁସ୍ତକ ପୃଷ୍ଠାଗୁଡ଼ିକୁ ୨୩ଟି ସରକାରୀ ଭାଷାରେ ଅନୁବାଦ କରନ୍ତୁ।",
+    Punjabi: "ਪਾਠ-ਪੁਸਤਕ ਦੇ ਪੰਨਿਆਂ ਦਾ 23 ਸਰਕਾਰੀ ਭਾਰਤੀ ਭਾਸ਼ਾਵਾਂ ਵਿੱਚ ਅਨੁਵਾਦ ਕਰੋ।",
+    Sanskrit: "पाठ्यपुस्तकस्य पृष्ठानि २३ भाषासु अनूद्यताम्।",
+    Santali: "Textbooks 23 ᱯᱟᱹᱨᱥᱤ ᱛᱮ Translate ᱢᱮ.",
+    Sindhi: "پاٺيائي ڪتاب جا صفحا 23 ٻولين ۾ ترجمو ڪريو.",
+    Tamil: "பாடநூல் பக்கங்கள் மற்றும் கோப்புகளை 23 அதிகாரப்பூர்வ இந்திய மொழிகளில் மொழிபெயர்க்கிறது.",
+    Telugu: "పాఠ్యపుస్తకాలను 23 అధికారిక భారతీయ భాషలలోకి అనువదించండి.",
+    Urdu: "درسی کتب کے صفحات کا 23 سرکاری بھارتی زبانوں میں ترجمہ کریں۔"
   },
   subtitle_generator_title: {
-    English: "AI Subtitle Generator",
-    Tamil: "AI சப்டைட்டில் உருவாக்குபவை",
-    Hindi: "एआई उपशीर्षक जेनरेटर",
-    Telugu: "AI సబ్‌టైటిல் జెనరేటర్"
+    English: "AI Subtitle Generator", Assamese: "AI চাবটাইটেল প্রস্তুতকাৰী", Bengali: "AI সাবটাইটেল জেনারেটর", Bodo: "AI साबटाइटेल सोरजिग्रा", Dogri: "AI उपशीर्षक जेनरेटर", Gujarati: "AI સબટાઇટલ જેનરેટર",
+    Hindi: "एआई उपशीर्षक जेनरेटर", Kannada: "AI ಉಪಶೀರ್ಷಿಕೆ ಜೆನೆರೇಟರ್", Kashmiri: "AI سب ٹائٹل", Konkani: "AI उपशीर्षक करपी", Maithili: "एआई उपशीर्षक जेनरेटर", Malayalam: "AI സബ്‌ടൈറ്റിൽ ജനറേറ്റർ",
+    Manipuri: "AI ꯁꯕꯇꯥꯏꯇꯦꯜ ꯁꯦꯝꯕ", Marathi: "AI सबटायटल जनरेटर", Nepali: "AI उपशीर्षक जेनरेटर", Odia: "AI ଉପଶୀର୍ଷକ ଜେନେରେଟର", Punjabi: "AI ਉਪ-ਸਿਰਲੇਖ ਜੇਨਰੇਟਰ", Sanskrit: "AI उपशीर्षक-रचयिता",
+    Santali: "AI Subtitle Generator", Sindhi: "AI سب ٽائيٽل جينيئيٽر", Tamil: "AI சப்டைட்டில் உருவாக்குபவை", Telugu: "AI సబ్‌టైటిల్ జెனరేటర్", Urdu: "اے آئی سب ٹائٹل جینیریٹر"
   },
   subtitle_generator_desc: {
     English: "Extract spoken speech from videos and generate aligned WebVTT subtitles in target Indian dialects.",
-    Tamil: "வீடியோக்களிலிருந்து பேச்சை பிரித்தெடுத்து துல்லியமான WebVTT சப்டைட்டில்களை உருவாக்குகிறது.",
+    Assamese: "ভিডিঅ'ৰ পৰা বাক্য উলিয়াই উপযুক্ত চাবটাইটেল প্ৰস্তুত কৰক।",
+    Bengali: "ভিডিও থেকে কথা রূপান্তর করে নিখুঁত সাবটাইটেল তৈরি করুন।",
+    Bodo: "भिडियोनि रायलायनायनिफाय साबटाइटेल सोरजिफाय।",
+    Dogri: "वीडियो थमां बोली गी कड्डी ते सटीक उपशीर्षक तैयार करो।",
+    Gujarati: "વિડિઓમાંથી બોલાયેલ વાતો પરથી સબટાઇટલ બનાવો.",
     Hindi: "वीडियो से भाषण निकालकर सटीक उपशीर्षक (WebVTT) उत्पन्न करें।",
-    Telugu: "వీడియోల నుండి మాటలను గుర్తించి సబ్‌టైటిల్స్ రూపొందించండి."
+    Kannada: "ವೀಡಿಯೊದಿಂದ ಧ್ವನಿಯನ್ನು ಗ್ರಹಿಸಿ ನಿಖರ ಉಪಶೀರ್ಷಿಕೆಗಳನ್ನು ರಚಿಸಿ.",
+    Kashmiri: "ویڈیو منزہ سب ٹائٹل بناویو۔",
+    Konkani: "व्हिडिओंतल्यान आवाज काडून अचूक उपशीर्षकां तयार करात.",
+    Maithili: "वीडियो सँ भाषण निकालि कऽ सटीक उपशीर्षक बनाबू।",
+    Malayalam: "വീഡിയോകളിൽ നിന്ന് സംസാരം തിരിച്ചറിഞ്ഞ് സബ്‌ടൈറ്റിലുകൾ ഉണ്ടാക്കുക.",
+    Manipuri: "ꯚꯤꯗꯤꯑꯣꯗꯒꯤ ꯁꯕꯇꯥꯏꯇꯦꯜ ꯁꯦꯝꯕꯨ꯫",
+    Marathi: "व्हिडिओमधून भाषण ओळखून अचूक सबटायटल्स तयार करा.",
+    Nepali: "भिडियोबाट आवाज निकालेर सटीक उपशीर्षकहरू सिर्जना गर्नुहोस्।",
+    Odia: "ଭିଡିଓରୁ କଥା ଚିହ୍ନି ସଠିକ୍ ଉପଶୀର୍ଷକ ତିଆରି କରନ୍ତୁ।",
+    Punjাবি: "ਵੀਡੀਓ ਤੋਂ ਬੋਲੀ ਕੱਢ ਕੇ ਸਟੀਕ ਉਪ-ਸਿਰਲੇਖ ਬਣਾਓ।",
+    Sanskrit: "दृश्यश्रव्यचित्रतः वाचं निष्कास्य उपशीर्षकाणि रचयतु।",
+    Santali: "Video ᱠᱷᱚᱱ Subtitle ᱵᱮᱱᱟᱣ ᱢᱮ.",
+    Sindhi: "ويڊيو مان آواز ڪڍي صحيح سب ٽائيٽل ٺاهيو.",
+    Tamil: "வீடியோக்களிலிருந்து பேச்சை பிரித்தெடுத்து துல்லியமான WebVTT சப்டைட்டில்களை உருவாக்குகிறது.",
+    Telugu: "వీడియోల నుండి మాటలను గుర్తించి సబ్‌టైటిల్స్ రూపొందించండి.",
+    Urdu: "ویڈیوز سے گفتگو نکال کر درست سب ٹائٹلز تیار کریں۔"
   },
   voiceover_dubber_title: {
-    English: "AI Voice-over Dubber",
-    Tamil: "AI குரல் டப்பிங் கருவி",
-    Hindi: "एआई वॉयस-ओवर डबिंग",
-    Telugu: "AI వాయిస్-ఓవర్ డబ్బింగ్"
+    English: "AI Voice-over Dubber", Assamese: "AI ভইচ-অভাৰ ডাবিং", Bengali: "AI ভয়েস-ওভার ডাবিং", Bodo: "AI राव डबिंग", Dogri: "AI वॉइस-ओवर डबिंग", Gujarati: "AI વોઇસ-ઓવર ડબિંગ",
+    Hindi: "एआई वॉयस-ओवर डबिंग", Kannada: "AI ವಾಯ್ಸ್-ಓವರ್ ಡಬ್ಬಿಂಗ್", Kashmiri: "AI ڈبنگ", Konkani: "AI व्हॉइस-ओव्हर डबिंग", Maithili: "एआई वॉयस-ओवर डबिंग", Malayalam: "AI വോയ്‌സ്-ഓവർ ഡബ്ബിംഗ്",
+    Manipuri: "AI ꯚꯣꯏꯁ ꯗꯕꯤꯡ", Marathi: "AI व्हॉइस-ओवर डबिंग", Nepali: "AI भोइस-ओभर डबिङ", Odia: "AI ଭଏସ୍-ଓଭର ଡବିଂ", Punjabi: "AI ਵੌਇਸ-ਓਵਰ ਡਬਿੰਗ", Sanskrit: "AI वाग्-ध्वन्यारोपणम्",
+    Santali: "AI Voice Dubber", Sindhi: "AI وائس اوور ڊبنگ", Tamil: "AI குரல் டப்பிங் கருவி", Telugu: "AI వాయిస్-ఓవర్ డబ్బింగ్", Urdu: "اے آئی وائس اوور ڈبنگ"
   },
   voiceover_dubber_desc: {
     English: "Convert text translations into natural speech voices for multi-dialect audio dubbing.",
-    Tamil: "உரை மொழிபெயர்ப்புகளை இயல்பான ஒலி வடிவமாக மாற்றி குரல் டப்பிங் செய்கிறது.",
+    Assamese: "পাঠ্য অনুবাদক স্বাভাৱিক মাতলৈ ৰূপান্তৰ কৰি ডাবিং কৰক।",
+    Bengali: "টেক্সট অনুবাদকে প্রাকৃতিক কণ্ঠে রূপান্তর করে ডাবিং করুন।",
+    Bodo: "लिरनायखौ राव डबिंग खालाम।",
+    Dogri: "पाठ अनुवाद गी प्राकृतिक आवाज बिच्च बदली ते डबिंग करो।",
+    Gujarati: "લખાણ અનુવાદોને કુદરતી અવાજમાં બદલી ડબિંગ કરો.",
     Hindi: "पाठ अनुवादों को प्राकृतिक आवाज में बदलें और डबिंग करें।",
-    Telugu: "వచనాన్ని సహజమైన వాయిస్ డబ్బింగ్‌గా మార్చండి."
+    Kannada: "ಪಠ್ಯ ಅನುವಾದಗಳನ್ನು ನೈಸರ್ಗಿಕ ಧ್ವನಿಗೆ ಬದಲಾಯಿಸಿ ಡಬ್ಬಿಂಗ್ ಮಾಡಿ.",
+    Kashmiri: "ٹیکسٹ آواز منز بدلایو۔",
+    Konkani: "मजकूर अणकारांक सैमिक आवाजांत बदलून डबिंग करात.",
+    Maithili: "पाठ अनुवादकेँ प्राकृतिक आवाज मे बदलू आ डबिंग करू।",
+    Malayalam: "ടെക്സ്റ്റ് തർജ്ജമകളെ സ്വാഭാവിക ശബ്ദമാക്കി മാറ്റി ഡബ്ബ് ചെയ്യുക.",
+    Manipuri: "ꯋꯥꯍꯩ ꯍꯟꯗꯣꯛꯄꯕꯨ ꯈꯣꯟꯖꯦꯜ ꯑꯣꯏꯅ ꯁꯦꯝꯕꯨ꯫",
+    Marathi: "मजकूर भाषांतरांना नैसर्गिक आवाजात बदलून डबिंग करा.",
+    Nepali: "पाठ अनुवादहरूलाई प्राकृतिक आवाजमा बदलेर डबिङ गर्नुहोस्।",
+    Odia: "ପାଠ୍ୟ ଅନୁବାଦକୁ ପ୍ରାକୃତିକ ସ୍ୱରରେ ବଦଳାଇ ଡବିଂ କରନ୍ତୁ।",
+    Punjabi: "ਟੈਕਸਟ ਅਨੁਵਾਦਾਂ ਨੂੰ ਕੁਦਰਤੀ ਆਵਾਜ਼ ਵਿੱਚ ਬਦਲ ਕੇ ਡਬਿੰਗ ਕਰੋ।",
+    Sanskrit: "पाठ्यानुवादान् प्राकृतिकवाण्यां परिवर्त्य वाग्-ध्वन्यारोपणं करोतु।",
+    Santali: "Text ᱠᱷᱚᱱ Audio Dubbing ᱵᱮᱱᱟᱣ ᱢᱮ.",
+    Sindhi: "ٽيڪسٽ ترجمي کي قدرتي آواز ۾ بدلائي ڊبنگ ڪريو.",
+    Tamil: "உரை மொழிபெயர்ப்புகளை இயல்பான ஒலி வடிவமாக மாற்றி குரல் டப்பிங் செய்கிறது.",
+    Telugu: "వచనాన్ని సహజమైన వాయిస్ డబ్బింగ్‌గా మార్చండి.",
+    Urdu: "متن کے ترجمے کو قدرتی آواز میں بدل کر ڈبنگ کریں۔"
   },
   tutor_companion_title: {
-    English: "AI Classroom Tutor Config",
-    Tamil: "AI வகுப்பறை ஆசிரியர் அமைவாக்கம்",
-    Hindi: "एआई ट्यूटर कॉन्फ़िगरेशन",
-    Telugu: "AI ట్యూటర్ కాన్ఫిగరేషన్"
+    English: "AI Classroom Tutor Config", Assamese: "AI শ্ৰেণী শিক্ষক কনফিগাৰ", Bengali: "AI ক্লাসরুম টিউটর কনফিগ", Bodo: "AI फरायसालि फोरोंगिरि", Dogri: "AI ट्यूटर कॉन्फ़िगरेशन", Gujarati: "AI ટ્યુટર કોન્ફિગરેશન",
+    Hindi: "एआई ट्यूटर कॉन्फ़िगरेशन", Kannada: "AI ಟ್ಯೂಟರ್ ಕಾನ್ಫಿಗರೇಶನ್", Kashmiri: "AI ٹیوٹر سیٹنگ", Konkani: "AI शिक्षक मांडणी", Maithili: "एआई ट्यूटर कॉन्फ़िगरेशन", Malayalam: "AI ട്യൂട്ടർ കോൺഫിഗറേഷൻ",
+    Manipuri: "AI ꯇ꯭ꯌꯨꯇꯔ ꯁꯦꯇꯤꯡ", Marathi: "AI ट्यूटर कॉन्फिगरेशन", Nepali: "AI ट्यूटर कन्फिगरेसन", Odia: "AI ଟ୍ୟୁଟର କନଫିଗରେସନ୍", Punjabi: "AI ਟਿਊਟਰ ਕੌਂਫਿਗਰੇਸ਼ਨ", Sanskrit: "AI गुरु-विन्यासः",
+    Santali: "AI Tutor Config", Sindhi: "AI ٽيوٽر ڪنفيگريشن", Tamil: "AI வகுப்பறை ஆசிரியர் அமைவாக்கம்", Telugu: "AI ట్యూటర్ కాన్ఫిగరేషన్", Urdu: "اے آئی ٹیوٹر کنفیگریشن"
   },
   tutor_companion_desc: {
     English: "Setup training parameters and custom system prompts grounded in educator content for student chat bots.",
-    Tamil: "ஆசிரியர் பதிவேற்றிய பாடக் கோப்புகளை ஆதாரமாக கொண்டு மாணவர் சாட்பாட்டை அமைவாக்கம் செய்கிறது.",
+    Assamese: "ছাত্ৰ-ছাত্ৰীৰ বাবে শিক্ষকে প্ৰস্তুত কৰা সমলৰ আধাৰত চ্যাটবট সংহতি কৰক।",
+    Bengali: "শিক্ষার্থীর চ্যাটবটের জন্য মূল উপাদানভিত্তিক সিস্টেম প্রম্পট সেটআপ করুন।",
+    Bodo: "चैटबटनि थाखाय सेतिं खालाम।",
+    Dogri: "छात्र चैटबॉट लेई शिक्षक सामग्री पर आधारित प्रॉम्प्ट कॉन्फ़िगर करो।",
+    Gujarati: "વિદ્યાર્થી ચેટબોટ માટે સિસ્ટમ પ્રોમ્પ્ટ ગોઠવો.",
     Hindi: "शिक्षक सामग्री पर आधारित छात्र चैटबॉट के लिए सिस्टम प्रॉम्प्ट कॉन्फ़िगर करें।",
-    Telugu: "విద్యార్థి చాట్‌బాట్ కోసం ఉపాధ్యాయ కంటెంట్ ఆధారిత ప్రాంప్ట్‌లను కాన్ఫిగర్ చేయండి."
+    Kannada: "ವಿದ್ಯಾರ್ಥಿ ಚಾಟ್‌ಬಾಟ್‌ಗಾಗಿ ಶಿಕ್ಷಕರ ವಿಷಯ ಆಧಾರಿತ ಪ್ರಾಂಪ್ಟ್‌ಗಳನ್ನು ಹೊಂದಿಸಿ.",
+    Kashmiri: "چيٹ بوٹ سیٹنگ کرو۔",
+    Konkani: "विद्यार्थी चॅटबॉटा खातीर शिक्षकांच्या माहितीचेर आधारित सिस्टिम प्रॉमप्ट्स सेट करात.",
+    Maithili: "विद्यार्थी चैटबॉट लेल शिक्षक सामग्री पर आधारित सिस्टम प्रॉम्प्ट कॉन्फ़िगर करू।",
+    Malayalam: "വിദ്യാർത്ഥി ചാറ്റ്ബോട്ടിനായി സിസ്റ്റം പ്രോംപ്റ്റുകൾ ക്രമീകരിക്കുക.",
+    Manipuri: "ꯆꯦꯠꯕꯣꯠꯀꯤ ꯁꯦꯇꯤꯡ ꯁꯦꯝꯕꯨ꯫",
+    Marathi: "विद्यार्थी चॅटबॉटसाठी शिक्षक माहितीवर आधारित प्रॉमप्ट्स सेट करा.",
+    Nepali: "विद्यार्थी च्याटबटका लागि शिक्षक सामग्रीमा आधारित प्रम्प्टहरू सेट गर्नुहोस्।",
+    Odia: "ଛାତ୍ରଛାତ୍ରୀ ଚାଟବଟ୍ ପାଇଁ ଶିକ୍ଷକଙ୍କ ଆଲେଖ୍ୟ ଆଧାରିତ ପ୍ରମ୍ପ୍ଟ ସେଟ୍ କରନ୍ତୁ।",
+    Punjabi: "ਵਿਦਿਆਰਥੀ ਚੈਟਬੋਟ ਲਈ ਸਿਸਟਮ ਪ੍ਰੌਮਪਟ ਕੌਂਫਿਗਰ ਕਰੋ।",
+    Sanskrit: "छात्रसंभाषणयन्त्राय शिक्षकसामग्रीम् आधारीकृत्य प्रबोधनानि विरचयतु।",
+    Santali: "Chatbot setup ᱢᱮ.",
+    Sindhi: "شاگرد چئٽ بوٽ لاءِ سسٽم پرامپٽس مقرر ڪريو.",
+    Tamil: "ஆசிரியர் பதிவேற்றிய பாடக் கோப்புகளை ஆதாரமாக கொண்டு மாணவர் சாட்பாட்டை அமைவாக்கம் செய்கிறது.",
+    Telugu: "విద్యార్థి చాట్‌బాట్ కోసం ఉపాధ్యాయ కంటెంట్ ఆధారిత ప్రాంప్ట్‌లను కాన్ఫిగర్ చేయండి.",
+    Urdu: "طلباء کے چیٹ بوٹ کے لیے تعلیمی مواد پر مبنی سسٹم پرامپٹس کنفیگر کریں۔"
   },
 
+  view_content_library: {
+    English: "View Content Library", Assamese: "সামগ্ৰী পুথিভঁৰাল চাওক", Bengali: "কন্টেন্ট লাইব্রেরি দেখুন", Bodo: "आयदा लायब्रेरी नाय", Dogri: "सामग्री पुस्तकालय देखो", Gujarati: "સાધનો મંડળ જુઓ",
+    Hindi: "सामग्री पुस्तकालय देखें", Kannada: "ವಿಷಯ ಗ್ರಂಥಾಲಯ ವೀಕ್ಷಿಸಿ", Kashmiri: "لایبریری وچھیو", Konkani: "सामग्री लायब्ररी पळयात", Maithili: "सामग्री पुस्तकालय देखू", Malayalam: "കണ്ടന്റ് ലൈബ്രറി കാണുക",
+    Manipuri: "ꯂꯥꯏꯕ꯭ꯔꯦꯔꯤ ꯌꯦꯡꯕ", Marathi: "सामग्री ग्रंथालय पहा", Nepali: "सामग्री पुस्तकालय हेर्नुहोस्", Odia: "ବିଷୟବସ୍ତୁ ପାଠାଗାର ଦେଖନ୍ତୁ", Punjabi: "ਸਮੱਗਰੀ ਲਾਇਬ੍ਰੇਰੀ ਵੇਖੋ", Sanskrit: "विषयपुस्तकालयं पश्यतु",
+    Santali: "Content Library ᱧᱮᱞ ᱢᱮ", Sindhi: "مواد لائبريري ڏسو", Tamil: "பாடக் களஞ்சியத்தைக் காண்க", Telugu: "కంటెంట్ లైబ్రరీ చూడండి", Urdu: "مواد کی لائبریری دیکھیں"
+  },
+  launch_interactive_studio: {
+    English: "Launch Interactive Studio", Assamese: "ইন্টъৰেক্টিভ ষ্টুডিঅ' চলাওক", Bengali: "ইন্টারেক্টিভ স্টুডিও চালু করুন", Bodo: "स्टुडियो बेवफाय", Dogri: "इंटरएक्टिव स्टूडियो चलाओ", Gujarati: "ઇન્ટરેક્ટિવ સ્ટુડિયો ચાલુ કરો",
+    Hindi: "इंटरएक्टिव स्टूडियो चलाएं", Kannada: "ಇಂಟರಾಕ್ಟಿವ್ ಸ್ಟುಡಿಯೋ ಪ್ರಾರಂಭಿಸಿ", Kashmiri: "اسٹوڈیو چلاویو", Konkani: "इंटरॲक्टिव्ह स्टुडिओ सुरू करात", Maithili: "इंटरएक्टिव स्टूडियो चलाबू", Malayalam: "ഇന്ററാക്ടീവ് സ്റ്റുഡിയോ ആരംഭിക്കുക",
+    Manipuri: "ꯁ꯭ꯇꯨꯗꯤꯑꯣ ꯍꯧꯕ", Marathi: "इंटरअॅक्टिव्ह स्टुडिओ सुरू करा", Nepali: "इन्टरएक्टिभ स्टुडियो सुरु गर्नुहोस्", Odia: "ଇଣ୍ଟରାକ୍ଟିଭ୍ ଷ୍ଟୁଡିଓ ଆରମ୍ଭ କରନ୍ତু", Punjabi: "ਇੰਟਰਐਕਟਿਵ ਸਟੂਡੀਓ ਸ਼ੁਰੂ ਕਰੋ", Sanskrit: "संवादात्मकं मञ्चं सञ्चालयतु",
+    Santali: "Studio Launch ᱢᱮ", Sindhi: "انٽرايڪٽو اسٽوڊيو شروع ڪريو", Tamil: "ஊடாடும் ஸ்டுடியோவை இயக்கு", Telugu: "ఇంటరాక్టివ్ స్టూడియోను ప్రారంభించండి", Urdu: "انٹرایکٹو اسٹوڈیو شروع کریں"
+  },
   educator_dashboard: {
-    English: "Educator Dashboard",
-    Hindi: "शिक्षक डैशबोर्ड",
-    Tamil: "ஆசிரியர் டாஷ்போர்டு",
-    Telugu: "ఉపాధ్యాయ డాష్‌బోర్డ్"
+    English: "Educator Dashboard", Assamese: "শিক্ষক ড্যাশবোর্ড", Bengali: "শিক্ষক ড্যাশবোর্ড", Bodo: "फोरोंगिरि ड्यासबोर्ड", Dogri: "शिक्षक डैशबोर्ड", Gujarati: "શિક્ષક ડેશબોર્ડ",
+    Hindi: "शिक्षक डैशबोर्ड", Kannada: "ಶಿಕ್ಷಕರ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್", Kashmiri: "استاد ڈیش بورڈ", Konkani: "शिक्षक डॅशबोर्ड", Maithili: "शिक्षक डैशबोर्ड", Malayalam: "അധ്യാപക ഡാഷ്‌ബോർഡ്",
+    Manipuri: "ꯑꯣꯖꯥꯒꯤ ꯗꯦꯁꯕꯣꯔꯗ", Marathi: "शिक्षक डॅशबोर्ड", Nepali: "शिक्षक ड्यासबोर्ड", Odia: "ଶିକ୍ଷକ ଡ୍ୟାସବୋର୍ଡ", Punjabi: "ਅਧਿਆਪਕ ਡੈਸ਼ਬੋਰਡ", Sanskrit: "शिक्षकफलकम्",
+    Santali: "Educator Dashboard", Sindhi: "استاد ڊئش بورڊ", Tamil: "ஆசிரியர் டாஷ்போர்டு", Telugu: "ఉపాధ్యాయ డాష్‌బోర్డ్", Urdu: "استاد ڈیش بورڈ"
   },
   preferred_language: {
-    English: "Preferred Language",
-    Hindi: "पसंदीदा भाषा",
-    Tamil: "விருப்பமான மொழி",
-    Telugu: "இஷ்டపడే భాష"
+    English: "Preferred Language", Assamese: "পছন্দৰ ভাষা", Bengali: "পছন্দের ভাষা", Bodo: "मोजां मोन्नाय राव", Dogri: "पसंदीदा भाषा", Gujarati: "પસંદગીની ભાષા",
+    Hindi: "पसंदीदा भाषा", Kannada: "ಆದ್ಯತೆಯ ಭಾಷೆ", Kashmiri: "پسندیدہ زبان", Konkani: "आवडती भास", Maithili: "पसंदीदा भाषा", Malayalam: "ഇഷ്ടമുള്ള ഭാഷ",
+    Manipuri: "ꯄꯥꯝꯕ ꯂꯣꯟ", Marathi: "पसंतीची भाषा", Nepali: "पसंदीदा भाषा", Odia: "ପସନ୍ଦର ଭାଷା", Punjabi: "ਪਸੰਦੀਦਾ ਭਾਸ਼ਾ", Sanskrit: "इष्टा भाषा",
+    Santali: "Preferred Language", Sindhi: "پسنديده ٻولي", Tamil: "விருப்பமான மொழி", Telugu: "ఇష్టపడే భాష", Urdu: "پسندیدہ زبان"
   }
 };
 
