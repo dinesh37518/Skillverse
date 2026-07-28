@@ -1,5 +1,5 @@
 import logging
-from groq import Groq
+import google.generativeai as genai
 from app.core.config import settings
 
 logger = logging.getLogger("translation_service")
@@ -8,17 +8,18 @@ class IndianLanguagesTranslator:
     def __init__(self):
         # List of 22 Scheduled Indian Languages supported
         self.supported_languages = settings.SUPPORTED_LANGUAGES
-        self.client = None
-        if settings.GROQ_API_KEY != "gsk_mock_api_key_placeholder":
+        self.model = None
+        if settings.GEMINI_API_KEY and settings.GEMINI_API_KEY != "your_gemini_api_key_placeholder":
             try:
-                self.client = Groq(api_key=settings.GROQ_API_KEY)
+                genai.configure(api_key=settings.GEMINI_API_KEY)
+                self.model = genai.GenerativeModel('gemini-1.5-flash')
             except Exception as e:
-                logger.error(f"Failed to initialize Groq client in Translation Service: {str(e)}")
-        logger.info("Initializing Translation Service supporting 22 Indian Languages.")
+                logger.error(f"Failed to initialize Gemini client in Translation Service: {str(e)}")
+        logger.info("Initializing Translation Service supporting 22 Indian Languages via Gemini AI.")
 
     def translate(self, text: str, source_lang: str, target_lang: str) -> str:
         """
-        Translates text from source_lang to target_lang.
+        Translates text from source_lang to target_lang using Gemini AI.
         If source_lang equals target_lang, it skips computation and returns original text.
         """
         if not text or text.strip() == "":
@@ -45,8 +46,8 @@ class IndianLanguagesTranslator:
             logger.warning(f"Unsupported translation language requested: {src} -> {tgt}. Falling back to original.")
             return text
 
-        # If Groq client is available and active, call it for real translations
-        if self.client:
+        # If Gemini client is available and active, call it for real translations
+        if self.model:
             try:
                 prompt = f"""
                 Translate the following text from {src} to {tgt}.
@@ -55,19 +56,13 @@ class IndianLanguagesTranslator:
 
                 Text to translate: "{text}"
                 """
-                chat_completion = self.client.chat.completions.create(
-                    messages=[
-                        {"role": "system", "content": "You are a professional multilingual translator specialized in Indian scheduled languages."},
-                        {"role": "user", "content": prompt}
-                    ],
-                    model="llama3-8b-8192",  # Fast model optimized for translation latency
-                    temperature=0.1
-                )
-                translated_text = chat_completion.choices[0].message.content.strip()
-                logger.info(f"Groq translated: '{text}' ({src}) -> '{translated_text}' ({tgt})")
-                return translated_text
+                response = self.model.generate_content(prompt)
+                if response and response.text:
+                    translated_text = response.text.strip()
+                    logger.info(f"Gemini translated: '{text}' ({src}) -> '{translated_text}' ({tgt})")
+                    return translated_text
             except Exception as e:
-                logger.error(f"Groq translation failed: {str(e)}. Falling back to mock.")
+                logger.error(f"Gemini translation failed: {str(e)}. Falling back to mock.")
 
         # Enterprise fallback mock string
         translated_mock = f"[{tgt} Translation of: '{text}']"
@@ -75,3 +70,4 @@ class IndianLanguagesTranslator:
         return translated_mock
 
 translation_service = IndianLanguagesTranslator()
+

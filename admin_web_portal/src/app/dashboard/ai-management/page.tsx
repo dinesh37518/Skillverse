@@ -6,15 +6,15 @@ import DataTable from '../../../components/DataTable';
 import { AIServiceConfig } from '../../../types';
 
 export default function AIManagement() {
-  const [groqKey, setGroqKey] = useState('gsk_y9A2********************');
+  const [geminiKey, setGeminiKey] = useState('your_gemini_api_key_here');
   const [bhashiniKey, setBhashiniKey] = useState('bha_82J3********************');
-  const [activeModel, setActiveModel] = useState('llama-3.3-70b-versatile');
+  const [activeModel, setActiveModel] = useState('gemini-1.5-flash');
 
   const [services] = useState<AIServiceConfig[]>([
     {
       id: 'srv-1',
-      service_name: 'Llama text summaries & quiz generator',
-      provider: 'Groq Cloud API',
+      service_name: 'Gemini AI text summaries & quiz generator',
+      provider: 'Google Gemini AI',
       status: 'active',
       api_key_set: true,
       usage_count: 1450,
@@ -88,7 +88,7 @@ export default function AIManagement() {
       {/* Title */}
       <div>
         <h2 className="text-3xl font-bold tracking-tight">AI & Translation Management</h2>
-        <p className="text-slate-400 mt-1">Configure translation pipelines, Groq API allocations, system prompts, and endpoint audits.</p>
+        <p className="text-slate-400 mt-1">Configure translation pipelines, Gemini AI allocations, system prompts, and endpoint audits.</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
@@ -100,11 +100,11 @@ export default function AIManagement() {
           </h3>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-400 mb-1.5">Groq Cloud API Key</label>
+            <label className="block text-xs font-semibold text-slate-400 mb-1.5">Google Gemini AI API Key</label>
             <input
               type="password"
-              value={groqKey}
-              onChange={e => setGroqKey(e.target.value)}
+              value={geminiKey}
+              onChange={e => setGeminiKey(e.target.value)}
               className="w-full px-3 py-2 text-sm rounded-lg bg-slate-950 border border-slate-800 text-white placeholder-slate-650 focus:outline-none"
             />
           </div>
@@ -120,15 +120,15 @@ export default function AIManagement() {
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-400 mb-1.5">Active Llama Model</label>
+            <label className="block text-xs font-semibold text-slate-400 mb-1.5">Active Gemini Model</label>
             <select
               value={activeModel}
               onChange={e => setActiveModel(e.target.value)}
               className="w-full px-3 py-2 text-sm rounded-lg bg-slate-950 border border-slate-800 text-slate-400 focus:outline-none"
             >
-              <option value="llama-3.3-70b-versatile">llama-3.3-70b-versatile</option>
-              <option value="llama-3.1-8b-instant">llama-3.1-8b-instant</option>
-              <option value="mixtral-8x7b-32768">mixtral-8x7b-32768</option>
+              <option value="gemini-1.5-flash">gemini-1.5-flash</option>
+              <option value="gemini-1.5-pro">gemini-1.5-pro</option>
+              <option value="gemini-2.0-flash">gemini-2.0-flash</option>
             </select>
           </div>
 
@@ -145,7 +145,7 @@ export default function AIManagement() {
           <div className="flex justify-between items-center">
             <h3 className="text-base font-semibold">Translation & NLP Pipeline Nodes</h3>
             <button 
-              onClick={() => alert("Verifying connection to Groq and Bhashini...")}
+              onClick={() => alert("Verifying connection to Gemini AI and Bhashini...")}
               className="text-xs text-sky-400 font-semibold hover:text-sky-300 transition-colors flex items-center gap-1 cursor-pointer"
             >
               <RefreshCw className="h-3.5 w-3.5" /> Force diagnostic run

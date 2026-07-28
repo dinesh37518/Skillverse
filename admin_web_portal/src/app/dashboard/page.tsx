@@ -23,7 +23,7 @@ export default function AdminDashboardOverview() {
   const auditLogs = [
     { desc: "Educator Ravi Kumar requested course draft approval: 'PLC Basics'", time: "10 mins ago", type: "course" },
     { desc: "System Config updated: Sindhi language engine enabled", time: "1 hour ago", type: "system" },
-    { desc: "AI Usage limit threshhold warning: Groq token logs reached 85%", time: "3 hours ago", type: "ai" },
+    { desc: "AI Usage limit threshhold warning: Gemini AI token logs reached 85%", time: "3 hours ago", type: "ai" },
     { desc: "Educator account registration status suspended: Suresh Nair", time: "Yesterday", type: "security" }
   ];
 

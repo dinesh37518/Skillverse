@@ -53,7 +53,7 @@ export default function FileUploader({
       setUploadProgress((prev) => {
         if (prev >= 100) {
           clearInterval(interval);
-          onFileSelect(file);
+          setTimeout(() => onFileSelect(file), 0);
           return 100;
         }
         return prev + 10;

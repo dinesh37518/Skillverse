@@ -9,6 +9,7 @@ from app.models.models import (
 )
 from app.services.ai_service import ai_service
 from app.services.translation_service import translation_service
+from app.services.speech_to_speech import s2s_service
 
 logger = logging.getLogger("live_class_service")
 
@@ -54,19 +55,18 @@ class LiveClassService:
         live_class = self.update_class_status(db, class_id, "live")
         class_title = live_class.title if live_class else "Live Classroom"
         
-        # Dispatches SMS notification via SMS service
-        from app.services.sms_service import sms_service
+        # Dispatches email notification via Email service
+        from app.services.email_service import email_service
         from app.services.notification_service import notification_service
 
-        sms_msg = f"🔴 Live Lecture Started! Join '{class_title}' now on Skillverse AI."
-        sms_status = sms_service.send_otp_sms("+919876543210", f"ALERT: {class_title} is Live!")
+        email_status = email_service.send_live_class_email_alert("student@skillverse.ai", class_title, room_id=class_id)
         
-        logger.info(f"🚀 Live class {class_id} launched! Dispatched SMS and student portal notifications.")
+        logger.info(f"🚀 Live class {class_id} launched! Dispatched email and student portal notifications.")
         return {
             "status": "live",
             "class_id": class_id,
             "title": class_title,
-            "sms_delivery": "dispatched",
+            "email_delivery": "dispatched",
             "notification_sent": True
         }
 
@@ -161,5 +161,22 @@ class LiveClassService:
             "revision_notes": "# Quick Revision\nAlways confirm grounds prior to breaker toggle.",
             "interview_questions": [{"question": "How do you test a three-phase motor?", "answer": "Using a megohmmeter to check insulation resistance and winding continuity."}]
         }
+
+    def translate_live_audio_stream_s2s(
+        self, 
+        audio_chunk_bytes: bytes, 
+        source_lang: str = "English", 
+        target_lang: str = "Hindi"
+    ) -> Dict[str, Any]:
+        """
+        Translates live classroom audio in real-time using Speech-to-Speech (S2S).
+        Returns dubbed audio stream payload + translated live subtitle captions.
+        """
+        logger.info(f"🎙️ [LIVE S2S STREAM] Translating classroom audio ({source_lang} -> {target_lang})")
+        return s2s_service.process_speech_to_speech_chunk(
+            audio_bytes=audio_chunk_bytes,
+            source_language=source_lang,
+            target_language=target_lang
+        )
 
 live_class_service = LiveClassService()

@@ -17,7 +17,7 @@ export default function ReportsGenerator() {
   const reports = [
     { title: "Student progress & enrollment matrix", desc: "Detailed records on quiz scores, course hours and student profiles.", format: "CSV", size: "2.4 MB" },
     { title: "Educator class hours log", desc: "Records live stream connections durations, classes counts and departments.", format: "PDF", size: "1.1 MB" },
-    { title: "AI usage token allocation summaries", desc: "Monitors translation requests counts and Groq query bounds.", format: "CSV", size: "640 KB" },
+    { title: "AI usage token allocation summaries", desc: "Monitors translation requests counts and Gemini AI query bounds.", format: "CSV", size: "640 KB" },
     { title: "Course completion rates & certificate ledger", desc: "Lists authorized vocational certificate numbers and achievements rates.", format: "PDF", size: "820 KB" }
   ];
 

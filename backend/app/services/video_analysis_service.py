@@ -5,7 +5,7 @@ import datetime
 from typing import Dict, Any, List, Optional, Tuple
 
 from sqlalchemy.orm import Session
-from groq import Groq
+import google.generativeai as genai
 from app.core.config import settings
 from app.models.models import AnalyzedVideo
 from app.services.translation_service import translation_service
@@ -169,8 +169,11 @@ class YouTubeTranscriptExtractor:
 # ─────────────────────────────────────────────────────────
 class VideoAnalysisService:
     def __init__(self):
-        self.client = Groq(api_key=settings.GROQ_API_KEY)
-        self.model = "llama3-70b-8192"
+        if settings.GEMINI_API_KEY:
+            genai.configure(api_key=settings.GEMINI_API_KEY)
+            self.model = genai.GenerativeModel('gemini-1.5-flash')
+        else:
+            self.model = None
         self.yt_extractor = YouTubeTranscriptExtractor()
 
     def validate_url(self, url: str) -> bool:
@@ -322,23 +325,16 @@ class VideoAnalysisService:
         Instructions:
         1. Prioritize details present in the Transcript and Study Notes above general knowledge.
         2. If the answer is directly supported by the transcript or notes, explain it clearly referencing the video.
-        3. If the transcript context does not contain enough information, you may use your general Groq knowledge but explicitly mention that this is additional outside context.
+        3. If the transcript context does not contain enough information, you may use your general AI knowledge but explicitly mention that this is additional outside context.
         4. Keep explanations concise, vocational, and focused on practical understanding.
         """
 
         try:
-            if settings.GROQ_API_KEY == "gsk_mock_api_key_placeholder":
+            if not self.model or settings.GEMINI_API_KEY == "your_gemini_api_key_placeholder":
                 english_reply = f"This is an AI response to: '{english_question}' based on the video: '{video.title}'."
             else:
-                chat_completion = self.client.chat.completions.create(
-                    messages=[
-                        {"role": "system", "content": system_prompt},
-                        {"role": "user", "content": english_question}
-                    ],
-                    model=self.model,
-                    temperature=0.4
-                )
-                english_reply = chat_completion.choices[0].message.content
+                response = self.model.generate_content(f"{system_prompt}\n\nQuestion: {english_question}")
+                english_reply = response.text if response and response.text else f"Answer to '{english_question}'."
 
             # Translate response back to user's select language
             return translation_service.translate(english_reply, source_lang="English", target_lang=language)

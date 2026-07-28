@@ -23,8 +23,10 @@ app.add_middleware(
 
 # Register main API Routers
 app.include_router(endpoints.router, prefix=settings.API_V1_STR, tags=["Core Modules"])
+app.include_router(endpoints.router, prefix="/api", tags=["Core Modules API Alias"])
 app.include_router(search.router, prefix=settings.API_V1_STR, tags=["Search Engine"])
 app.include_router(websocket_classroom.router, tags=["Live Classroom WebSockets"])
+
 
 @app.get("/")
 def read_root():

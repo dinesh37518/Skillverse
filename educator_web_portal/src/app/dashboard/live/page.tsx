@@ -21,18 +21,31 @@ const sessionSchema = z.object({
 
 type SessionInput = z.infer<typeof sessionSchema>;
 
-// Subtitle captions map matching exact language selection
+// Subtitle captions map matching exact language selection across all 23 scheduled languages
 const SUBTITLE_TRANSLATION_MAP: Record<string, string> = {
-  "Tamil": "மின்சார வயரிங் மற்றும் பிரேக்கர் அமைப்புகளை சரிபார்க்கவும். [Live Tamil Subtitles]",
+  "English": "Verify electrical wiring and circuit breaker clearances before power on. [Live English Subtitles]",
+  "Assamese": "বিদ্যুৎ ৱায়াৰিং আৰু ব্ৰেকাৰ ছেটিংছ পৰীক্ষা কৰক। [Live Assamese Subtitles]",
+  "Bengali": "বৈদ্যুতিক তারের সংযোজন এবং ব্রেকার সেটিংস পরীক্ষা করুন। [Live Bengali Subtitles]",
+  "Bodo": "बिजुलि तार आरो ब्रेकार सैटिंफोरखौ नायबिजिर। [Live Bodo Subtitles]",
+  "Dogri": "बिजली दी वायरिंग ते ब्रेकर सैटिंग दी जांच करो। [Live Dogri Subtitles]",
+  "Gujarati": "ઇલેક્ટ્રિકલ વાયરિંગ અને બ્રેકર સેટિંગ્સ તપાસો. [Live Gujarati Subtitles]",
   "Hindi": "विद्युत तारों और ब्रेकर सेटिंग्स की जांच करें। [Live Hindi Subtitles]",
+  "Kannada": "ವಿದ್ಯುತ್ ವೈರಿಂಗ್ ಮತ್ತು ಬ್ರೇಕರ್ ಸೆಟ್ಟಿಂಗ್‌ಗಳನ್ನು ಪರಿಶೀಲಿಸಿ. [Live Kannada Subtitles]",
+  "Kashmiri": "برقی وائرنگ اور بریکر سیٹنگس چیک کرو۔ [Live Kashmiri Subtitles]",
+  "Konkani": "विद्युत वायरिंग आणी ब्रेकर मांडणी तपासात. [Live Konkani Subtitles]",
+  "Maithili": "बिजली तार आ ब्रेकर सेटिंगक जाँच करू। [Live Maithili Subtitles]",
+  "Malayalam": "വൈദ്യുതി വയറിംഗും ബ്രേക്കർ ക്രമീകരണങ്ങളും പരിശോധിക്കുക. [Live Malayalam Subtitles]",
+  "Manipuri": "ꯏꯂꯦꯛꯠꯔꯤꯛ ꯋꯥꯌꯔꯤꯡ ꯑꯃꯁꯨꯡ ꯕ꯭ꯔꯦꯀꯔ ꯁꯦꯇꯤꯡꯁꯤꯡ ꯌꯦꯡꯁꯤꯅꯕꯤꯌꯨ꯫ [Live Manipuri Subtitles]",
+  "Marathi": "विद्युत वायरिंग आणि ब्रेकर सेटिंग्ज तपासा. [Live Marathi Subtitles]",
+  "Nepali": "विद्युतीय वायरिङ र ब्रेकर सेटिङहरू जाँच गर्नुहोस्। [Live Nepali Subtitles]",
+  "Odia": "ବିଦ୍ୟୁତ୍ ୱାୟାରିଂ ଏବଂ ବ୍ରେକର୍ ସେଟିଙ୍ଗ୍ ଯାଞ୍ଚ କରନ୍ତୁ। [Live Odia Subtitles]",
+  "Punjabi": "ਬਿਜਲੀ ਵਾਇਰਿੰਗ ਅਤੇ ਬ੍ਰੇਕਰ ਸੈਟਿੰਗਾਂ ਦੀ ਜਾਂਚ ਕਰੋ। [Live Punjabi Subtitles]",
+  "Sanskrit": "विद्युत्तन्त्री संयोजनं परिपथविच्छेदकव्यवस्थां च परीक्ष्यताम्। [Live Sanskrit Subtitles]",
+  "Santali": "ᱵᱤᱡᱽᱞᱤ ᱣᱟᱭᱟᱨᱤᱝ ᱟᱨ ᱵᱽᱨᱮᱠᱟᱨ ᱥᱮᱴᱤᱝ ᱧᱮᱞ ᱢᱮ. [Live Santali Subtitles]",
+  "Sindhi": "بجليءَ جي وائرنگ ۽ بريڪر سيٽنگون چيڪ ڪريو. [Live Sindhi Subtitles]",
+  "Tamil": "மின்சார வயரிங் மற்றும் பிரேக்கர் அமைப்புகளை சரிபார்க்கவும். [Live Tamil Subtitles]",
   "Telugu": "విద్యుత్ వైరింగ్ మరియు బ్రేకర్ సెట్టింగ్‌లను తనిఖీ చేయండి. [Live Telugu Subtitles]",
-  "Korean": "전기 배선 및 브레이커 설정을 확인하십시오. [Live Korean Subtitles]",
-  "Japanese": "電気配線とブレーカーの設定を確認してください。 [Live Japanese Subtitles]",
-  "Chinese": "请检查电气线路和断路器设置。[Live Chinese Subtitles]",
-  "German": "Überprüfen Sie die elektrische Verkabelung und die Leistungsschaltereinstellungen. [Live German Subtitles]",
-  "Spanish": "Verifique el cableado eléctrico y la configuración de los disyuntores. [Live Spanish Subtitles]",
-  "French": "Vérifiez le câblage électrique et les réglages du disjoncteur. [Live French Subtitles]",
-  "English": "Verify electrical wiring and circuit breaker clearances before power on. [Live English Subtitles]"
+  "Urdu": "برقی وائرنگ اور بریکر سیٹنگز کی تصدیق کریں۔ [Live Urdu Subtitles]"
 };
 
 export default function LiveClassroom() {
@@ -51,13 +64,13 @@ export default function LiveClassroom() {
   const [sessions, setSessions] = useState<LiveSession[]>([
     {
       id: 'session-1',
-      course_id: 'course-1',
-      course_title: 'Hydraulic Systems',
-      title: 'Hydraulic Valves Troubleshooting Live Session',
+      course_id: 'c-sat-comm',
+      course_title: 'Satellite Communication',
+      title: 'Satellite Orbit & Link Budget Live Session',
       scheduled_at: '2026-07-23T16:00:00Z',
       status: 'scheduled',
-      webrtc_room_id: 'room-hydraulic-trouble',
-      join_link: 'http://localhost:3000/live/room-hydraulic-trouble',
+      webrtc_room_id: 'room-sat-orbit-501',
+      join_link: 'http://localhost:3000/live/room-sat-orbit-501',
       created_at: '2026-07-23T10:00:00Z'
     },
     {
@@ -93,8 +106,8 @@ export default function LiveClassroom() {
     const timestamp = generateId('temp');
     const newSession: LiveSession = {
       id: `session-${timestamp}`,
-      course_id: 'course-1',
-      course_title: 'Hydraulic Systems',
+      course_id: 'c-sat-comm',
+      course_title: 'Satellite Communication',
       title: data.title,
       scheduled_at: data.scheduled_at,
       status: 'scheduled',
@@ -177,19 +190,19 @@ export default function LiveClassroom() {
         </div>
       </div>
 
-      {/* SMS Alert Notification Banner */}
+      {/* SMS & Email Alert Notification Banner */}
       {smsNotificationSent && (
-        <div className="bg-emerald-50 border border-emerald-200 p-4 rounded-xl flex items-center justify-between">
+        <div className="bg-emerald-50 border border-emerald-200 p-4 rounded-xl flex items-center justify-between flex-wrap gap-3">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-emerald-600 text-white rounded-lg">
               <Send className="h-5 w-5" />
             </div>
             <div>
-              <p className="text-sm font-bold text-emerald-950">Live Class Alert Dispatched!</p>
-              <p className="text-xs text-emerald-700">SMS notification sent to student mobile numbers & live push alert posted on student mobile app.</p>
+              <p className="text-sm font-bold text-emerald-950">Live Class Link Dispatched to Registered Student Emails!</p>
+              <p className="text-xs text-emerald-700">Unique join link (http://localhost:3000/live/room-sat-orbit-501) dispatched to all registered student inboxes.</p>
             </div>
           </div>
-          <span className="text-xs font-bold px-2.5 py-1 bg-emerald-200 text-emerald-800 rounded-full">SMS Delivered</span>
+          <span className="text-xs font-bold px-2.5 py-1 bg-emerald-200 text-emerald-800 rounded-full">Email & SMS Delivered</span>
         </div>
       )}
 
@@ -231,6 +244,13 @@ export default function LiveClassroom() {
                   <Radio className="h-3.5 w-3.5 animate-pulse" />
                   <span>LIVE BROADCASTING</span>
                 </div>
+                
+                {/* Educator Only Permission Badge */}
+                <div className="px-3 py-1 bg-violet-950/80 border border-violet-500/30 text-violet-300 rounded-full text-xs font-bold flex items-center gap-1.5">
+                  <Lock className="h-3 w-3 text-violet-400" />
+                  <span>Educator Exclusive Camera & Screen Control</span>
+                </div>
+
                 <div className="flex items-center gap-3">
                   {/* Educator Screen Share Toggle Button */}
                   <button
@@ -273,36 +293,34 @@ export default function LiveClassroom() {
                 )}
               </div>
 
-              {/* Real-time Subtitle Overlay HUD (Matching Selected Language) */}
+              {/* Real-time Subtitle Overlay HUD */}
               <div className="z-10 bg-black/75 backdrop-blur-md p-3 rounded-xl border border-violet-500/30 text-center my-2">
                 <p className="text-xs font-bold text-violet-300 mb-0.5 flex items-center justify-center gap-1">
                   <Globe className="h-3.5 w-3.5 text-violet-400" />
-                  <span>Instagram-Style Live Translated Subtitles ({selectedDubbingLang})</span>
+                  <span>Speech-to-Speech Realtime Dubbing ({selectedDubbingLang})</span>
                 </p>
                 <p className="text-sm font-semibold text-white">
-                  &quot;{SUBTITLE_TRANSLATION_MAP[selectedDubbingLang] || SUBTITLE_TRANSLATION_MAP["English"]}&quot;
+                  &quot;Verify electrical wiring, pressure valves and circuit breaker clearances before powering on.&quot;
                 </p>
               </div>
 
               {/* Bottom Stream Controls Bar */}
-              <div className="flex justify-between items-center z-10 bg-black/80 backdrop-blur-md p-3 rounded-xl border border-slate-800">
+              <div className="flex justify-between items-center z-10 bg-black/80 backdrop-blur-md p-3 rounded-xl border border-slate-800 flex-wrap gap-2">
                 <div className="flex items-center gap-3">
-                  <span className="text-xs font-bold text-slate-300">Live Dubbing Language:</span>
+                  <span className="text-xs font-bold text-slate-300">Target Student Language (23 Languages):</span>
                   <select
                     value={selectedDubbingLang}
                     onChange={(e) => setSelectedDubbingLang(e.target.value)}
                     className="px-2.5 py-1 bg-slate-800 text-white rounded-lg text-xs border border-slate-700 font-semibold focus:outline-none focus:ring-2 focus:ring-violet-500"
                   >
-                    <option value="Tamil">Tamil (தமிழ் Live Subtitle & Dub)</option>
-                    <option value="Hindi">Hindi (हिंदी Live Subtitle & Dub)</option>
-                    <option value="Telugu">Telugu (తెలుగు Live Subtitle & Dub)</option>
-                    <option value="Korean">Korean (한국어 Live Subtitle & Dub)</option>
-                    <option value="Japanese">Japanese (日本語 Live Subtitle & Dub)</option>
-                    <option value="Chinese">Chinese (中文 Live Subtitle & Dub)</option>
-                    <option value="German">German (Deutsch Live Subtitle & Dub)</option>
-                    <option value="Spanish">Spanish (Español Live Subtitle & Dub)</option>
-                    <option value="French">French (Français Live Subtitle & Dub)</option>
-                    <option value="English">English Subtitle & Dub</option>
+                    {[
+                      'English', 'Assamese', 'Bengali', 'Bodo', 'Dogri', 'Gujarati', 'Hindi',
+                      'Kannada', 'Kashmiri', 'Konkani', 'Maithili', 'Malayalam', 'Manipuri',
+                      'Marathi', 'Nepali', 'Odia', 'Punjabi', 'Sanskrit', 'Santali', 'Sindhi',
+                      'Tamil', 'Telugu', 'Urdu'
+                    ].map((lang) => (
+                      <option key={lang} value={lang}>{lang}</option>
+                    ))}
                   </select>
                 </div>
                 <button

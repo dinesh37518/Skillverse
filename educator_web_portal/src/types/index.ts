@@ -85,3 +85,11 @@ export interface NotificationItem {
   type: 'announcement' | 'assignment' | 'live_session' | 'system';
   created_at: string;
 }
+
+export interface AIToolItem {
+  id: string;
+  titleKey: string;
+  descKey: string;
+  icon: any;
+  status: 'active' | 'coming_soon';
+}

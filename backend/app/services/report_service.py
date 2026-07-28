@@ -59,7 +59,7 @@ class ReportService:
         elif report_type == "ai_usage":
             content = {
                 "total_ai_queries": 412,
-                "groq_tokens_consumed": 210452,
+                "gemini_tokens_consumed": 210452,
                 "average_response_time_ms": 482,
                 "popular_ai_features": ["Ask AI Doubt", "Flashcards Generate", "Summary Compile"],
                 "generation_timestamp": datetime.datetime.utcnow().isoformat()

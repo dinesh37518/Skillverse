@@ -11,18 +11,58 @@ export default function StudentRoster() {
   const [roster] = useState<StudentProgress[]>([
     {
       id: 'std-1',
-      student_name: 'Amit Patel',
-      course_title: 'Hydraulic Systems',
+      student_name: 'Ravi Kumar',
+      course_title: 'Satellite Communication',
       completion_rate: 85,
       quiz_average: 92,
       attendance_rate: 100,
       watch_time_mins: 145,
-      last_active: '10 mins ago'
+      last_active: 'Active Now'
     },
     {
       id: 'std-2',
+      student_name: 'Ananya Sharma',
+      course_title: 'Satellite Communication',
+      completion_rate: 92,
+      quiz_average: 96,
+      attendance_rate: 100,
+      watch_time_mins: 210,
+      last_active: '10 mins ago'
+    },
+    {
+      id: 'std-3',
+      student_name: 'Karthik Raja',
+      course_title: 'Satellite Communication',
+      completion_rate: 78,
+      quiz_average: 88,
+      attendance_rate: 95,
+      watch_time_mins: 160,
+      last_active: 'Today'
+    },
+    {
+      id: 'std-4',
+      student_name: 'Deepa Lakshmi',
+      course_title: 'Satellite Communication',
+      completion_rate: 95,
+      quiz_average: 94,
+      attendance_rate: 100,
+      watch_time_mins: 240,
+      last_active: 'Yesterday'
+    },
+    {
+      id: 'std-5',
+      student_name: 'Amit Patel',
+      course_title: 'Satellite Communication',
+      completion_rate: 85,
+      quiz_average: 90,
+      attendance_rate: 100,
+      watch_time_mins: 145,
+      last_active: 'Today'
+    },
+    {
+      id: 'std-6',
       student_name: 'Suresh Nair',
-      course_title: 'PLC Fundamentals',
+      course_title: 'Satellite Communication',
       completion_rate: 45,
       quiz_average: 78,
       attendance_rate: 85,
@@ -30,11 +70,11 @@ export default function StudentRoster() {
       last_active: '2 hours ago'
     },
     {
-      id: 'std-3',
+      id: 'std-7',
       student_name: 'Pooja Sharma',
-      course_title: 'Hydraulic Systems',
+      course_title: 'Satellite Communication',
       completion_rate: 100,
-      quiz_average: 96,
+      quiz_average: 98,
       attendance_rate: 100,
       watch_time_mins: 180,
       last_active: 'Yesterday'

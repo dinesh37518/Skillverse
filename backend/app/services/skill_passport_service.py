@@ -5,15 +5,18 @@ from typing import Optional
 from sqlalchemy.orm import Session
 from app.models.models import SkillPassport, Student, Course, Lesson, LearningProgress, Certificate
 from app.services.ai_service import ai_service
-from groq import Groq
+import google.generativeai as genai
 from app.core.config import settings
 
 logger = logging.getLogger("skill_passport_service")
 
 class SkillPassportService:
     def __init__(self):
-        self.client = Groq(api_key=settings.GROQ_API_KEY)
-        self.model = "llama3-70b-8192"
+        if settings.GEMINI_API_KEY:
+            genai.configure(api_key=settings.GEMINI_API_KEY)
+            self.model = genai.GenerativeModel('gemini-1.5-flash')
+        else:
+            self.model = None
 
     def get_or_create_passport(self, db: Session, student_id: str) -> SkillPassport:
         student_uuid = uuid.UUID(student_id) if isinstance(student_id, str) else student_id
@@ -97,7 +100,7 @@ class SkillPassportService:
         return passport
 
     def _generate_ai_passport_insights(self, skills: list, quiz_scores: list) -> tuple:
-        if settings.GROQ_API_KEY == "gsk_mock_api_key_placeholder":
+        if not self.model or settings.GEMINI_API_KEY == "your_gemini_api_key_placeholder":
             return (
                 "Student exhibits strong understanding of industrial safety, electrical wiring, and diagnostics with consistent quiz marks.",
                 "Junior Electrical Technician or Workshop Maintenance Specialist."
@@ -112,25 +115,19 @@ class SkillPassportService:
         1. A brief competency summary paragraph (2-3 sentences).
         2. A career recommendation matching these vocational skillsets.
 
-        Format output exactly as JSON:
+        Format output exactly as JSON with no markdown backticks:
         {{
           "summary": "...",
           "career_recommendation": "..."
         }}
         """
         try:
-            chat_completion = self.client.chat.completions.create(
-                messages=[
-                    {"role": "system", "content": "You are a professional vocational career coach. Output JSON only."},
-                    {"role": "user", "content": prompt}
-                ],
-                model=self.model,
-                temperature=0.3
-            )
-            data = json.loads(chat_completion.choices[0].message.content)
+            response = self.model.generate_content(prompt)
+            clean_text = response.text.replace("```json", "").replace("```", "").strip() if response and response.text else "{}"
+            data = json.loads(clean_text)
             return data.get("summary"), data.get("career_recommendation")
         except Exception as e:
-            logger.error(f"Error calling Groq for passport insights: {str(e)}")
+            logger.error(f"Error calling Gemini AI for passport insights: {str(e)}")
             return (
                 "Student exhibits strong understanding of safety and core electrical diagnostic modules.",
                 "Junior Electrical Systems Maintenance Technician"

@@ -4,7 +4,7 @@ import datetime
 from typing import Dict, Any, List, Optional
 from sqlalchemy.orm import Session
 from sqlalchemy import func
-from groq import Groq
+import google.generativeai as genai
 from app.core.config import settings
 from app.models.models import (
     Student, Course, Lesson, LearningProgress, Analytics,
@@ -16,8 +16,11 @@ logger = logging.getLogger("mentor_service")
 
 class MentorService:
     def __init__(self):
-        self.client = Groq(api_key=settings.GROQ_API_KEY)
-        self.model = "llama3-70b-8192"
+        if settings.GEMINI_API_KEY:
+            genai.configure(api_key=settings.GEMINI_API_KEY)
+            self.model = genai.GenerativeModel('gemini-1.5-flash')
+        else:
+            self.model = None
 
     def get_mentor_dashboard(self, db: Session, student_id: str) -> Dict[str, Any]:
         """
@@ -310,7 +313,7 @@ class MentorService:
         """
 
         try:
-            if settings.GROQ_API_KEY == "gsk_mock_api_key_placeholder":
+            if not self.model or settings.GEMINI_API_KEY == "your_gemini_api_key_placeholder":
                 # Fallback mock response
                 return {
                     "title": f"Mastery Checkpoint: {topic_name}",
@@ -331,18 +334,11 @@ class MentorService:
                     ]
                 }
 
-            chat_completion = self.client.chat.completions.create(
-                messages=[
-                    {"role": "system", "content": "You are a master vocational engineering educator who outputs only raw JSON."},
-                    {"role": "user", "content": prompt}
-                ],
-                model=self.model,
-                temperature=0.4
-            )
-            response_text = chat_completion.choices[0].message.content
-            return json.loads(response_text)
+            response = self.model.generate_content(f"{prompt}\nReturn valid JSON only with no markdown formatting.")
+            clean_text = response.text.replace("```json", "").replace("```", "").strip() if response and response.text else "{}"
+            return json.loads(clean_text)
         except Exception as e:
-            logger.error(f"Error calling Groq for custom assignment: {str(e)}")
+            logger.error(f"Error calling Gemini AI for custom assignment: {str(e)}")
             return {
                 "title": f"AI Directed Assignment: {topic_name}",
                 "description": f"Review questions targeting concepts of {topic_name}.",
@@ -505,18 +501,12 @@ class MentorService:
         """
 
         try:
-            if settings.GROQ_API_KEY == "gsk_mock_api_key_placeholder":
+            if not self.model or settings.GEMINI_API_KEY == "your_gemini_api_key_placeholder":
                 raise Exception("Using mock fallback")
 
-            chat_completion = self.client.chat.completions.create(
-                messages=[
-                    {"role": "system", "content": "You are a friendly AI Vocational Career Guide who outputs JSON."},
-                    {"role": "user", "content": prompt}
-                ],
-                model=self.model,
-                temperature=0.3
-            )
-            return json.loads(chat_completion.choices[0].message.content)
+            response = self.model.generate_content(f"{prompt}\nReturn valid JSON format only with no markdown formatting.")
+            clean_text = response.text.replace("```json", "").replace("```", "").strip() if response and response.text else "{}"
+            return json.loads(clean_text)
         except Exception:
             # Fallback values
             weak_area_fallbacks = ["Motor Phase Alignment & Voltage Ratios"]

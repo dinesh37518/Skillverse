@@ -46,8 +46,31 @@ export default function CreateCourse() {
   });
 
   const onSubmit = (data: CourseInput) => {
-    alert("Course metadata validated successfully! Database entry placeholder triggered.");
-    console.log(data);
+    const newCourse = {
+      id: `c-custom-${Date.now()}`,
+      title: data.title,
+      description: data.description,
+      category: data.category || 'Vocational',
+      language: data.language || 'English',
+      duration_hours: data.duration_hours || 10,
+      educator: 'Prof. Educator',
+      rating: '5.0 ★',
+      students: 0,
+      status: 'published',
+      code: `EC-${data.title.substring(0, 3).toUpperCase()}-${Math.floor(100 + Math.random() * 900)}`,
+      created_at: new Date().toISOString()
+    };
+
+    try {
+      const stored = JSON.parse(localStorage.getItem('skillverse_courses') || '[]');
+      const updated = [newCourse, ...stored];
+      localStorage.setItem('skillverse_courses', JSON.stringify(updated));
+      window.dispatchEvent(new Event('storage'));
+    } catch (e) {
+      console.error(e);
+    }
+
+    alert(`Success! Course "${data.title}" has been published and synced live to the Student Portal!`);
     router.push('/dashboard/courses');
   };
 

@@ -168,7 +168,7 @@ class AnalyticsService:
                 "total_hits": 24050,
                 "error_rate": 0.02
             },
-            "groq_usage": {
+            "gemini_usage": {
                 "total_tokens_used": 1450000,
                 "total_cost_usd": 12.50
             },

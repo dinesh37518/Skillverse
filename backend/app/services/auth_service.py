@@ -9,7 +9,7 @@ from fastapi import HTTPException, status
 from app.core.supabase_client import get_supabase
 from app.core.config import settings
 from app.schemas.schemas import UserSignUp, UserLogin, OTPRequest, OTPVerify
-from app.services.sms_service import sms_service
+from app.services.email_service import email_service
 
 logger = logging.getLogger("auth_service")
 
@@ -20,42 +20,40 @@ class AuthService:
 
     def request_otp(self, otp_data: OTPRequest) -> Dict[str, Any]:
         """
-        Generates and dispatches a 6-digit Email/Mobile OTP.
+        Generates and dispatches a 6-digit Email Verification OTP.
         """
         email = (otp_data.email or "").strip().lower()
         phone = (otp_data.phone_number or "").strip()
 
-        if email:
-            target_key = email
-            dispatch_msg = f"OTP successfully sent to email {email}"
-        elif phone:
-            target_key = phone if phone.startswith("+") else f"+91{phone}"
-            dispatch_msg = f"OTP successfully sent to {target_key}"
-        else:
+        target_email = email if email else (f"{phone.replace('+', '')}@student.skillverse.ai" if phone else "")
+        if not target_email or "@" not in target_email:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
-                detail="Email address or mobile phone number is required."
+                detail="Valid email address is required for email verification."
             )
         
         # Generate 6-digit code
         otp_code = str(random.randint(100000, 999999))
         expires_at = time.time() + 300  # 5 minutes validity
 
-        self._otp_store[target_key] = {
+        self._otp_store[target_email] = {
             "code": otp_code,
             "expires_at": expires_at,
             "role": otp_data.role or "student"
         }
 
-        logger.info(f"🔑 [EMAIL/MOBILE OTP GENERATED] Target: {target_key} | Code: {otp_code} | Expires: 5 mins")
+        # Dispatch Email Verification OTP
+        email_service.send_verification_email_otp(target_email, otp_code, purpose="authentication")
+        logger.info(f"📧 [EMAIL VERIFICATION OTP DISPATCHED] Target: {target_email} | Code: {otp_code} | Expires: 5 mins")
 
         return {
-            "message": dispatch_msg,
-            "target": target_key,
-            "email": email or None,
+            "message": f"Verification OTP code sent to email {target_email}",
+            "target": target_email,
+            "email": target_email,
             "expires_in_seconds": 300,
             "dev_otp_hint": otp_code
         }
+
 
     def verify_otp(self, verify_data: OTPVerify) -> Dict[str, Any]:
         """
@@ -155,7 +153,9 @@ class AuthService:
             "purpose": purpose
         }
 
-        logger.info(f"📧 [EMAIL OTP GENERATED] Email: {email_clean} | Code: {otp_code} | Purpose: {purpose}")
+        # Dispatch email verification OTP
+        email_service.send_verification_email_otp(email_clean, otp_code, purpose=purpose)
+        logger.info(f"📧 [EMAIL VERIFICATION OTP DISPATCHED] Email: {email_clean} | Code: {otp_code} | Purpose: {purpose}")
 
         return {
             "message": f"Verification OTP successfully sent to {email_clean}",

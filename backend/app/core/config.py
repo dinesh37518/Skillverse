@@ -12,16 +12,17 @@ class Settings(BaseSettings):
     # Redis Configuration for realtime channels & cache
     REDIS_URL: str = "redis://localhost:6379/0"
     
-    # AI Engine API Keys
+    # AI Engine API Key (Google Gemini AI)
     GEMINI_API_KEY: str = "your_gemini_api_key_placeholder"
-    GROQ_API_KEY: str = "your_gemini_api_key_placeholder"
     
-    # Real SMS Gateway Configurations (Fast2SMS / Twilio / Supabase)
-    SMS_PROVIDER: str = "auto"
-    FAST2SMS_API_KEY: str = ""
-    TWILIO_ACCOUNT_SID: str = ""
-    TWILIO_AUTH_TOKEN: str = ""
-    TWILIO_PHONE_NUMBER: str = ""
+    # SMTP Email Verification Gateway Configurations
+    SMTP_HOST: str = "smtp.gmail.com"
+    SMTP_PORT: int = 587
+    SMTP_USER: str = "noreply@skillverse.ai"
+    SMTP_PASSWORD: str = ""
+    SMTP_FROM_EMAIL: str = "noreply@skillverse.ai"
+    SMTP_FROM_NAME: str = "SkillVerse AI Verification"
+    EMAIL_VERIFICATION_REQUIRED: bool = True
 
     # Supabase authentication details
     SUPABASE_URL: str = "https://mock.supabase.co"

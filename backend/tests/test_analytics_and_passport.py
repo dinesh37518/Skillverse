@@ -35,7 +35,7 @@ def test_admin_advanced_analytics():
     
     response = client.get("/api/v1/admin/advanced-analytics")
     assert response.status_code == 200
-    assert "groq_usage" in response.json()
+    assert "gemini_usage" in response.json()
     assert "supabase_usage" in response.json()
 
 def test_educator_advanced_analytics():

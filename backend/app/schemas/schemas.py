@@ -162,9 +162,10 @@ class ChatMessage(BaseModel):
     content: str
 
 class ChatSessionRequest(BaseModel):
-    session_id: str
+    session_id: Optional[str] = "session-default"
     message: str
-    language: str = "English"
+    language: Optional[str] = "English"
+    history: Optional[List[Dict[str, Any]]] = None
 
 class ChatSessionResponse(BaseModel):
     session_id: str
@@ -574,6 +575,35 @@ class SkillPassportRead(BaseModel):
 
     class Config:
         from_attributes = True
+
+
+# ==========================================
+# 29. AI TUTOR MULTILINGUAL & PRACTICE SCHEMAS
+# ==========================================
+
+class AITutorPracticeRequest(BaseModel):
+    topic: str = "General Vocational Safety"
+    language: str = "English"
+    difficulty: str = "Medium"
+
+class AITutorPracticeResponse(BaseModel):
+    topic: str
+    language: str
+    difficulty: str
+    question: str
+    options: List[str]
+    correct_index: int
+    explanation: str
+    emotional_pep_talk: str
+
+class AITutorResourceRead(BaseModel):
+    id: str
+    category: str
+    title: str
+    topics: List[str]
+    supported_languages_count: int
+    languages: List[str]
+
 
 
 

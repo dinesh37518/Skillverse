@@ -2,6 +2,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../core/constants/languages.dart';
+import '../../core/constants/app_translations.dart';
+import '../../core/providers/language_provider.dart';
 import '../../core/providers/auth_provider.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_input.dart';
@@ -18,6 +21,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   // Form controllers
   final _nameController = TextEditingController();
+  final _emailController = TextEditingController();
   final _stateController = TextEditingController();
   final _districtController = TextEditingController();
   final _addressController = TextEditingController();
@@ -66,6 +70,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   @override
   void dispose() {
     _nameController.dispose();
+    _emailController.dispose();
     _stateController.dispose();
     _districtController.dispose();
     _addressController.dispose();
@@ -76,18 +81,81 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     super.dispose();
   }
 
+  void _showLanguageModal(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: const Color(0xFF0F172A),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) {
+        final currentLang = ref.watch(languageProvider);
+        return Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    'Select App & Login Language (23 Languages)',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.close, color: Colors.white54),
+                    onPressed: () => Navigator.pop(context),
+                  )
+                ],
+              ),
+              const Divider(color: Colors.white10),
+              Flexible(
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: AppLanguages.supportedLanguages.length,
+                  itemBuilder: (context, index) {
+                    final lang = AppLanguages.supportedLanguages[index];
+                    final nativeName = AppLanguages.nativeLanguageNames[lang] ?? lang;
+                    final isSelected = lang == currentLang;
+
+                    return ListTile(
+                      dense: true,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      tileColor: isSelected ? Colors.deepPurple.withOpacity(0.3) : null,
+                      leading: Icon(
+                        Icons.translate_rounded,
+                        color: isSelected ? Colors.deepPurpleAccent : Colors.grey,
+                      ),
+                      title: Text(lang, style: TextStyle(color: isSelected ? Colors.white : Colors.white70, fontWeight: isSelected ? FontWeight.bold : FontWeight.normal)),
+                      trailing: Text(nativeName, style: const TextStyle(color: Colors.amberAccent, fontSize: 13)),
+                      onTap: () {
+                        ref.read(languageProvider.notifier).setLanguage(lang);
+                        Navigator.pop(context);
+                      },
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   void _requestOTP() async {
     if (!_formKey.currentState!.validate()) return;
+    final lang = ref.read(languageProvider);
 
     if (_selectedStandard == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please select your standard of studying.')),
+        SnackBar(content: Text(AppTranslations.translate('please_select_std', lang))),
       );
       return;
     }
     if (_selectedInterest == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please select your topic of interest.')),
+        SnackBar(content: Text(AppTranslations.translate('please_select_interest', lang))),
       );
       return;
     }
@@ -98,7 +166,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     final random = Random();
     final otp = (100000 + random.nextInt(900000)).toString();
 
-    // Call authProvider to trigger email OTP request
     await ref.read(authProvider.notifier).requestEmailOTP(email);
 
     if (mounted) {
@@ -108,12 +175,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         _isLoading = false;
       });
 
+      final codeNotice = AppTranslations.translate('enter_code', lang);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           duration: const Duration(seconds: 15),
           backgroundColor: Colors.deepPurpleAccent,
           content: Text(
-            '🔑 [EMAIL VERIFICATION CODE] Code: $otp — sent to $email',
+            '🔑 [$codeNotice] Code: $otp — sent to $email',
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
           ),
         ),
@@ -123,9 +191,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   void _verifyOTP() async {
     final entered = _otpController.text.trim();
+    final lang = ref.read(languageProvider);
+    final validCodeErr = AppTranslations.translate('enter_code', lang);
+
     if (entered.length != 6) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Enter a valid 6-digit verification code.')),
+        SnackBar(content: Text('$validCodeErr (6 digits)')),
       );
       return;
     }
@@ -153,190 +224,157 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         context.go('/home');
       }
     } else {
+      final invalidCodeMsg = AppTranslations.translate('invalid_code_error', lang);
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
+        SnackBar(
           backgroundColor: Colors.redAccent,
-          content: Text('Invalid Code. Use the code shown on screen or "123456".'),
+          content: Text(invalidCodeMsg),
         ),
       );
     }
   }
 
-  int _currentVisionaryIndex = 0;
-
-  final List<Map<String, String>> _visionaries = const [
-    {
-      'title': 'SkillVerse AI — Education for All',
-      'quote': 'Empowering learners globally with real-time AI dubbing, automated document translations, and interactive live classrooms.',
-      'translation': 'Accessible, high-quality vocational education for every student in their preferred native language.',
-      'author': 'Education for all',
-      'image': '',
-    },
-  ];
-
-  void _nextVisionary() {
-    setState(() {
-      _currentVisionaryIndex = (_currentVisionaryIndex + 1) % _visionaries.length;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final currentLang = ref.watch(languageProvider);
+    final nativeName = AppLanguages.nativeLanguageNames[currentLang] ?? currentLang;
 
     return Scaffold(
-      backgroundColor: const Color(0xFF0A0E1A), // Deep Midnight Slate
+      backgroundColor: const Color(0xFF0A0E1A),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 16.0, top: 8.0),
+            child: ActionChip(
+              avatar: const Icon(Icons.language_rounded, size: 16, color: Colors.amberAccent),
+              label: Text(
+                '$currentLang ($nativeName)',
+                style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold),
+              ),
+              backgroundColor: const Color(0xFF1E293B),
+              onPressed: () => _showLanguageModal(context),
+            ),
+          ),
+        ],
+      ),
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8),
             child: _showOTP
-                ? _buildOTPView(theme)
-                : _buildRegistrationView(theme),
+                ? _buildOTPView(theme, currentLang)
+                : _buildRegistrationView(theme, currentLang),
           ),
         ),
       ),
     );
   }
 
-  // ───── Step 1: Basic Details Form ─────
-  Widget _buildRegistrationView(ThemeData theme) {
-    final currentVisionary = _visionaries[_currentVisionaryIndex];
+  Widget _buildRegistrationView(ThemeData theme, String lang) {
+    final loginTitle = AppTranslations.translate('login_title', lang);
+    final fullNameLabel = AppTranslations.translate('full_name', lang);
+    final emailLabel = AppTranslations.translate('email_address', lang);
+    final standardLabel = AppTranslations.translate('select_standard', lang);
+    final interestLabel = AppTranslations.translate('admired_topic', lang);
+    final stateLabel = AppTranslations.translate('state_label', lang);
+    final districtLabel = AppTranslations.translate('district_label', lang);
+    final addressLabel = AppTranslations.translate('address_label', lang);
+    final phoneLabel = AppTranslations.translate('phone_label', lang);
+    final schoolNameLabel = AppTranslations.translate('school_name_label', lang);
+    final schoolAddressLabel = AppTranslations.translate('school_address_label', lang);
+    final requestBtn = AppTranslations.translate('request_otp', lang);
+    final requiredErr = AppTranslations.translate('required_error', lang);
+    final validEmailErr = AppTranslations.translate('valid_email_error', lang);
+    final validPhoneErr = AppTranslations.translate('valid_phone_error', lang);
+    final preferredLangLabel = AppTranslations.translate('preferred_lang_label', lang);
 
     return Form(
       key: _formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // 💎 Modern Hero Header Banner - Education for All
+          // Header Banner
           Container(
-            height: 140,
+            padding: const EdgeInsets.all(18),
             decoration: BoxDecoration(
               gradient: const LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  Color(0xFF4F46E5),
-                  Color(0xFF7C3AED),
-                  Color(0xFF2563EB),
-                ],
+                colors: [Color(0xFF4F46E5), Color(0xFF7C3AED), Color(0xFF2563EB)],
               ),
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
                   color: const Color(0xFF6366F1).withOpacity(0.3),
                   blurRadius: 20,
-                  spreadRadius: 1,
-                ),
-              ],
-            ),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                gradient: LinearGradient(
-                  begin: Alignment.bottomCenter,
-                  end: Alignment.topCenter,
-                  colors: [
-                    const Color(0xFF0A0E1A).withOpacity(0.85),
-                    Colors.transparent,
-                  ],
-                ),
-              ),
-              padding: const EdgeInsets.all(16),
-              alignment: Alignment.bottomLeft,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.2),
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: Colors.white.withOpacity(0.4)),
-                    ),
-                    child: const Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.auto_awesome, color: Colors.amberAccent, size: 12),
-                        SizedBox(width: 4),
-                        Text(
-                          'EDUCATION FOR ALL',
-                          style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold, letterSpacing: 1),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 6),
-                  Text(
-                    currentVisionary['title']!,
-                    style: const TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
-              ),
-            ),
-          ),
-          const SizedBox(height: 16),
-
-          // 📜 Dual-Tone Tamil & Indian Educational Quote Showcase Card
-          Container(
-            padding: const EdgeInsets.all(14),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  const Color(0xFF1E1B4B).withOpacity(0.8),
-                  const Color(0xFF0F172A).withOpacity(0.8),
-                ],
-              ),
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: const Color(0xFF06B6D4).withOpacity(0.4)),
-              boxShadow: [
-                BoxShadow(
-                  color: const Color(0xFF06B6D4).withOpacity(0.1),
-                  blurRadius: 16,
                 ),
               ],
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  currentVisionary['quote']!,
-                  style: const TextStyle(
-                    color: Color(0xFF38BDF8),
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                    fontStyle: FontStyle.italic,
-                    height: 1.4,
-                  ),
+                Row(
+                  children: [
+                    const Icon(Icons.auto_awesome, color: Colors.amberAccent, size: 16),
+                    const SizedBox(width: 6),
+                    Text(
+                      'SkillVerse AI • $lang (${AppLanguages.nativeLanguageNames[lang] ?? lang})',
+                      style: const TextStyle(color: Colors.white70, fontSize: 12, fontWeight: FontWeight.bold),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 6),
+                const SizedBox(height: 8),
                 Text(
-                  currentVisionary['translation']!,
-                  style: const TextStyle(color: Colors.white70, fontSize: 11),
-                ),
-                const SizedBox(height: 6),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: Text(
-                    '— ${currentVisionary['author']}',
-                    style: const TextStyle(color: Color(0xFFF59E0B), fontSize: 11, fontWeight: FontWeight.bold),
-                  ),
+                  loginTitle,
+                  style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
           ),
           const SizedBox(height: 20),
 
+          // Preferred Language Selector Form Field (23 Languages)
+          DropdownButtonFormField<String>(
+            value: lang,
+            style: const TextStyle(color: Colors.white, fontSize: 15),
+            decoration: InputDecoration(
+              labelText: preferredLangLabel,
+              prefixIcon: const Icon(Icons.language_rounded, size: 20, color: Colors.amberAccent),
+              border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+            ),
+            hint: Text(preferredLangLabel, style: const TextStyle(color: Colors.white38)),
+            items: AppLanguages.supportedLanguages.map((l) {
+              final native = AppLanguages.nativeLanguageNames[l] ?? l;
+              return DropdownMenuItem(
+                value: l,
+                child: Text('$l ($native)', style: const TextStyle(color: Colors.white)),
+              );
+            }).toList(),
+            onChanged: (v) {
+              if (v != null) {
+                ref.read(languageProvider.notifier).setLanguage(v);
+              }
+            },
+          ),
+          const SizedBox(height: 16),
+
           // Full Name
           CustomInput(
-            labelText: 'Full Name',
+            labelText: fullNameLabel,
             controller: _nameController,
             prefixIcon: Icons.person_outline,
-            validator: (v) =>
-                v == null || v.isEmpty ? 'Name is required' : null,
+            validator: (v) => v == null || v.isEmpty ? requiredErr : null,
+          ),
+          const SizedBox(height: 16),
+
+          // Email Address
+          CustomInput(
+            labelText: emailLabel,
+            controller: _emailController,
+            prefixIcon: Icons.email_outlined,
+            keyboardType: TextInputType.emailAddress,
+            validator: (v) => v == null || v.isEmpty || !v.contains('@') ? validEmailErr : null,
           ),
           const SizedBox(height: 16),
 
@@ -345,104 +383,94 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             value: _selectedStandard,
             style: const TextStyle(color: Colors.white, fontSize: 15),
             decoration: InputDecoration(
-              labelText: 'Standard of Studying',
+              labelText: standardLabel,
               prefixIcon: const Icon(Icons.school_outlined, size: 20),
-              border:
-                  OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+              border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
             ),
-            hint: const Text('Select Standard',
-                style: TextStyle(color: Colors.white38)),
-            items: _standards
-                .map((s) => DropdownMenuItem(value: s, child: Text(s)))
-                .toList(),
+            hint: Text(standardLabel, style: const TextStyle(color: Colors.white38)),
+            items: _standards.map((s) {
+              final num = s.split(' ').last;
+              final localizedStd = '$standardLabel $num';
+              return DropdownMenuItem(value: s, child: Text(localizedStd));
+            }).toList(),
             onChanged: (v) => setState(() => _selectedStandard = v),
           ),
           const SizedBox(height: 16),
 
-          // Area of Interest / Topic Admired
+          // Area of Interest
           DropdownButtonFormField<String>(
             value: _selectedInterest,
             style: const TextStyle(color: Colors.white, fontSize: 15),
             decoration: InputDecoration(
-              labelText: 'Area of Interest / Admired Topic',
-              prefixIcon:
-                  const Icon(Icons.star_outline_rounded, size: 20),
-              border:
-                  OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+              labelText: interestLabel,
+              prefixIcon: const Icon(Icons.star_outline_rounded, size: 20),
+              border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
             ),
-            hint: const Text('Select Admired Topic',
-                style: TextStyle(color: Colors.white38)),
-            items: _interests
-                .map((i) => DropdownMenuItem(value: i, child: Text(i)))
-                .toList(),
+            hint: Text(interestLabel, style: const TextStyle(color: Colors.white38)),
+            items: _interests.map((i) {
+              return DropdownMenuItem(value: i, child: Text(i));
+            }).toList(),
             onChanged: (v) => setState(() => _selectedInterest = v),
           ),
           const SizedBox(height: 16),
 
           // State
           CustomInput(
-            labelText: 'State',
+            labelText: stateLabel,
             controller: _stateController,
             prefixIcon: Icons.map_outlined,
-            validator: (v) =>
-                v == null || v.isEmpty ? 'State is required' : null,
+            validator: (v) => v == null || v.isEmpty ? requiredErr : null,
           ),
           const SizedBox(height: 16),
 
           // District
           CustomInput(
-            labelText: 'District',
+            labelText: districtLabel,
             controller: _districtController,
             prefixIcon: Icons.location_city_outlined,
-            validator: (v) =>
-                v == null || v.isEmpty ? 'District is required' : null,
+            validator: (v) => v == null || v.isEmpty ? requiredErr : null,
           ),
           const SizedBox(height: 16),
 
           // Address
           CustomInput(
-            labelText: 'Residential Address',
+            labelText: addressLabel,
             controller: _addressController,
             prefixIcon: Icons.home_outlined,
-            validator: (v) =>
-                v == null || v.isEmpty ? 'Address is required' : null,
+            validator: (v) => v == null || v.isEmpty ? requiredErr : null,
           ),
           const SizedBox(height: 16),
 
           // Phone Number
           CustomInput(
-            labelText: 'Phone Number',
+            labelText: phoneLabel,
             controller: _phoneController,
             prefixIcon: Icons.phone_android_rounded,
             keyboardType: TextInputType.phone,
-            validator: (v) => v == null || v.isEmpty || v.length < 10
-                ? 'Enter a valid phone number'
-                : null,
+            validator: (v) => v == null || v.isEmpty || v.length < 10 ? validPhoneErr : null,
           ),
           const SizedBox(height: 16),
 
           // School Name
           CustomInput(
-            labelText: 'School / Institute Name',
+            labelText: schoolNameLabel,
             controller: _schoolNameController,
             prefixIcon: Icons.domain_rounded,
-            validator: (v) =>
-                v == null || v.isEmpty ? 'School name is required' : null,
+            validator: (v) => v == null || v.isEmpty ? requiredErr : null,
           ),
           const SizedBox(height: 16),
 
           // School Address
           CustomInput(
-            labelText: 'School / Institute Address',
+            labelText: schoolAddressLabel,
             controller: _schoolAddressController,
             prefixIcon: Icons.pin_drop_outlined,
-            validator: (v) =>
-                v == null || v.isEmpty ? 'School address is required' : null,
+            validator: (v) => v == null || v.isEmpty ? requiredErr : null,
           ),
           const SizedBox(height: 24),
 
           CustomButton(
-            text: 'Request Email Verification Code',
+            text: requestBtn,
             onPressed: _requestOTP,
             isLoading: _isLoading,
             icon: Icons.mark_email_read_outlined,
@@ -452,23 +480,29 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     );
   }
 
-  // ───── Step 2: Email Code Verification ─────
-  Widget _buildOTPView(ThemeData theme) {
+  Widget _buildOTPView(ThemeData theme, String lang) {
+    final title = AppTranslations.translate('verify_email_title', lang);
+    final enterCodeLabel = AppTranslations.translate('enter_code', lang);
+    final verifyBtn = AppTranslations.translate('verify_code', lang);
+    final backBtn = AppTranslations.translate('back_to_details', lang);
+    final codeSentNotice = AppTranslations.translate('code_sent_notice', lang);
+    final activateNotice = AppTranslations.translate('activate_account_notice', lang);
+    final emailDispatchedTag = AppTranslations.translate('email_code_dispatched', lang);
+    final masterNotice = AppTranslations.translate('master_code_notice', lang);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const Icon(Icons.mark_email_read_rounded,
-            size: 64, color: Colors.deepPurpleAccent),
+        const Icon(Icons.mark_email_read_rounded, size: 64, color: Colors.deepPurpleAccent),
         const SizedBox(height: 16),
         Text(
-          'Verify Email Address',
+          title,
           textAlign: TextAlign.center,
-          style: theme.textTheme.titleLarge
-              ?.copyWith(fontSize: 24, fontWeight: FontWeight.bold),
+          style: theme.textTheme.titleLarge?.copyWith(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
         ),
         const SizedBox(height: 8),
         Text(
-          'A 6-digit code was sent to ${_emailController.text.trim()}.\nEnter it below to activate your account.',
+          '$codeSentNotice (${_emailController.text.trim()})\n$activateNotice',
           textAlign: TextAlign.center,
           style: const TextStyle(color: Colors.white54, fontSize: 13, height: 1.5),
         ),
@@ -482,33 +516,33 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           ),
           child: Column(
             children: [
-              const Text(
-                '🔑 [EMAIL CODE DISPATCHED]',
-                style: TextStyle(color: Colors.deepPurpleAccent, fontWeight: FontWeight.bold, fontSize: 12),
+              Text(
+                emailDispatchedTag,
+                style: const TextStyle(color: Colors.deepPurpleAccent, fontWeight: FontWeight.bold, fontSize: 12),
               ),
               const SizedBox(height: 4),
               Text(
-                'Verification Code: $_generatedOTP',
+                'Code: $_generatedOTP',
                 style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
               ),
               const SizedBox(height: 2),
-              const Text(
-                '(Or use master code "123456")',
-                style: TextStyle(color: Colors.white38, fontSize: 11),
+              Text(
+                masterNotice,
+                style: const TextStyle(color: Colors.white38, fontSize: 11),
               ),
             ],
           ),
         ),
         const SizedBox(height: 24),
         CustomInput(
-          labelText: '6-Digit Email Code',
+          labelText: enterCodeLabel,
           controller: _otpController,
           prefixIcon: Icons.vpn_key_outlined,
           keyboardType: TextInputType.number,
         ),
         const SizedBox(height: 24),
         CustomButton(
-          text: 'Verify Code & Access Workspace',
+          text: verifyBtn,
           onPressed: _verifyOTP,
           icon: Icons.verified_outlined,
         ),
@@ -518,10 +552,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             _showOTP = false;
             _otpController.clear();
           }),
-          child: const Text('Back to Profile Details',
-              style: TextStyle(color: Colors.deepPurpleAccent)),
+          child: Text(backBtn, style: const TextStyle(color: Colors.deepPurpleAccent)),
         ),
       ],
     );
   }
+
+  String get nativeName => AppLanguages.nativeLanguageNames[ref.watch(languageProvider)] ?? ref.watch(languageProvider);
 }

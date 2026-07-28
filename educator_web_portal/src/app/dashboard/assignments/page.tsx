@@ -30,10 +30,10 @@ export default function AssignmentManagement() {
   const [assignments, setAssignments] = useState<Assignment[]>([
     {
       id: 'assign-1',
-      course_id: 'course-1',
-      course_title: 'Hydraulic Systems',
-      title: 'Safety Valve Pressure Calibration Review',
-      description: 'Submit calculations for threshold safety configurations.',
+      course_id: 'c-sat-comm',
+      course_title: 'Satellite Communication',
+      title: 'GEO Orbit Altitude & C/N Calculation Review',
+      description: 'Submit link budget calculations for 36 MHz transponder bandwidth.',
       max_score: 100,
       due_date: '2026-07-12T23:59:00Z',
       submissions_count: 8,
@@ -55,8 +55,8 @@ export default function AssignmentManagement() {
   const handleCreateAssignment = (data: AssignmentInput) => {
     const newAssign: Assignment = {
       id: generateId('assign'),
-      course_id: 'course-1',
-      course_title: 'Hydraulic Systems',
+      course_id: 'c-sat-comm',
+      course_title: 'Satellite Communication',
       title: data.title,
       description: data.description,
       max_score: data.max_score,

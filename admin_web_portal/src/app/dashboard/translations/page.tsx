@@ -12,7 +12,7 @@ export default function TranslationSettings() {
 
   const serviceProviders = [
     { name: 'AI4Bharat Bhashini', type: 'Translation + STT + TTS', status: 'active', latency: '120ms', quota: '85%' },
-    { name: 'Groq Whisper Large-v3', type: 'Speech-to-Text', status: 'active', latency: '95ms', quota: '62%' },
+    { name: 'Google Gemini 1.5 Flash STT', type: 'Speech-to-Text', status: 'active', latency: '95ms', quota: '62%' },
     { name: 'Google Cloud TTS', type: 'Text-to-Speech', status: 'standby', latency: '—', quota: '100%' },
     { name: 'IndicTrans2 (Local)', type: 'Translation Fallback', status: 'active', latency: '210ms', quota: 'N/A' },
   ];
@@ -115,7 +115,7 @@ export default function TranslationSettings() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {[
             { label: 'Bhashini API Key', placeholder: 'bhas_xxxxxxxxxx' },
-            { label: 'Groq API Key', placeholder: 'gsk_xxxxxxxxxx' },
+            { label: 'Google Gemini API Key', placeholder: 'AIzaSy...' },
             { label: 'Google Cloud TTS Key', placeholder: 'AIzaSy...' },
             { label: 'Redis Connection URL', placeholder: 'redis://localhost:6379/0' },
           ].map((field, i) => (

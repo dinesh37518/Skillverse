@@ -51,10 +51,11 @@ class _HomeTabState extends ConsumerState<HomeTab> {
 
   String _getLocalizedQuote(String language) {
     final quoteMap = _wellnessQuotes[_quoteIndex];
+    if (quoteMap.containsKey(language)) return quoteMap[language]!;
     if (language.startsWith("Hindi") && quoteMap.containsKey("hi")) return quoteMap["hi"]!;
     if (language.startsWith("Tamil") && quoteMap.containsKey("ta")) return quoteMap["ta"]!;
     if (language.startsWith("Telugu") && quoteMap.containsKey("te")) return quoteMap["te"]!;
-    return quoteMap["en"]!;
+    return quoteMap["en"] ?? quoteMap.values.first;
   }
 
   @override

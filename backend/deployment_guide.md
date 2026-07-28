@@ -32,8 +32,8 @@ DATABASE_URL="postgresql://postgres:[password]@db.[project-id].supabase.co:5432/
 # Real-time WebSockets state server (Redis cache URL)
 REDIS_URL="redis://default:[password]@[redis-host]:6379/0"
 
-# AI Integrations
-GROQ_API_KEY="gsk_your_production_groq_api_key_here"
+# AI Integrations (Google Gemini AI)
+GEMINI_API_KEY="your_production_gemini_api_key_here"
 
 # Supabase Auth Settings
 SUPABASE_URL="https://[project-id].supabase.co"

@@ -9,7 +9,7 @@ export default function SystemHealth() {
     { name: 'Redis Cache', status: 'healthy', uptime: '99.95%', responseTime: '2ms', icon: Cpu },
     { name: 'WebRTC Signaling', status: 'degraded', uptime: '98.50%', responseTime: '145ms', icon: Wifi },
     { name: 'Storage (Supabase)', status: 'healthy', uptime: '99.99%', responseTime: '35ms', icon: HardDrive },
-    { name: 'Groq LLM API', status: 'healthy', uptime: '99.80%', responseTime: '420ms', icon: Cpu },
+    { name: 'Google Gemini AI API', status: 'healthy', uptime: '99.80%', responseTime: '420ms', icon: Cpu },
   ];
 
   const recentEvents = [
