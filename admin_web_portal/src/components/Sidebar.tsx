@@ -76,17 +76,21 @@ export default function Sidebar({ userEmail }: SidebarProps) {
 
       {/* User Footer Profile & Signout */}
       <div className="p-4 border-t border-slate-800 space-y-3">
-        <div className="flex items-center gap-3 px-2">
-          <div className="h-9 w-9 rounded-full bg-slate-800 flex items-center justify-center font-bold text-sky-400 border border-slate-700">
+        <Link 
+          href="/dashboard/profile"
+          className="flex items-center gap-3 px-2 p-2 hover:bg-slate-800 rounded-xl transition-colors cursor-pointer group"
+          title="View Admin Profile & Login Details"
+        >
+          <div className="h-9 w-9 rounded-full bg-slate-800 flex items-center justify-center font-bold text-sky-400 border border-slate-700 group-hover:border-sky-500 transition-colors">
             {userEmail ? userEmail.charAt(0).toUpperCase() : 'A'}
           </div>
           <div className="truncate">
-            <p className="text-xs text-slate-500">System Admin</p>
-            <p className="text-sm font-medium truncate text-slate-300" title={userEmail}>
-              {userEmail || 'admin@skillverse.ai'}
+            <p className="text-xs text-slate-400 font-semibold group-hover:text-sky-400 transition-colors">System Admin</p>
+            <p className="text-xs font-mono truncate text-slate-300" title={userEmail}>
+              {userEmail || 'adminofskillverse@gmail.com'}
             </p>
           </div>
-        </div>
+        </Link>
         
         <button
           onClick={handleLogout}

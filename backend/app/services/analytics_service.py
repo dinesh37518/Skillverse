@@ -142,7 +142,11 @@ class AnalyticsService:
         # Languages used count (simulated breakdown)
         languages_used = {
             "Hindi": 420, "English": 280, "Tamil": 190, "Telugu": 110,
-            "Malayalam": 95, "Marathi": 80, "Bengali": 70, "Odia": 40
+            "Bengali": 95, "Marathi": 85, "Malayalam": 80, "Gujarati": 75,
+            "Kannada": 70, "Odia": 65, "Assamese": 60, "Punjabi": 55,
+            "Urdu": 50, "Nepali": 45, "Konkani": 40, "Maithili": 35,
+            "Manipuri": 30, "Dogri": 25, "Kashmiri": 20, "Sanskrit": 18,
+            "Santali": 15, "Sindhi": 12, "Bodo": 10
         }
         
         # API and storage metrics

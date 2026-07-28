@@ -4,7 +4,6 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   LineChart, Line, AreaChart, Area, Legend
 } from 'recharts';
-import { COURSE_CATEGORIES } from '../../../lib/constants';
 
 export default function AnalyticsDashboard() {
   const enrollmentData = [

@@ -12,7 +12,7 @@ class LiveClassroomScreen extends StatefulWidget {
 class _LiveClassroomScreenState extends State<LiveClassroomScreen> {
   String _selectedLanguage = "Hindi";
   final List<String> _languagesList = [
-    "English", "Hindi", "Tamil", "Telugu", "Korean", "Japanese", "Chinese", "German", "Spanish", "French", "Marathi", "Bengali", "Kannada"
+    "English", "Assamese", "Bengali", "Bodo", "Dogri", "Gujarati", "Hindi", "Kannada", "Kashmiri", "Konkani", "Maithili", "Malayalam", "Manipuri", "Marathi", "Nepali", "Odia", "Punjabi", "Sanskrit", "Santali", "Sindhi", "Tamil", "Telugu", "Urdu"
   ];
   
   final List<Map<String, String>> _chatMessages = [

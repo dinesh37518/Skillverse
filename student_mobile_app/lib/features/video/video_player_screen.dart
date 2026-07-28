@@ -19,7 +19,9 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   double _sliderValue = 0.3;
 
   final List<double> _speeds = [0.75, 1.0, 1.25, 1.5, 2.0];
-  final List<String> _languages = ['English', 'Hindi', 'Tamil', 'Telugu', 'Bengali', 'Marathi'];
+  final List<String> _languages = [
+    'English', 'Assamese', 'Bengali', 'Bodo', 'Dogri', 'Gujarati', 'Hindi', 'Kannada', 'Kashmiri', 'Konkani', 'Maithili', 'Malayalam', 'Manipuri', 'Marathi', 'Nepali', 'Odia', 'Punjabi', 'Sanskrit', 'Santali', 'Sindhi', 'Tamil', 'Telugu', 'Urdu'
+  ];
 
   void _showSpeedDialog() {
     showDialog(

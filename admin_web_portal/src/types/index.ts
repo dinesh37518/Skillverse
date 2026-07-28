@@ -30,6 +30,7 @@ export interface Student {
   certificates_earned: number;
   attendance_rate: number;
   last_active: string;
+  password?: string;
 }
 
 export interface LiveSession {

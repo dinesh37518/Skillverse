@@ -202,7 +202,10 @@ class AdminService:
         "max_upload_size_mb": 500
     }
     _languages = [
-        "English", "Hindi", "Tamil", "Telugu", "Kannada", "Malayalam", "Marathi", "Bengali", "Gujarati"
+        "English", "Assamese", "Bengali", "Bodo", "Dogri", "Gujarati", 
+        "Hindi", "Kannada", "Kashmiri", "Konkani", "Maithili", "Malayalam", 
+        "Manipuri", "Marathi", "Nepali", "Odia", "Punjabi", "Sanskrit", 
+        "Santali", "Sindhi", "Tamil", "Telugu", "Urdu"
     ]
 
     def get_languages(self) -> List[str]:

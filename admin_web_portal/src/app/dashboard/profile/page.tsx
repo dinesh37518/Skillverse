@@ -1,9 +1,10 @@
 "use client";
 
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { Shield, User } from 'lucide-react';
+import { Shield, User, Key, Eye, EyeOff, CheckCircle2 } from 'lucide-react';
 
 const profileSchema = z.object({
   fullName: z.string().min(3, { message: "Name must be at least 3 characters" }),
@@ -13,11 +14,14 @@ const profileSchema = z.object({
 type ProfileInput = z.infer<typeof profileSchema>;
 
 export default function AdminProfile() {
+  const [showAdminPass, setShowAdminPass] = useState(false);
+  const adminPassword = "AdminSkillVerse2026!";
+
   const { register, handleSubmit, formState: { errors } } = useForm<ProfileInput>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
       fullName: 'System Administrator',
-      email: 'admin@skillverse.ai'
+      email: 'adminofskillverse@gmail.com'
     }
   });
 
@@ -43,7 +47,41 @@ export default function AdminProfile() {
             </div>
             <div>
               <h4 className="font-semibold text-lg text-white">System Administrator</h4>
-              <p className="text-xs text-slate-500">Root Access Node: Active</p>
+              <p className="text-xs text-sky-400 font-medium">Root Access Node: Active</p>
+            </div>
+          </div>
+
+          {/* Admin Credentials Quick Box */}
+          <div className="p-4 bg-slate-950/80 border border-sky-500/30 rounded-xl space-y-3">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-bold text-sky-400 flex items-center gap-1.5">
+                <Key className="h-4 w-4" /> Root Admin Login Credentials
+              </span>
+              <span className="text-[10px] bg-emerald-950/80 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded-full font-semibold">
+                Superuser Authenticated
+              </span>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+              <div>
+                <span className="text-slate-500">Admin Email:</span>
+                <p className="font-mono text-slate-200 font-semibold">adminofskillverse@gmail.com</p>
+              </div>
+              <div>
+                <span className="text-slate-500">Admin Password:</span>
+                <div className="flex items-center gap-2">
+                  <p className="font-mono text-slate-200 font-semibold">
+                    {showAdminPass ? adminPassword : '••••••••••••••••'}
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setShowAdminPass(!showAdminPass)}
+                    className="p-1 hover:bg-slate-800 rounded text-slate-400 hover:text-white transition-colors cursor-pointer"
+                    title={showAdminPass ? "Hide Password" : "Show Password"}
+                  >
+                    {showAdminPass ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
 

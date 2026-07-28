@@ -609,7 +609,12 @@ def send_notification(
 
 @router.post("/video/localize", dependencies=[Depends(require_educator)], tags=["AI Processing"])
 def trigger_video_localization(lesson_id: str, video_url: str, original_lang: str):
-    target_langs = ["Hindi", "Tamil", "Telugu", "Marathi"]
+    target_langs = [
+        "Assamese", "Bengali", "Bodo", "Dogri", "Gujarati", "Hindi", "Kannada", 
+        "Kashmiri", "Konkani", "Maithili", "Malayalam", "Manipuri", "Marathi", 
+        "Nepali", "Odia", "Punjabi", "Sanskrit", "Santali", "Sindhi", "Tamil", 
+        "Telugu", "Urdu"
+    ]
     localization_results = video_localizer.run_pipeline(
         video_id=str(uuid.uuid4()),
         original_video_url=video_url,

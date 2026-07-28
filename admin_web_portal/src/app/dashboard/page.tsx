@@ -10,18 +10,18 @@ export default function AdminDashboardOverview() {
   const [activeModal, setActiveModal] = useState<'educators' | 'students' | 'courses' | 'live' | null>(null);
 
   const mockEducatorsList = [
-    { id: "EDU-2001", name: "Prof. Ramanathan", email: "ramanathan@skillverse.ai", dept: "Electronics & Communication", courses: 5, lastLogin: "Active Today at 1:45 PM", status: "Active" },
-    { id: "EDU-2002", name: "Dr. Ananya Roy", email: "ananya.roy@skillverse.ai", dept: "Computer Science & AI", courses: 4, lastLogin: "Active Today at 10:15 AM", status: "Active" },
-    { id: "EDU-2003", name: "Prof. Priya Patel", email: "priya.patel@skillverse.ai", dept: "Mechanical Engineering", courses: 3, lastLogin: "Active Yesterday", status: "Active" },
-    { id: "EDU-2004", name: "Dr. Suresh Nair", email: "suresh.nair@skillverse.ai", dept: "Electrical Engineering", courses: 4, lastLogin: "Active 2 days ago", status: "Suspended" }
+    { id: "EDU-2001", name: "Prof. Ramanathan", email: "ramanathan@skillverse.ai", dept: "Electronics & Communication", courses: 5, lastLogin: "Active Today at 1:45 PM", status: "Active", password: "RamanathanPass123!" },
+    { id: "EDU-2002", name: "Dr. Ananya Roy", email: "ananya.roy@skillverse.ai", dept: "Computer Science & AI", courses: 4, lastLogin: "Active Today at 10:15 AM", status: "Active", password: "AnanyaPass456!" },
+    { id: "EDU-2003", name: "Prof. Priya Patel", email: "priya.patel@skillverse.ai", dept: "Mechanical Engineering", courses: 3, lastLogin: "Active Yesterday", status: "Active", password: "PriyaPass789!" },
+    { id: "EDU-2004", name: "Dr. Suresh Nair", email: "suresh.nair@skillverse.ai", dept: "Electrical Engineering", courses: 4, lastLogin: "Active 2 days ago", status: "Suspended", password: "SureshPass101!" }
   ];
 
   const mockStudentsList = [
-    { id: "STU-1001", name: "Ananya Sharma", email: "ananya.s@gmail.com", course: "Satellite Communication", progress: "92%", quizAvg: "96%", lastLogin: "Active Today at 1:40 PM", status: "Active" },
-    { id: "STU-1002", name: "Karthik Raja", email: "karthik.r@gmail.com", course: "Satellite Communication", progress: "78%", quizAvg: "88%", lastLogin: "Active Today at 12:15 PM", status: "Active" },
-    { id: "STU-1003", name: "Deepa Lakshmi", email: "deepa.l@gmail.com", course: "PLC Basics & Automation", progress: "95%", quizAvg: "94%", lastLogin: "Active Yesterday at 6:30 PM", status: "Active" },
-    { id: "STU-1004", name: "Ravi Kumar", email: "ravi.k@gmail.com", course: "Machine Learning & AI", progress: "85%", quizAvg: "92%", lastLogin: "Active Today at 1:55 PM", status: "Active" },
-    { id: "STU-1005", name: "Priya Sundaram", email: "priya.s@gmail.com", course: "Electrical Engineering", progress: "89%", quizAvg: "90%", lastLogin: "Active Today at 11:20 AM", status: "Active" }
+    { id: "STU-1001", name: "Ananya Sharma", email: "ananya.s@gmail.com", course: "Satellite Communication", progress: "92%", quizAvg: "96%", lastLogin: "Active Today at 1:40 PM", status: "Active", password: "AnanyaStudent123!" },
+    { id: "STU-1002", name: "Karthik Raja", email: "karthik.r@gmail.com", course: "Satellite Communication", progress: "78%", quizAvg: "88%", lastLogin: "Active Today at 12:15 PM", status: "Active", password: "KarthikStudent456!" },
+    { id: "STU-1003", name: "Deepa Lakshmi", email: "deepa.l@gmail.com", course: "PLC Basics & Automation", progress: "95%", quizAvg: "94%", lastLogin: "Active Yesterday at 6:30 PM", status: "Active", password: "DeepaStudent789!" },
+    { id: "STU-1004", name: "Ravi Kumar", email: "ravi.k@gmail.com", course: "Machine Learning & AI", progress: "85%", quizAvg: "92%", lastLogin: "Active Today at 1:55 PM", status: "Active", password: "RaviStudent101!" },
+    { id: "STU-1005", name: "Priya Sundaram", email: "priya.s@gmail.com", course: "Electrical Engineering", progress: "89%", quizAvg: "90%", lastLogin: "Active Today at 11:20 AM", status: "Active", password: "PriyaStudent202!" }
   ];
 
   const mockCoursesList = [
@@ -179,9 +179,9 @@ export default function AdminDashboardOverview() {
                           </span>
                         </div>
                         <p className="text-xs text-slate-400">Department: <strong className="text-slate-200">{e.dept}</strong> | Courses Hosted: <strong className="text-sky-400">{e.courses}</strong></p>
-                        <div className="flex items-center gap-2 text-[11px] text-slate-400 pt-1">
-                          <Clock className="h-3 w-3 text-slate-500" />
-                          <span>Login Activity: <strong className="text-emerald-400">{e.lastLogin}</strong></span>
+                        <div className="flex items-center gap-3 text-[11px] text-slate-400 pt-1">
+                          <span className="flex items-center gap-1"><Clock className="h-3 w-3 text-slate-500" /> Login: <strong className="text-emerald-400">{e.lastLogin}</strong></span>
+                          <span>Pass: <strong className="text-sky-300 font-mono">{e.password}</strong></span>
                         </div>
                       </div>
                       <span className={`px-3 py-1 rounded-full text-xs font-semibold shrink-0 border ${
@@ -207,9 +207,10 @@ export default function AdminDashboardOverview() {
                           </span>
                         </div>
                         <p className="text-xs text-slate-300">Course Enrolled: <strong className="text-sky-300">{s.course}</strong></p>
-                        <div className="flex items-center gap-4 text-[11px] text-slate-400 pt-1">
+                        <div className="flex items-center gap-4 text-[11px] text-slate-400 pt-1 flex-wrap">
                           <span>Completion: <strong className="text-emerald-400">{s.progress}</strong></span>
                           <span>Quiz Avg: <strong className="text-amber-400">{s.quizAvg}</strong></span>
+                          <span>Pass: <strong className="text-sky-300 font-mono">{s.password}</strong></span>
                           <span className="flex items-center gap-1"><Clock className="h-3 w-3 text-slate-500" /> {s.lastLogin}</span>
                         </div>
                       </div>

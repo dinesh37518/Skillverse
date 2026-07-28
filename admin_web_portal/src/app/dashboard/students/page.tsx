@@ -1,9 +1,35 @@
 "use client";
 
 import { useState } from 'react';
-import { Search, GraduationCap, Star, Calendar, Award } from 'lucide-react';
+import { Search, GraduationCap, Star, Calendar, Award, Eye, EyeOff } from 'lucide-react';
 import DataTable from '../../../components/DataTable';
 import { Student } from '../../../types';
+
+function StudentNameCell({ student }: { student: Student }) {
+  const [showPass, setShowPass] = useState(false);
+  return (
+    <div>
+      <p className="font-semibold text-white">{student.full_name}</p>
+      <span className="text-xs text-slate-500 font-mono">{student.email}</span>
+      {student.password && (
+        <div className="flex items-center gap-1.5 mt-1 text-xs text-slate-400">
+          <span>Pass: {showPass ? student.password : '••••••••'}</span>
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowPass(!showPass);
+            }}
+            className="hover:text-white transition-colors p-0.5 cursor-pointer"
+            title={showPass ? "Hide Password" : "Show Password"}
+          >
+            {showPass ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function StudentDirectory() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -17,7 +43,8 @@ export default function StudentDirectory() {
       completion_rate: 85,
       certificates_earned: 1,
       attendance_rate: 100,
-      last_active: '10 mins ago'
+      last_active: '10 mins ago',
+      password: 'AmitStudentPass123!'
     },
     {
       id: 'std-2',
@@ -27,7 +54,8 @@ export default function StudentDirectory() {
       completion_rate: 45,
       certificates_earned: 0,
       attendance_rate: 85,
-      last_active: '2 hours ago'
+      last_active: '2 hours ago',
+      password: 'SureshStudentPass456!'
     },
     {
       id: 'std-3',
@@ -37,7 +65,19 @@ export default function StudentDirectory() {
       completion_rate: 100,
       certificates_earned: 2,
       attendance_rate: 100,
-      last_active: 'Yesterday'
+      last_active: 'Yesterday',
+      password: 'PoojaStudentPass789!'
+    },
+    {
+      id: 'std-4',
+      full_name: 'Ananya Sharma',
+      email: 'ananya.s@gmail.com',
+      courses_enrolled: 4,
+      completion_rate: 92,
+      certificates_earned: 3,
+      attendance_rate: 98,
+      last_active: 'Active Today at 1:40 PM',
+      password: 'AnanyaStudentPass999!'
     }
   ]);
 
@@ -48,13 +88,8 @@ export default function StudentDirectory() {
 
   const columns = [
     {
-      header: 'Student Name',
-      accessor: (s: Student) => (
-        <div>
-          <p className="font-semibold text-white">{s.full_name}</p>
-          <span className="text-xs text-slate-500">{s.email}</span>
-        </div>
-      )
+      header: 'Student Name & Login',
+      accessor: (s: Student) => <StudentNameCell student={s} />
     },
     {
       header: 'Enrolled Courses',
