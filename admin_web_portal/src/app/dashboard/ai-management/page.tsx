@@ -33,10 +33,10 @@ export default function AIManagement() {
       id: 'srv-3',
       service_name: 'Bhashini voice synthesis & speech to text',
       provider: 'MeitY TTS/ASR Gateway',
-      status: 'maintenance',
-      api_key_set: false,
-      usage_count: 420,
-      last_used: 'Yesterday'
+      status: 'active',
+      api_key_set: true,
+      usage_count: 1240,
+      last_used: 'Just now'
     }
   ]);
 

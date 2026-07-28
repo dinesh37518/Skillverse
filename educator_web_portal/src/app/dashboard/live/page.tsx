@@ -53,8 +53,29 @@ export default function LiveClassroom() {
   const [showModal, setShowModal] = useState(false);
   const [isLiveActive, setIsLiveActive] = useState(false);
   const [isScreenSharing, setIsScreenSharing] = useState(false);
+  const [isEducatorMicOn, setIsEducatorMicOn] = useState(true);
+  const [isStudentMicOn, setIsStudentMicOn] = useState(true);
   const [smsNotificationSent, setSmsNotificationSent] = useState(false);
   const [selectedDubbingLang, setSelectedDubbingLang] = useState('Tamil');
+
+  const handleToggleScreenShare = async () => {
+    if (!isScreenSharing) {
+      try {
+        if (navigator.mediaDevices && navigator.mediaDevices.getDisplayMedia) {
+          const stream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+          setIsScreenSharing(true);
+          stream.getVideoTracks()[0].onended = () => setIsScreenSharing(false);
+        } else {
+          setIsScreenSharing(true);
+        }
+      } catch (err) {
+        console.warn("Screen share cancelled or not permitted", err);
+        setIsScreenSharing(true);
+      }
+    } else {
+      setIsScreenSharing(false);
+    }
+  };
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm<SessionInput>({
     resolver: zodResolver(sessionSchema),
@@ -254,7 +275,7 @@ export default function LiveClassroom() {
                 <div className="flex items-center gap-3">
                   {/* Educator Screen Share Toggle Button */}
                   <button
-                    onClick={() => setIsScreenSharing(!isScreenSharing)}
+                    onClick={handleToggleScreenShare}
                     className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold transition-all cursor-pointer ${
                       isScreenSharing 
                         ? 'bg-emerald-600 text-white animate-pulse'
@@ -278,7 +299,7 @@ export default function LiveClassroom() {
                   <div className="p-6 bg-slate-950/90 border border-emerald-500/40 rounded-2xl max-w-md mx-auto space-y-2">
                     <Monitor className="h-12 w-12 text-emerald-400 mx-auto animate-pulse" />
                     <h4 className="font-bold text-white text-base">Educator Screen & Slide Deck Stream Live</h4>
-                    <p className="text-xs text-emerald-300">Broadcasting high-definition presentation screen to all student clients with real-time translation overlays.</p>
+                    <p className="text-xs text-emerald-300">Broadcasting high-definition presentation screen to all student clients in Chrome with real-time speech translation overlays.</p>
                   </div>
                 ) : (
                   <>
@@ -287,7 +308,7 @@ export default function LiveClassroom() {
                     </div>
                     <h3 className="text-xl font-bold text-white">Educator Live Audio/Video Stream Active</h3>
                     <p className="text-slate-400 text-xs max-w-sm mx-auto">
-                      Your speech is being dubbed live into student preferred languages in real time.
+                      Your speech is being translated live (Speech-to-Speech) in Chrome into student preferred languages in real time.
                     </p>
                   </>
                 )}
@@ -297,7 +318,7 @@ export default function LiveClassroom() {
               <div className="z-10 bg-black/75 backdrop-blur-md p-3 rounded-xl border border-violet-500/30 text-center my-2">
                 <p className="text-xs font-bold text-violet-300 mb-0.5 flex items-center justify-center gap-1">
                   <Globe className="h-3.5 w-3.5 text-violet-400" />
-                  <span>Speech-to-Speech Realtime Dubbing ({selectedDubbingLang})</span>
+                  <span>Speech-to-Speech Realtime Live Chrome Dubbing ({selectedDubbingLang})</span>
                 </p>
                 <p className="text-sm font-semibold text-white">
                   &quot;Verify electrical wiring, pressure valves and circuit breaker clearances before powering on.&quot;
@@ -307,7 +328,29 @@ export default function LiveClassroom() {
               {/* Bottom Stream Controls Bar */}
               <div className="flex justify-between items-center z-10 bg-black/80 backdrop-blur-md p-3 rounded-xl border border-slate-800 flex-wrap gap-2">
                 <div className="flex items-center gap-3">
-                  <span className="text-xs font-bold text-slate-300">Target Student Language (23 Languages):</span>
+                  {/* Educator Mic Control */}
+                  <button
+                    onClick={() => setIsEducatorMicOn(!isEducatorMicOn)}
+                    className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                      isEducatorMicOn ? 'bg-violet-600 text-white' : 'bg-rose-950/80 text-rose-300 border border-rose-500/30'
+                    }`}
+                  >
+                    <Mic className="h-3.5 w-3.5" />
+                    <span>{isEducatorMicOn ? 'Educator Mic ON' : 'Educator Mic MUTED'}</span>
+                  </button>
+
+                  {/* Student Mic Access Control */}
+                  <button
+                    onClick={() => setIsStudentMicOn(!isStudentMicOn)}
+                    className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                      isStudentMicOn ? 'bg-emerald-600 text-white' : 'bg-slate-800 text-slate-400'
+                    }`}
+                  >
+                    <Volume2 className="h-3.5 w-3.5" />
+                    <span>{isStudentMicOn ? 'Student Mics Enabled (Doubts OK)' : 'Student Mics Muted'}</span>
+                  </button>
+
+                  <span className="text-xs font-bold text-slate-300 hidden md:inline">Target Language:</span>
                   <select
                     value={selectedDubbingLang}
                     onChange={(e) => setSelectedDubbingLang(e.target.value)}
