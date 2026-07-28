@@ -2449,20 +2449,45 @@ export default function StudentPortal() {
 
   // Live Class Join Room Overlay & Controls state
   const [inLiveRoom, setInLiveRoom] = useState(false);
-  const [liveSessionTitle, setLiveSessionTitle] = useState("Hydraulic Control Valves Troubleshooting & Assembly");
+  const [liveSessionTitle, setLiveSessionTitle] = useState("Satellite Orbit & Link Budget Live Session");
   const [liveJoinLinkInput, setLiveJoinLinkInput] = useState("");
   const [studentMicOn, setStudentMicOn] = useState(false);
   const [studentCamOn, setStudentCamOn] = useState(false);
+  const studentCamRef = useRef<HTMLVideoElement | null>(null);
+
+  useEffect(() => {
+    let activeStream: MediaStream | null = null;
+    if (inLiveRoom && studentCamOn) {
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+          .then((stream) => {
+            activeStream = stream;
+            if (studentCamRef.current) {
+              studentCamRef.current.srcObject = stream;
+            }
+          })
+          .catch((err) => console.warn("Student camera stream access issue:", err));
+      }
+    }
+    return () => {
+      if (activeStream) {
+        activeStream.getTracks().forEach(t => t.stop());
+      }
+    };
+  }, [inLiveRoom, studentCamOn]);
+
   const [educatorCamOn, setEducatorCamOn] = useState(true);
   const [educatorScreenShareOn, setEducatorScreenShareOn] = useState(true);
   const [receivedEmailAlert, setReceivedEmailAlert] = useState<string | null>(null);
 
+
   // Live Meeting Dual Sidebar state
   const [liveSidebarTab, setLiveSidebarTab] = useState<"chat" | "ai_assistant">("chat");
   const [liveMeetingMessages, setLiveMeetingMessages] = useState<Array<{ sender: string; text: string; time: string; role: string }>>([
-    { sender: "Prof. Ramanathan", text: "Welcome students! Today we are examining valve pressure thresholds.", time: "12:01 PM", role: "educator" },
-    { sender: "Aarav Sharma", text: "Is the pressure safety limit set to 250 PSI?", time: "12:02 PM", role: "student" }
+    { sender: "Prof. Ramanathan", text: "Welcome students! Today we are examining satellite orbit inclination and link budget calculations.", time: "12:01 PM", role: "educator" },
+    { sender: "Aarav Sharma", text: "Is the carrier-to-noise ratio calculation covered in Unit 2?", time: "12:02 PM", role: "student" }
   ]);
+
   const [liveMessageInput, setLiveMessageInput] = useState("");
 
   // Live Meeting AI Tutor Assistant State
@@ -2864,12 +2889,13 @@ export default function StudentPortal() {
                   </div>
 
                   {[
-                    { title: "Advanced Hydraulic Systems & Valve Assembly", category: "Mechanical", type: "Course", tab: "courses" },
-                    { title: "Industrial Electrical Safety & Circuit Protection", category: "Electrical", type: "Course", tab: "courses" },
-                    { title: "Python Data Structures & Relational SQL Architecture", category: "Computer Science", type: "Course", tab: "courses" },
-                    { title: "PLC Induction Grounding Lecture", category: "Video", type: "Lecture", tab: "courses" },
-                    { title: "Hydraulic Seals Installation Manual", category: "PDF Document", type: "Handbook", tab: "courses" }
+                    { title: "Satellite Communication Orbits & Link Budget", category: "Electronics", type: "Course", tab: "courses" },
+                    { title: "SC Syllabus.pdf", category: "Syllabus", type: "PDF Document", tab: "courses" },
+                    { title: "2 MARKS Question bank.pdf", category: "Question Bank", type: "PDF Document", tab: "courses" },
+                    { title: "SC Part B.xlsx", category: "Spreadsheet", type: "Excel", tab: "courses" },
+                    { title: "APR MAY 2025.pdf", category: "Exam Paper", type: "PDF Document", tab: "courses" }
                   ].filter(item => item.title.toLowerCase().includes(studentSearchQuery.toLowerCase()) || item.category.toLowerCase().includes(studentSearchQuery.toLowerCase()))
+
                   .map((item, idx) => (
                     <button
                       key={idx}
@@ -3030,42 +3056,31 @@ export default function StudentPortal() {
               </h2>
               <p className="text-xs text-slate-300">
                 {preferredLang === "Tamil" 
-                  ? "உங்கள் ஆசிரியர்களால் பதிவேற்றப்பட்ட பாடங்கள், செய்முறை வழிகாட்�              {/* PDF Document Viewer Paper Layout */}
-              <div className="flex-1 bg-slate-950 p-6 relative overflow-y-auto flex flex-col items-center">
-                <div className="w-full max-w-4xl p-3 mb-4 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-300 flex items-center justify-between shadow-md">
-                  <div className="flex items-center gap-2">
-                    <span className="px-2 py-0.5 bg-violet-600/30 text-violet-300 font-mono text-[10px] rounded border border-violet-500/30">PDF DOCUMENT</span>
-                    <span>Script Language: <strong className="text-white">{preferredLang}</strong></span>
-                  </div>
-                  <span className="text-[11px] text-emerald-400 font-semibold">✓ 100% Native Script Preserved</span>
+                  ? "உங்கள் ஆசிரியர்களால் பதிவேற்றப்பட்ட பாடங்கள், செய்முறை வழிகாட்டிகள் மற்றும் ஆய்வுக் குறிப்புகளை கற்றுக்கொள்ளுங்கள்."
+                  : "Access official vocational lessons, practical guides, and study notes uploaded directly by your course instructors."}
+              </p>
+            </div>
+
+            {/* Courses Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {educatorCourses.length === 0 ? (
+                <div className="col-span-full p-8 text-center bg-[#0f172a] border border-slate-800 rounded-2xl">
+                  <p className="text-sm text-slate-400">No educator uploaded courses found.</p>
                 </div>
+              ) : (
+                educatorCourses.map((course) => {
+                  const courseFiles = educatorUploads.filter(f => f.course_title === course.title || f.course_id === course.id);
+                  return (
+                    <div key={course.id} className="bg-[#0f172a] border border-slate-800 rounded-2xl p-5 shadow-lg flex flex-col justify-between">
+                      <div>
+                        <span className="text-[10px] font-mono text-violet-400 uppercase tracking-widest">{course.category || "Vocational Course"}</span>
+                        <h3 className="text-base font-bold text-white mt-1 mb-2">{course.title}</h3>
+                        <p className="text-xs text-slate-400 line-clamp-2">{course.description}</p>
+                      </div>
 
-                <div className="w-full max-w-4xl bg-white text-slate-900 rounded-2xl shadow-2xl p-8 md:p-10 border border-slate-200 flex-1 overflow-y-auto">
-                  <div className="border-b-2 border-indigo-600 pb-3 mb-5 flex justify-between items-start flex-wrap gap-2">
-                    <div>
-                      <span className="text-[10px] font-bold uppercase tracking-widest text-indigo-600">OFFICIAL UNIVERSITY SYLLABUS DOCUMENT</span>
-                      <h2 className="text-lg md:text-xl font-extrabold text-slate-900 mt-1">
-                        {viewingDirectFile.title}
-                      </h2>
-                      <p className="text-xs text-slate-500 mt-0.5">
-                        Department of Electronics & Communication Engineering • SkillVerse AI
-                      </p>
-                    </div>
-                    <span className="px-3 py-1 bg-indigo-50 border border-indigo-200 text-indigo-700 text-xs font-bold rounded-lg font-mono">
-                      {preferredLang} Version
-                    </span>
-                  </div>
-
-                  <div className="text-xs md:text-sm text-slate-800 leading-relaxed font-sans whitespace-pre-wrap">
-                    {getSyllabusTranslation(viewingDirectFile.title, preferredLang)}
-                  </div>
-
-                  <div className="mt-8 pt-4 border-t border-slate-200 flex justify-between items-center text-[11px] text-slate-500">
-                    <span>Grounded in educator source files</span>
-                    <span>Translated to native {preferredLang}</span>
-                  </div>
-                </div>
-              </div>l({ course, files: courseFiles })}
+                      <div className="mt-4 pt-3 border-t border-slate-800 flex gap-2">
+                        <button
+                          onClick={() => setSelectedCourseModal({ course, files: courseFiles })}
                           className="flex-1 py-2.5 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white text-xs font-bold rounded-xl shadow-lg shadow-violet-600/30 border border-violet-400/30 transition-all cursor-pointer flex items-center justify-center gap-2"
                         >
                           <BookOpen className="h-4 w-4 text-emerald-300" />
@@ -3167,33 +3182,35 @@ export default function StudentPortal() {
                     )}
 
                     {/* Student Local Camera Preview (If enabled) */}
-                    <div className="absolute top-4 right-4 w-32 h-24 bg-slate-900 border border-violet-500/30 rounded-xl overflow-hidden shadow-lg flex flex-col items-center justify-center">
+                    <div className="absolute top-4 right-4 w-36 h-24 bg-slate-900 border border-violet-500/40 rounded-xl overflow-hidden shadow-2xl flex flex-col items-center justify-center">
                       {studentCamOn ? (
-                        <div className="text-center">
-                          <div className="w-8 h-8 rounded-full bg-violet-600 text-white font-bold text-xs flex items-center justify-center mx-auto mb-1">
-                            {name.charAt(0).toUpperCase() || "S"}
-                          </div>
-                          <span className="text-[9px] text-emerald-400 font-bold">You (Cam ON)</span>
-                        </div>
+                        <video
+                          ref={studentCamRef}
+                          autoPlay
+                          playsInline
+                          muted
+                          className="w-full h-full object-cover rounded-xl"
+                        />
                       ) : (
                         <div className="text-center text-slate-500">
                           <CameraOff className="h-5 w-5 mx-auto mb-1 text-slate-600" />
                           <span className="text-[9px]">Your Cam OFF</span>
                         </div>
                       )}
-                      {studentMicOn && <span className="text-[8px] bg-emerald-500 text-slate-950 font-bold px-1.5 rounded mt-0.5 animate-pulse">MIC LIVE</span>}
+                      {studentMicOn && <span className="absolute bottom-1 right-1 text-[8px] bg-emerald-500 text-slate-950 font-extrabold px-1.5 py-0.5 rounded animate-pulse">MIC LIVE</span>}
                     </div>
 
                     {/* S2S Subtitle Overlay */}
                     <div className="absolute bottom-4 left-4 right-4 bg-slate-950/95 border border-violet-500/40 rounded-xl p-3 text-center shadow-xl">
                       <div className="flex items-center justify-center gap-2 mb-1">
                         <Volume2 className="h-3.5 w-3.5 text-emerald-400" />
-                        <span className="text-[10px] uppercase font-bold text-emerald-400 tracking-wider">Live Speech-to-Speech Translation ({preferredLang}):</span>
+                        <span className="text-[10px] uppercase font-bold text-emerald-400 tracking-wider">Live Speech-to-Speech Subtitles ({preferredLang}):</span>
                       </div>
                       <p className="text-xs text-white font-medium">
-                        &quot;Verify valve pressure settings and circuit breaker ground clearances before powering on the hydraulic assembly.&quot;
+                        &quot;Verify satellite orbit inclination, elevation angle, and carrier-to-noise ratio before link budget calculation.&quot;
                       </p>
                     </div>
+
                   </div>
 
                   {/* Student Controls Toolbar (Mic, Camera, S2S Dubbing) */}
@@ -3315,10 +3332,9 @@ export default function StudentPortal() {
                 <h3 className="text-sm font-bold text-white uppercase tracking-wider">Scheduled Educator Sessions</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {[
-                    { id: "room-1", title: "Hydraulic Control Valves Assembly & Troubleshooting", educator: "Prof. Ramanathan", status: "live", students: 23, link: "http://localhost:3000/live/room-hydraulic-trouble-8921" },
-                    { id: "room-2", title: "Industrial Electrical Safety & Circuit Protection", educator: "Prof. Lakshmi", status: "upcoming", students: 0, link: "http://localhost:3000/live/room-elec-safety-302" },
-                    { id: "room-3", title: "Python Data Structures & Relational SQL Architecture", educator: "Prof. Ananya", status: "upcoming", students: 0, link: "http://localhost:3000/live/room-cs-ds-201" }
+                    { id: "room-sat-orbit-501", title: "Satellite Orbit & Link Budget Live Session", educator: "Prof. Ramanathan", status: "live", students: 24, link: "http://localhost:3000/live/room-sat-orbit-501" }
                   ].map(cls => (
+
                     <div key={cls.id} className="bg-[#0f172a] border border-[#1e293b] hover:border-violet-500/40 rounded-2xl p-5 transition-all flex flex-col justify-between shadow-xl">
                       <div>
                         <div className="flex items-center justify-between mb-3">
@@ -3866,7 +3882,7 @@ export default function StudentPortal() {
                         translatedText = `### 📄 Fully Translated PDF Document (${preferredLang} Native Script)\n====================================================================\nSource File: ${viewingDirectFile.title}\nTarget Language: ${preferredLang}\nSubject: ${viewingDirectFile.course_title || 'Satellite Communication'}\n\n#### 📝 PART-A: Short Q&A Translated Key (${preferredLang})\n\n1. Question / Overview:\n   Full native script translation of ${viewingDirectFile.title} grounded directly in educator uploaded source files.\n\n2. Key Formulas & Governing Equations:\n   - GEO Orbit Altitude: 35,786 km (Orbital period = 24 Hours).\n   - Frequency Assignment: Uplink = 14 GHz, Downlink = 12 GHz.\n   - Carrier-to-Noise Ratio: C/N = EIRP - FSL + G/T - k - B (dB).\n\n---\n\n#### 📐 PART-B: Detailed Solved Exercises (${preferredLang})\n\n11. Comprehensive Derivation & Working Principle:\n    Step-by-step translation of mathematical proofs and structural block diagrams in ${preferredLang}.\n\n12. Step-by-Step Numerical Solution:\n    Full mathematical breakdown with values substituted into standard Boltzmann constants.\n    Final Computed Link Margin = 22.04 dB (Exceeds minimum link threshold of 8 dB).\n\n---\n*Grounded in educator-uploaded PDF document (${viewingDirectFile.title}) and translated into 100% native ${preferredLang} script.*`;
                       }
 
-                      const syllabusText = getSyllabusTranslation(viewingDirectFile.title, preferredLang);
+                      const syllabusText = getTranslatedFileTitle(viewingDirectFile.title, preferredLang);
                       
                       const printableHTML = `<!DOCTYPE html>
 <html>
@@ -3936,6 +3952,33 @@ export default function StudentPortal() {
             </div>
           </div>
         )}
+                    {/* PDF Document Viewer Paper Layout */}
+              {viewingDirectFile && (
+                <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md p-6 overflow-y-auto flex flex-col items-center justify-center">
+                  <div className="w-full max-w-4xl p-3 mb-4 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-300 flex items-center justify-between shadow-md">
+                    <div className="flex items-center gap-2">
+                      <span className="px-2 py-0.5 bg-violet-600/30 text-violet-300 font-mono text-[10px] rounded border border-violet-500/30">PDF DOCUMENT</span>
+                      <span>Script Language: <strong className="text-white">{preferredLang}</strong></span>
+                    </div>
+                    <button onClick={() => setViewingDirectFile(null)} className="text-slate-400 hover:text-white cursor-pointer text-xs font-bold">✕ Close</button>
+                  </div>
+
+                  <div className="w-full max-w-4xl bg-white text-slate-900 rounded-2xl shadow-2xl p-8 md:p-10 border border-slate-200 overflow-y-auto max-h-[80vh]">
+                    <div className="border-b-2 border-indigo-600 pb-3 mb-5 flex justify-between items-start flex-wrap gap-2">
+                      <div>
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-indigo-600">OFFICIAL UNIVERSITY SYLLABUS DOCUMENT</span>
+                        <h2 className="text-lg md:text-xl font-extrabold text-slate-900 mt-1">
+                          {viewingDirectFile.title}
+                        </h2>
+                      </div>
+                    </div>
+
+                    <div className="text-xs md:text-sm text-slate-800 leading-relaxed font-sans whitespace-pre-wrap">
+                      {getTranslatedFileTitle(viewingDirectFile.title, preferredLang)}
+                    </div>
+                  </div>
+                </div>
+              )}
       </main>
     </div>
   );

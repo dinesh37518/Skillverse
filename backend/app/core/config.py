@@ -12,8 +12,10 @@ class Settings(BaseSettings):
     # Redis Configuration for realtime channels & cache
     REDIS_URL: str = "redis://localhost:6379/0"
     
-    # AI Engine API Key (Google Gemini AI)
+    # AI Engine API Key (Google Gemini AI & Sarvam AI)
     GEMINI_API_KEY: str = "your_gemini_api_key_placeholder"
+    SARVAM_API_KEY: str = "sk_36fawzpe_vdqQonVGeDJ7PIRICaJ0VBUV"
+
     
     # SMTP Email Verification Gateway Configurations
     SMTP_HOST: str = "smtp.gmail.com"

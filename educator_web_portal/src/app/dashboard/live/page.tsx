@@ -57,6 +57,39 @@ export default function LiveClassroom() {
   const [isStudentMicOn, setIsStudentMicOn] = useState(true);
   const [smsNotificationSent, setSmsNotificationSent] = useState(false);
   const [selectedDubbingLang, setSelectedDubbingLang] = useState('Tamil');
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [mediaStream, setMediaStream] = useState<MediaStream | null>(null);
+
+  useEffect(() => {
+    let activeStream: MediaStream | null = null;
+    if (isLiveActive && isCameraOn) {
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+          .then((stream) => {
+            activeStream = stream;
+            setMediaStream(stream);
+            if (videoRef.current) {
+              videoRef.current.srcObject = stream;
+            }
+          })
+          .catch((err) => {
+            console.warn("Physical camera access fallback:", err);
+          });
+      }
+    } else {
+      if (mediaStream) {
+        mediaStream.getTracks().forEach(track => track.stop());
+        setMediaStream(null);
+      }
+    }
+    return () => {
+      if (activeStream) {
+        activeStream.getTracks().forEach(track => track.stop());
+      }
+    };
+  }, [isLiveActive, isCameraOn]);
+
+
 
   const handleToggleScreenShare = async () => {
     if (!isScreenSharing) {
@@ -93,19 +126,9 @@ export default function LiveClassroom() {
       webrtc_room_id: 'room-sat-orbit-501',
       join_link: 'http://localhost:3000/live/room-sat-orbit-501',
       created_at: '2026-07-23T10:00:00Z'
-    },
-    {
-      id: 'session-2',
-      course_id: 'course-2',
-      course_title: 'PLC Fundamentals',
-      title: 'AC Motor Phase Connections Vetting Q&A',
-      scheduled_at: '2026-07-24T10:00:00Z',
-      status: 'scheduled',
-      webrtc_room_id: 'room-ac-motor-qa',
-      join_link: 'http://localhost:3000/live/room-ac-motor-qa',
-      created_at: '2026-07-23T08:00:00Z'
     }
   ]);
+
 
   // Privacy-Masked Student Participants List
   const privacyProtectedParticipants = [
@@ -192,7 +215,7 @@ export default function LiveClassroom() {
             </p>
           </div>
 
-          <div className="flex gap-3">
+          <div className="flex gap-3 flex-wrap">
             <button
               onClick={() => setShowModal(true)}
               className="flex items-center gap-2 px-4 py-2.5 bg-white text-violet-700 hover:bg-violet-50 rounded-xl font-bold text-sm shadow-md transition-all cursor-pointer"
@@ -201,13 +224,20 @@ export default function LiveClassroom() {
               Schedule Session
             </button>
             <button
-              onClick={handleStartLiveClass}
+              onClick={() => {
+                setIsLiveActive(true);
+                setSmsNotificationSent(true);
+                setActiveTab('active_studio');
+                // Open Pop-Out Studio Window (Google Meet + Zoom Hybrid Studio)
+                window.open('/dashboard/live?popout=true', '_blank', 'width=1280,height=850,menubar=no,toolbar=no,location=no,status=no');
+              }}
               className="flex items-center gap-2 px-5 py-2.5 bg-red-500 hover:bg-red-600 text-white rounded-xl font-extrabold text-sm shadow-md transition-all cursor-pointer animate-pulse"
             >
               <Radio className="h-4 w-4" />
-              Go Live Now
+              Go Live Studio (Pop-out Window)
             </button>
           </div>
+
         </div>
       </div>
 
@@ -254,162 +284,251 @@ export default function LiveClassroom() {
         )}
       </div>
 
-      {/* Studio View */}
-      {activeTab === 'active_studio' ? (
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
-          {/* Main Video Broadcast Stage */}
-          <div className="lg:col-span-2 space-y-4">
-            <div className="bg-slate-900 rounded-2xl p-4 shadow-xl text-white relative aspect-video flex flex-col justify-between overflow-hidden border border-slate-800">
+      {/* Fullscreen Black Theme Studio View */}
+      {isLiveActive && (
+        <div className="fixed inset-0 z-50 bg-black text-white flex flex-col font-sans select-none overflow-hidden">
+          {/* Top Black Header Bar */}
+          <div className="h-16 bg-zinc-950 border-b border-zinc-800/80 px-6 flex items-center justify-between z-20">
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 px-3 py-1 bg-red-600/90 text-white rounded-full text-xs font-black tracking-wider uppercase shadow-lg shadow-red-600/30">
+                <Radio className="h-3.5 w-3.5 animate-pulse" />
+                <span>LIVE BROADCAST</span>
+              </div>
+              <div className="h-4 w-[1px] bg-zinc-800" />
+              <div>
+                <h2 className="text-sm font-bold text-white tracking-tight">Satellite Orbit &amp; Link Budget Live Session</h2>
+                <p className="text-[11px] text-zinc-400">Course: Satellite Communication • SkillVerse AI Studio</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3">
+              {/* Student Count Badge Toggle */}
+              <button
+                onClick={() => setShowStudentsPanel(!showStudentsPanel)}
+                className={`flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer border ${
+                  showStudentsPanel 
+                    ? 'bg-violet-600/20 border-violet-500/50 text-violet-300' 
+                    : 'bg-zinc-900 border-zinc-800 text-zinc-300 hover:bg-zinc-800'
+                }`}
+              >
+                <Users className="h-4 w-4 text-emerald-400" />
+                <span>{privacyProtectedParticipants.length} Connected Students</span>
+              </button>
+
+              {/* Copy Join Link Button */}
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText("http://127.0.0.1:3002");
+                  alert("Student Live Join Link (http://127.0.0.1:3002) copied! Share with someone to test live translation.");
+                }}
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-200 rounded-full text-xs font-bold transition-all cursor-pointer"
+              >
+                <Share2 className="h-3.5 w-3.5 text-indigo-400" />
+                <span className="hidden md:inline">Share Join Link</span>
+              </button>
+
+              {/* End Stream Button */}
+              <button
+                onClick={() => setIsLiveActive(false)}
+                className="px-4 py-1.5 bg-red-600 hover:bg-red-700 text-white font-bold text-xs rounded-full transition-all shadow-lg shadow-red-600/30 cursor-pointer"
+              >
+                End Class
+              </button>
+            </div>
+          </div>
+
+          {/* Center Main Stage + Student Roster Panel */}
+          <div className="flex-1 flex overflow-hidden p-4 bg-[#05070c] gap-4">
+            {/* Main Stage Display Box */}
+            <div className="flex-1 bg-zinc-950 rounded-2xl border border-zinc-800/80 relative flex flex-col justify-between overflow-hidden shadow-2xl p-4">
+              {/* Stage Top Bar Overlay */}
               <div className="flex justify-between items-center z-10">
-                <div className="flex items-center gap-2 px-3 py-1 bg-red-600 rounded-full text-xs font-bold">
-                  <Radio className="h-3.5 w-3.5 animate-pulse" />
-                  <span>LIVE BROADCASTING</span>
+                <div className="flex items-center gap-2 bg-black/70 backdrop-blur-md px-3 py-1 rounded-full border border-zinc-800 text-xs text-zinc-300">
+                  <span className={`h-2 w-2 rounded-full ${isEducatorMicOn ? 'bg-emerald-500 animate-ping' : 'bg-red-500'}`} />
+                  <span>{isEducatorMicOn ? 'Live Speech Audio Capturing (Sarvam AI)' : 'Educator Muted'}</span>
                 </div>
-                
-                {/* Educator Only Permission Badge */}
-                <div className="px-3 py-1 bg-violet-950/80 border border-violet-500/30 text-violet-300 rounded-full text-xs font-bold flex items-center gap-1.5">
+
+                <div className="flex items-center gap-2 bg-black/70 backdrop-blur-md px-3 py-1 rounded-full border border-zinc-800 text-xs text-zinc-300">
                   <Lock className="h-3 w-3 text-violet-400" />
-                  <span>Educator Exclusive Camera & Screen Control</span>
-                </div>
-
-                <div className="flex items-center gap-3">
-                  {/* Educator Screen Share Toggle Button */}
-                  <button
-                    onClick={handleToggleScreenShare}
-                    className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold transition-all cursor-pointer ${
-                      isScreenSharing 
-                        ? 'bg-emerald-600 text-white animate-pulse'
-                        : 'bg-slate-800 hover:bg-slate-700 text-slate-200'
-                    }`}
-                  >
-                    <Monitor className="h-3.5 w-3.5" />
-                    <span>{isScreenSharing ? 'Sharing Screen Active' : 'Share Educator Screen'}</span>
-                  </button>
-
-                  <div className="flex items-center gap-2 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-xs text-slate-300">
-                    <Users className="h-3.5 w-3.5 text-emerald-400" />
-                    <span>{privacyProtectedParticipants.length} Active Students</span>
-                  </div>
+                  <span>Educator Exclusive Stream Stage</span>
                 </div>
               </div>
 
-              {/* Center Educator Stage / Screen Share View */}
-              <div className="text-center space-y-3 my-auto z-10">
+              {/* Stage Video Feed / Screen Share */}
+              <div className="text-center space-y-4 my-auto z-10">
                 {isScreenSharing ? (
-                  <div className="p-6 bg-slate-950/90 border border-emerald-500/40 rounded-2xl max-w-md mx-auto space-y-2">
-                    <Monitor className="h-12 w-12 text-emerald-400 mx-auto animate-pulse" />
-                    <h4 className="font-bold text-white text-base">Educator Screen & Slide Deck Stream Live</h4>
-                    <p className="text-xs text-emerald-300">Broadcasting high-definition presentation screen to all student clients in Chrome with real-time speech translation overlays.</p>
+                  <div className="p-8 bg-zinc-900/90 border border-emerald-500/40 rounded-3xl max-w-lg mx-auto space-y-3 shadow-2xl">
+                    <Monitor className="h-14 w-14 text-emerald-400 mx-auto animate-pulse" />
+                    <h3 className="font-extrabold text-white text-lg">Educator Screen &amp; Slide Presentation Active</h3>
+                    <p className="text-xs text-emerald-300 leading-relaxed">
+                      Broadcasting presentation slides to student clients with real-time Sarvam AI speech translation overlays.
+                    </p>
+                  </div>
+                ) : isCameraOn ? (
+                  <div className="relative w-full max-w-xl mx-auto rounded-3xl overflow-hidden border border-zinc-800 shadow-2xl bg-black aspect-video flex items-center justify-center">
+                    <video
+                      ref={videoRef}
+                      autoPlay
+                      playsInline
+                      muted
+                      className="w-full h-full object-cover rounded-3xl"
+                    />
+                    <div className="absolute top-3 left-3 bg-black/80 backdrop-blur-md px-3 py-1 rounded-full border border-emerald-500/40 text-xs text-white flex items-center gap-2">
+                      <span className="h-2 w-2 rounded-full bg-emerald-400 animate-ping" />
+                      <span className="font-bold">Prof. Ramanathan (Live Camera)</span>
+                    </div>
                   </div>
                 ) : (
-                  <>
-                    <div className="inline-flex p-4 bg-violet-600/30 text-violet-400 rounded-full border border-violet-500/30">
-                      <Mic className="h-10 w-10 animate-bounce" />
+
+                  <div className="p-8 bg-zinc-900/80 border border-zinc-800 rounded-3xl max-w-md mx-auto space-y-2">
+                    <div className="h-16 w-16 bg-violet-900/50 text-violet-300 rounded-full flex items-center justify-center mx-auto text-xl font-bold border border-violet-500/40">
+                      PR
                     </div>
-                    <h3 className="text-xl font-bold text-white">Educator Live Audio/Video Stream Active</h3>
-                    <p className="text-slate-400 text-xs max-w-sm mx-auto">
-                      Your speech is being translated live (Speech-to-Speech) in Chrome into student preferred languages in real time.
-                    </p>
-                  </>
+                    <h3 className="font-bold text-white text-base">Educator Camera Video Paused</h3>
+                    <p className="text-xs text-zinc-500">Microphone audio stream remains active for live translated subtitles.</p>
+                  </div>
                 )}
               </div>
 
-              {/* Real-time Subtitle Overlay HUD */}
-              <div className="z-10 bg-black/75 backdrop-blur-md p-3 rounded-xl border border-violet-500/30 text-center my-2">
-                <p className="text-xs font-bold text-violet-300 mb-0.5 flex items-center justify-center gap-1">
+              {/* Sarvam AI Subtitle Overlay Bar */}
+              <div className="z-10 bg-black/85 backdrop-blur-xl p-3.5 rounded-xl border border-violet-500/40 text-center mx-auto max-w-3xl w-full shadow-2xl">
+                <p className="text-xs font-bold text-violet-300 mb-1 flex items-center justify-center gap-1.5">
                   <Globe className="h-3.5 w-3.5 text-violet-400" />
-                  <span>Speech-to-Speech Realtime Live Chrome Dubbing ({selectedDubbingLang})</span>
+                  <span>Sarvam AI Real-Time Multilingual Speech Subtitles ({selectedDubbingLang})</span>
                 </p>
-                <p className="text-sm font-semibold text-white">
+                <p className="text-sm md:text-base font-bold text-white tracking-wide">
                   &quot;Verify electrical wiring, pressure valves and circuit breaker clearances before powering on.&quot;
                 </p>
               </div>
-
-              {/* Bottom Stream Controls Bar */}
-              <div className="flex justify-between items-center z-10 bg-black/80 backdrop-blur-md p-3 rounded-xl border border-slate-800 flex-wrap gap-2">
-                <div className="flex items-center gap-3">
-                  {/* Educator Mic Control */}
-                  <button
-                    onClick={() => setIsEducatorMicOn(!isEducatorMicOn)}
-                    className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                      isEducatorMicOn ? 'bg-violet-600 text-white' : 'bg-rose-950/80 text-rose-300 border border-rose-500/30'
-                    }`}
-                  >
-                    <Mic className="h-3.5 w-3.5" />
-                    <span>{isEducatorMicOn ? 'Educator Mic ON' : 'Educator Mic MUTED'}</span>
-                  </button>
-
-                  {/* Student Mic Access Control */}
-                  <button
-                    onClick={() => setIsStudentMicOn(!isStudentMicOn)}
-                    className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                      isStudentMicOn ? 'bg-emerald-600 text-white' : 'bg-slate-800 text-slate-400'
-                    }`}
-                  >
-                    <Volume2 className="h-3.5 w-3.5" />
-                    <span>{isStudentMicOn ? 'Student Mics Enabled (Doubts OK)' : 'Student Mics Muted'}</span>
-                  </button>
-
-                  <span className="text-xs font-bold text-slate-300 hidden md:inline">Target Language:</span>
-                  <select
-                    value={selectedDubbingLang}
-                    onChange={(e) => setSelectedDubbingLang(e.target.value)}
-                    className="px-2.5 py-1 bg-slate-800 text-white rounded-lg text-xs border border-slate-700 font-semibold focus:outline-none focus:ring-2 focus:ring-violet-500"
-                  >
-                    {[
-                      'English', 'Assamese', 'Bengali', 'Bodo', 'Dogri', 'Gujarati', 'Hindi',
-                      'Kannada', 'Kashmiri', 'Konkani', 'Maithili', 'Malayalam', 'Manipuri',
-                      'Marathi', 'Nepali', 'Odia', 'Punjabi', 'Sanskrit', 'Santali', 'Sindhi',
-                      'Tamil', 'Telugu', 'Urdu'
-                    ].map((lang) => (
-                      <option key={lang} value={lang}>{lang}</option>
-                    ))}
-                  </select>
-                </div>
-                <button
-                  onClick={() => setIsLiveActive(false)}
-                  className="px-3.5 py-1.5 bg-red-600 hover:bg-red-700 text-white font-bold text-xs rounded-lg transition-colors cursor-pointer"
-                >
-                  End Live Stream
-                </button>
-              </div>
             </div>
+
+            {/* Student Names & Count Side Panel */}
+            {showStudentsPanel && (
+              <div className="w-80 bg-zinc-950 border border-zinc-800/80 rounded-2xl p-4 flex flex-col text-white shadow-2xl">
+                <div className="flex items-center justify-between border-b border-zinc-800 pb-3 mb-3">
+                  <div className="flex items-center gap-2">
+                    <Users className="h-4 w-4 text-emerald-400" />
+                    <h3 className="font-bold text-sm text-white">Student Roster</h3>
+                  </div>
+                  <span className="px-2 py-0.5 bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[10px] font-mono font-bold rounded-full">
+                    {privacyProtectedParticipants.length} Active
+                  </span>
+                </div>
+
+                <div className="flex-1 overflow-y-auto space-y-2.5 pr-1">
+                  {privacyProtectedParticipants.map((student) => (
+                    <div key={student.id} className="p-3 bg-zinc-900/90 border border-zinc-800/90 rounded-xl flex items-center justify-between hover:border-violet-500/40 transition-colors">
+                      <div className="space-y-0.5">
+                        <p className="text-xs font-bold text-white flex items-center gap-1.5">
+                          <span className="h-2 w-2 rounded-full bg-emerald-400" />
+                          <span>{student.name}</span>
+                        </p>
+                        <p className="text-[10px] text-zinc-400 flex items-center gap-1">
+                          <Lock className="h-2.5 w-2.5 text-zinc-500" />
+                          <span>{student.maskedPhone}</span>
+                        </p>
+                      </div>
+                      <span className="text-[10px] font-bold px-2 py-0.5 bg-violet-950 text-violet-300 border border-violet-500/30 rounded-md font-mono">
+                        {student.lang}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
-          {/* Privacy Roster Side Panel */}
-          <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-4">
-            <div className="flex justify-between items-center border-b border-slate-100 pb-3">
-              <div>
-                <h3 className="font-bold text-slate-900 text-base">Participant Roster</h3>
-                <p className="text-xs text-slate-500">Student Names & Privacy Protection</p>
-              </div>
-              <div className="flex items-center gap-1 text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md">
-                <Lock className="h-3 w-3" />
-                <span>Phone Numbers Masked</span>
-              </div>
+          {/* Bottom Dock Control Bar */}
+          <div className="h-20 bg-zinc-950 border-t border-zinc-800/80 px-6 flex items-center justify-between z-20">
+            <div className="flex items-center gap-3">
+              <span className="text-xs font-bold text-zinc-400">Speech Translation Target:</span>
+              <select
+                value={selectedDubbingLang}
+                onChange={(e) => setSelectedDubbingLang(e.target.value)}
+                className="px-3 py-1.5 bg-zinc-900 text-white rounded-xl text-xs border border-zinc-800 font-bold focus:outline-none focus:ring-2 focus:ring-violet-500"
+              >
+                {[
+                  'English', 'Assamese', 'Bengali', 'Bodo', 'Dogri', 'Gujarati', 'Hindi',
+                  'Kannada', 'Kashmiri', 'Konkani', 'Maithili', 'Malayalam', 'Manipuri',
+                  'Marathi', 'Nepali', 'Odia', 'Punjabi', 'Sanskrit', 'Santali', 'Sindhi',
+                  'Tamil', 'Telugu', 'Urdu'
+                ].map((lang) => (
+                  <option key={lang} value={lang}>{lang}</option>
+                ))}
+              </select>
             </div>
 
-            <div className="space-y-2.5 max-h-96 overflow-y-auto pr-1">
-              {privacyProtectedParticipants.map((student) => (
-                <div key={student.id} className="p-3 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-between">
-                  <div>
-                    <p className="text-xs font-bold text-slate-900">{student.name}</p>
-                    <p className="text-[11px] text-slate-500 flex items-center gap-1 mt-0.5">
-                      <Lock className="h-2.5 w-2.5 text-slate-400" />
-                      <span>{student.maskedPhone}</span>
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <span className="text-[10px] font-bold px-2 py-0.5 bg-violet-100 text-violet-700 rounded-full">
-                      {student.lang} Sub & Dub
-                    </span>
-                  </div>
-                </div>
-              ))}
+            {/* Central Controls Dock (Mic, Camera, Screen Share, Students) */}
+            <div className="flex items-center gap-3">
+              {/* Mic Toggle */}
+              <button
+                onClick={() => setIsEducatorMicOn(!isEducatorMicOn)}
+                className={`p-3.5 rounded-full transition-all cursor-pointer shadow-lg ${
+                  isEducatorMicOn 
+                    ? 'bg-zinc-800 hover:bg-zinc-700 text-white border border-zinc-700' 
+                    : 'bg-red-600 hover:bg-red-700 text-white shadow-red-600/40'
+                }`}
+                title={isEducatorMicOn ? "Mute Educator Mic" : "Unmute Educator Mic"}
+              >
+                <Mic className="h-5 w-5" />
+              </button>
+
+              {/* Camera Video Toggle */}
+              <button
+                onClick={() => setIsCameraOn(!isCameraOn)}
+                className={`p-3.5 rounded-full transition-all cursor-pointer shadow-lg ${
+                  isCameraOn 
+                    ? 'bg-zinc-800 hover:bg-zinc-700 text-white border border-zinc-700' 
+                    : 'bg-red-600 hover:bg-red-700 text-white shadow-red-600/40'
+                }`}
+                title={isCameraOn ? "Turn Camera Off" : "Turn Camera On"}
+              >
+                <Monitor className="h-5 w-5" />
+              </button>
+
+              {/* Screen Share Toggle */}
+              <button
+                onClick={handleToggleScreenShare}
+                className={`p-3.5 rounded-full transition-all cursor-pointer shadow-lg ${
+                  isScreenSharing 
+                    ? 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-emerald-600/40 animate-pulse' 
+                    : 'bg-zinc-800 hover:bg-zinc-700 text-white border border-zinc-700'
+                }`}
+                title={isScreenSharing ? "Stop Screen Share" : "Share Educator Screen"}
+              >
+                <Share2 className="h-5 w-5" />
+              </button>
+
+              {/* Student Roster Toggle */}
+              <button
+                onClick={() => setShowStudentsPanel(!showStudentsPanel)}
+                className={`p-3.5 rounded-full transition-all cursor-pointer shadow-lg ${
+                  showStudentsPanel 
+                    ? 'bg-violet-600 text-white border border-violet-500' 
+                    : 'bg-zinc-800 hover:bg-zinc-700 text-zinc-300 border border-zinc-700'
+                }`}
+                title="Toggle Student Roster Panel"
+              >
+                <Users className="h-5 w-5" />
+              </button>
+            </div>
+
+            {/* Right End Call Red Button */}
+            <div>
+              <button
+                onClick={() => setIsLiveActive(false)}
+                className="px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white font-extrabold text-xs rounded-xl shadow-lg shadow-red-600/40 transition-all cursor-pointer"
+              >
+                End Live Stream
+              </button>
             </div>
           </div>
         </div>
-      ) : (
+      )}
+
+      {/* Upcoming Sessions Data Table View */}
+      {!isLiveActive && (
+
         <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
           <DataTable
             columns={upcomingColumns}
@@ -418,6 +537,7 @@ export default function LiveClassroom() {
           />
         </div>
       )}
+
 
       {/* Schedule Session Modal */}
       {showModal && (

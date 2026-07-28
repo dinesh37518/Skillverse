@@ -130,36 +130,22 @@ export default function CourseManagement() {
 
   const seedDefaultCourses = () => {
     try {
-      const storedCourses = JSON.parse(localStorage.getItem('skillverse_courses') || '[]');
-      
-      // Purge any unwanted/legacy courses like 'c-hyd-valves' or 'photo'
-      const cleanCourses = storedCourses.filter((c: any) => 
-        c.id === 'c-sat-comm' || (c.id !== 'c-hyd-valves' && c.title !== 'photo' && !c.title?.toLowerCase().includes('hydraulic'))
-      );
-
-      const hasSat = cleanCourses.some((c: any) => c.id === 'c-sat-comm' || c.title === 'Satellite Communication');
-      const finalCourses = hasSat ? cleanCourses : [SATELLITE_COMMUNICATION_COURSE, ...cleanCourses];
-
+      // Enforce strictly ONLY Satellite Communication course
+      const finalCourses = [SATELLITE_COMMUNICATION_COURSE];
       localStorage.setItem('skillverse_courses', JSON.stringify(finalCourses));
 
-      // Purge non-satellite files from default seeding
-      const storedUploads = JSON.parse(localStorage.getItem('skillverse_uploaded_content') || '[]');
-      const cleanUploads = storedUploads.filter((u: any) => 
-        u.course_id === 'c-sat-comm' || (u.course_id !== 'c-hyd-valves' && !u.course_title?.toLowerCase().includes('hydraulic'))
-      );
-
-      const hasSatFiles = cleanUploads.some((u: any) => u.course_id === 'c-sat-comm');
-      const finalUploads = hasSatFiles ? cleanUploads : [...SATELLITE_COMMUNICATION_FILES, ...cleanUploads];
-
+      // Enforce strictly ONLY Satellite Communication files
+      const finalUploads = [...SATELLITE_COMMUNICATION_FILES];
       localStorage.setItem('skillverse_uploaded_content', JSON.stringify(finalUploads));
 
-      setCourses(finalCourses);
+      setCourses(finalCourses as any);
       window.dispatchEvent(new Event('storage'));
     } catch (e) {
       console.error(e);
       setCourses([SATELLITE_COMMUNICATION_COURSE as any]);
     }
   };
+
 
   useEffect(() => {
     seedDefaultCourses();

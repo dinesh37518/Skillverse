@@ -2,9 +2,37 @@ import logging
 import google.generativeai as genai
 from app.core.config import settings
 
+SARVAM_LANG_MAP = {
+    "English": "en-IN",
+    "Assamese": "as-IN",
+    "Bengali": "bn-IN",
+    "Bodo": "brx-IN",
+    "Dogri": "doi-IN",
+    "Gujarati": "gu-IN",
+    "Hindi": "hi-IN",
+    "Kannada": "kn-IN",
+    "Kashmiri": "ks-IN",
+    "Konkani": "kok-IN",
+    "Maithili": "mai-IN",
+    "Malayalam": "ml-IN",
+    "Manipuri": "mni-IN",
+    "Marathi": "mr-IN",
+    "Nepali": "ne-IN",
+    "Odia": "or-IN",
+    "Punjabi": "pa-IN",
+    "Sanskrit": "sa-IN",
+    "Santali": "sat-IN",
+    "Sindhi": "sd-IN",
+    "Tamil": "ta-IN",
+    "Telugu": "te-IN",
+    "Urdu": "ur-IN"
+}
+
 logger = logging.getLogger("translation_service")
 
 class IndianLanguagesTranslator:
+
+
     def __init__(self):
         # List of 22 Scheduled Indian Languages supported
         self.supported_languages = settings.SUPPORTED_LANGUAGES

@@ -7,12 +7,14 @@ interface StatCardProps {
   changeType?: 'positive' | 'negative' | 'neutral';
   icon: LucideIcon;
   iconColor?: string;
+  onClick?: () => void;
 }
 
-export default function StatCard({ title, value, changeText, changeType = 'neutral', icon: Icon, iconColor = 'text-sky-500' }: StatCardProps) {
+export default function StatCard({ title, value, changeText, changeType = 'neutral', icon: Icon, iconColor = 'text-sky-500', onClick }: StatCardProps) {
   const color = changeType === 'positive' ? 'text-emerald-500' : changeType === 'negative' ? 'text-rose-500' : 'text-slate-400';
   return (
-    <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl flex items-center justify-between hover:border-slate-700 transition-colors">
+    <div onClick={onClick} className="bg-slate-900 border border-slate-800 p-6 rounded-2xl flex items-center justify-between hover:border-slate-700 transition-colors cursor-pointer">
+
       <div className="space-y-2">
         <span className="text-sm font-medium text-slate-400">{title}</span>
         <h3 className="text-3xl font-bold tracking-tight">{value}</h3>
